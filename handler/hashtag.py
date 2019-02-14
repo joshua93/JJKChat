@@ -1,20 +1,23 @@
 from flask import jsonify
+from dao.hashtag import HashtagDAO
 
-class hashtag:
-    def _init_(self):
-        self.hashtags = [
-            {"hashtag_id" : 1, "text" : "#borrachoPelao", "post_id" : 1, "hashtag_date" : "Feb14"}
-        ]
+class Hashtag:
 
     def getAllHashtags(self):
-        return jsonify(Hashtags=self.hashtags)
+        dao = HashtagDAO()
+        result = dao.getAllHashtags()
+        return jsonify(result)
 
     def getHashtagById(self, hID):
-        return jsonify(Hashtags=self.hashtags)
+        dao = HashtagDAO()
+        result = dao.getHashtagsByID()
+        return jsonify(result)
 
     def getHashtagByPostId(self, pID):
-        return jsonify(Hashtags=self.hashtags)
+        dao = HashtagDAO()
+        result = dao.getHashtagByPostId()
+        return jsonify(result)
 
-    def getHashtagsByDate(self, date):
-        return jsonify(Hashtags=self.hashtags) 
+   # def getHashtagsByDate(self, date):
+    #    return jsonify(Hashtags=self.hashtags)
 

@@ -1,10 +1,11 @@
-from dao.data import Data
+from dao.dat a import Data
 
 
 class UserDAO:
 
     users = Data().users
-    posts = Data().posts
+    groups = Data().groups
+    contacts = Data().contacts
 
     def getAllUsers(self):
         return Data().users
@@ -33,7 +34,13 @@ class UserDAO:
         user = list(filter(lambda u: u['username'] == uUn, self.users))
         return user
 
+    def getGroupByUserID(self,uID):
+        group = list(filter(lambda u: u['owner_id'] == uID, self.groups))
+        return group
 
+    def getContactsByUserID(self,uID):
+        contacts = list(filter(lambda u: u['user_id'] == uID, self.contacts))
+        return contacts
 
 
 

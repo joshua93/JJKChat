@@ -73,3 +73,16 @@ class Data:
             {"user_id":9,"chat_group_id":2}
 
         ]
+
+        self.contacts = [
+            {"user_id": 5, "contact_user_id": 9},
+            {"user_id": 2, "contact_user_id": 8},
+            {"user_id": 10, "contact_user_id": 9},
+            {"user_id": 9, "contact_user_id": 6},
+            {"user_id": 1, "contact_user_id": 5},
+            {"user_id": 1, "contact_user_id": 7},
+            {"user_id": 5, "contact_user_id": 5},
+            {"user_id": 8, "contact_user_id": 5},
+            {"user_id": 1, "contact_user_id": 10},
+            {"user_id": 2, "contact_user_id": 2}
+        ]

@@ -13,3 +13,13 @@ class UserHandler:
         result = dao.getUserByID(uID)
         return jsonify(User=result)
 
+    def getGroupByUserID(self,uID):
+        dao = UserDAO()
+        result = dao.getGroupByUserID(uID)
+        return jsonify(Groups=result)
+
+    def getContactsbyUserID(self,uID):
+        dao = UserDAO()
+        result = dao.getContactsByUserID(uID)
+        return  jsonify(Contacts = result)
+

@@ -17,6 +17,16 @@ def getUsers():
 def getUserByID(uID):
     return UserHandler().getUserById(uID)
 
+@app.route('/JJKChat/users/<int:uID>/groups', methods=['GET'])
+def getGroupByUserID(uID):
+    return UserHandler().getGroupByUserID(uID)
+
+@app.route('/JJKChat/users/<int:uID>/contacts', methods=['GET'])
+def getContactsByUserID(uID):
+    return UserHandler().getContactsbyUserID(uID)
+
+
+
 
 if __name__ == '__main__':
     app.run()

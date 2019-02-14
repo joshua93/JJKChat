@@ -8,16 +8,13 @@ class HashtagDAO:
     def getAllHashtags(self):
         return self.users
 
-    def getHashtagsByID(self, uID):
+    def getHashtagsByID(self, hID):
         hashtag = list(filter(lambda u: u['hashtag_id'] == hID, self.hashtags))
         return hashtag
 
     def getHashtagByPostId(self, pID):
         hashtag = list(filter(lambda u: u['post_id'] == pID, self.hashtags))
         return hashtag
-
-    def getHashtagsByDate(self, date):
-        return jsonify(Hashtags=self.hashtags)
 
 
 

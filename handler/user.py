@@ -21,5 +21,11 @@ class UserHandler:
     def getContactsbyUserID(self,uID):
         dao = UserDAO()
         result = dao.getContactsByUserID(uID)
-        return  jsonify(Contacts = result)
+        return jsonify(Contacts = result)
+
+    def getReplyByUserID(self,uID):
+        dao = UserDAO()
+        result = dao.getReplyByUserID(uID)
+        return jsonify(Reply = result)
+
 

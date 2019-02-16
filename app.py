@@ -1,6 +1,7 @@
 from flask import Flask
 from handler.user import UserHandler
 from handler.group import GroupHandler
+from handler.post import PostHandler
 
 app = Flask(__name__)
 
@@ -9,39 +10,78 @@ app = Flask(__name__)
 def home():
     return "Welcome to JJKChat api"
 
-
+#Get all users
 @app.route('/JJKChat/users', methods=['GET'])
 def getUsers():
     return UserHandler().getAllUsers()
 
+#Get specific user by ID
 @app.route('/JJKChat/users/<int:uID>', methods=['GET'])
 def getUserByID(uID):
     return UserHandler().getUserById(uID)
 
+#get what groups th e user is owner of
 @app.route('/JJKChat/users/<int:uID>/ownedgroups', methods=['GET'])
-def getGroupByUserID(uID):
-    return UserHandler().getGroupByUserID(uID)
+def getOwnedGroupByUserID(uID):
+    return UserHandler().getOwnedGroupByUserID(uID)
 
+#Gets contacts of a user
 @app.route('/JJKChat/users/<int:uID>/contacts', methods=['GET'])
 def getContactsByUserID(uID):
     return UserHandler().getContactsbyUserID(uID)
 
+#Gets to what groups a users is member of
+@app.route('/JJKChat/users/<int:uID>/member', methods=['GET'])
+def getMemberOfGroupsByUserID(uID):
+    return UserHandler().getMemberOfGroupsByUserID(uID)
 
+
+#Get all groups
 @app.route('/JJKChat/groups', methods=['GET'])
 def getGroup():
     return GroupHandler().getAllgroups()
 
+#Get specific group by ID
 @app.route('/JJKChat/groups/<int:gID>', methods=['GET'])
 def getGroupByID(gID):
     return GroupHandler().getGroupById(gID)
 
+#Gets specific groups owner by group ID
 @app.route('/JJKChat/groups/<int:gID>/owner', methods=['GET'])
 def getOwnerByGroupID(gID):
     return GroupHandler().getGroupOwnerByID(gID)
 
+#Gets members of a group by group ID
 @app.route('/JJKChat/groups/<int:gID>/members', methods=['GET'])
 def getMembersByGroupID(gID):
     return GroupHandler().getMembersByGroupID(gID)
+
+
+@app.route('/JJKChat/posts', methods=['GET'])
+def getAllPost():
+    return PostHandler().getAllPost()
+
+
+@app.route('/JJKChat/posts/<int:pID>', methods=['GET'])
+def getPostByID(pID):
+    return PostHandler().getPostByID(pID)
+
+
+@app.route('/JJKChat/posts/<int:pID>', methods=['GET'])
+def getPostByID(pID):
+    return PostHandler().getPostByID(pID)
+
+
+@app.route('/JJKChat/user/<int:uID>/post', methods=['GET'])
+def getPostsByUserID(uID):
+    return PostHandler().getPostsByUserID(uID)
+
+
+@app.route('/JJKChat/group/<int:gID>/post', methods=['GET'])
+def getPostByGroupId(gID):
+    return PostHandler().getPostByGroupId(gID)
+
+
 
 if __name__ == '__main__':
     app.run()

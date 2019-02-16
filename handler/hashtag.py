@@ -18,6 +18,11 @@ class Hashtag:
         result = dao.getHashtagByPostId()
         return jsonify(result)
 
+    def getHashtagCount(self, text):
+        dao = HastagDAO()
+        result = dao.getHashtagCount()
+        return len(result)
+
    # def getHashtagsByDate(self, date):
     #    return jsonify(Hashtags=self.hashtags)
 

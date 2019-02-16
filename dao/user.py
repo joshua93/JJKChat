@@ -1,4 +1,4 @@
-from dao.dat a import Data
+from dao.data import Data
 
 
 class UserDAO:

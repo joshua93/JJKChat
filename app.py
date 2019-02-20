@@ -20,10 +20,6 @@ def getAllUsers():
 def getUserByID(uID):
     return UserHandler().getUserById(uID)
 
-#Get specific user by ID
-@app.route('/JJKChat/users/<int:uID>', methods=['GET'])
-def getUserByID(uID):
-    return UserHandler().getUserById(uID)
 
 #get what groups th e user is owner of
 @app.route('/JJKChat/users/<int:uID>/ownedgroups', methods=['GET'])

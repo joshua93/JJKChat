@@ -36,7 +36,7 @@ class PostDAO:
         return likes
 
     def getNumberOfPostPerDay(self):
-        return len(posts)
+        return len(self.posts)
 
 
 

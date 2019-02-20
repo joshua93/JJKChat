@@ -38,6 +38,9 @@ class PostDAO:
     def getNumberOfPostPerDay(self):
         return len(self.posts)
 
+    def getNumberOfRepliesPerDay(self):
+        return len(self.posts) #Solo para demostracion
+
 
 
 

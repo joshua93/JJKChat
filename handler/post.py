@@ -42,3 +42,8 @@ class PostHandler:
         dao = PostDAO()
         result = dao.getLikesByPostId(pID)
         return jsonify(Likes = result)
+
+    def getNumberOfPostPerDay(self):
+        dao = PostDAO()
+        result = dao.getNumberOfPostPerDay()
+        return jsonify(Posts = result)

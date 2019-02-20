@@ -19,7 +19,7 @@ class UserHandler:
         return jsonify(Groups=result)
 
     def getContactsbyUserID(self,uID):
-        dao = UserDAO()
+        dao = UserDAO(x)
         result = dao.getContactsByUserID(uID)
         return jsonify(Contacts = result)
 

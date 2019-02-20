@@ -12,7 +12,7 @@ def home():
 
 #Get all users
 @app.route('/JJKChat/users', methods=['GET'])
-def getUsers():
+def getAllUsers():
     return UserHandler().getAllUsers()
 
 #Get specific user by ID
@@ -56,32 +56,45 @@ def getOwnerByGroupID(gID):
 def getMembersByGroupID(gID):
     return GroupHandler().getMembersByGroupID(gID)
 
-
+#Get all posts
 @app.route('/JJKChat/posts', methods=['GET'])
 def getAllPost():
     return PostHandler().getAllPost()
 
-
+#Get specific post by Id
 @app.route('/JJKChat/posts/<int:pID>', methods=['GET'])
 def getPostByID(pID):
     return PostHandler().getPostByID(pID)
 
-
-@app.route('/JJKChat/posts/<int:pID>', methods=['GET'])
-def getPostByID(pID):
-    return PostHandler().getPostByID(pID)
-
-
+#Get specific user posts by user id
 @app.route('/JJKChat/user/<int:uID>/post', methods=['GET'])
 def getPostsByUserID(uID):
     return PostHandler().getPostsByUserID(uID)
 
-
+#Get post by group id
 @app.route('/JJKChat/group/<int:gID>/post', methods=['GET'])
 def getPostByGroupId(gID):
     return PostHandler().getPostByGroupId(gID)
 
-
+# @app.route('/JJKChat/hashtag/top', methods=['GET'])
+# def getTrendingTopic(gID):
+#     return PostHandler().getTrendingTopic(gID)
+#
+# @app.route('/JJKChat/post/count', methods=['GET'])
+# def getTrendingTopic(gID):
+#     return PostHandler().getTrendingTopic(gID)
+#
+# @app.route('/JJKChat/replies/count', methods=['GET'])
+# def getTrendingTopic(gID):
+#     return PostHandler().getTrendingTopic(gID)
+#
+# @app.route('/JJKChat/likes/count', methods=['GET'])
+# def getTrendingTopic(gID):
+#     return PostHandler().getTrendingTopic(gID)
+#
+# @app.route('/JJKChat/dislikes/count', methods=['GET'])
+# def getTrendingTopic(gID):
+#     return PostHandler().getTrendingTopic(gID)
 
 if __name__ == '__main__':
     app.run()

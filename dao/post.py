@@ -44,8 +44,8 @@ class PostDAO:
     def getNumberOfLikesPerDay(self):
         return 25 #Just for demonstration
 
-
-
+    def getNumberOfDislikesPerDay(self):
+        return 15 #Just for demonstration
 
 
 

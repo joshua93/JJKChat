@@ -35,7 +35,7 @@ class PostDAO:
         likes = list(filter(lambda u: u['post_id'] == pID, self.posts))
         return likes
 
-    def getNumberOfPostPerDY(self):
+    def getNumberOfPostPerDay(self):
         return len(posts)
 
 

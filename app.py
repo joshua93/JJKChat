@@ -2,6 +2,7 @@ from flask import Flask
 from handler.user import UserHandler
 from handler.group import GroupHandler
 from handler.post import PostHandler
+from handler.hashtag import HashtagHandler
 
 app = Flask(__name__)
 
@@ -77,14 +78,15 @@ def getPostsByUserID(uID):
 def getPostByGroupId(gID):
     return PostHandler().getPostByGroupId(gID)
 
-# @app.route('/JJKChat/hashtag/top', methods=['GET'])
-# def getTrendingTopic(gID):
-#     return PostHandler().getTrendingTopic(gID)
-#
+#Get the trending topic via hashtags
+@app.route('/JJKChat/hashtag/top', methods=['GET'])
+def getTrendingTopic():
+    return HashtagHandler().getTrendingHashtag()
+
 @app.route('/JJKChat/post/count', methods=['GET'])
 def getNumberOfPostPerDay():
     return PostHandler().getNumberOfPostPerDay()
-#
+
 # @app.route('/JJKChat/replies/count', methods=['GET'])
 # def getTrendingTopic(gID):
 #     return PostHandler().getTrendingTopic(gID)

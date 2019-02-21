@@ -1,6 +1,6 @@
 # JJKChat
 
-##Objectives
+## Objectives
 1. Understand the design, implementation and use of an application backed by a database
 system.
 2. Understand the use of the E-R model for database application design.
@@ -8,7 +8,7 @@ system.
 fairly complex data structures.
 4. Gain further experience with Web programming concepts including REST and HTTP.
 
-##Overview
+## Overview
 You will design, implement and test a simple database application for photo messaging in a
 social context, like Instagram but based on chat groups. The application has a UI that runs these
 operations, backed by a database engine:
@@ -27,7 +27,7 @@ address.
 12. Dislike a photo posted on a chat group
 13. Reply to the original photo message posted on a chat group
 
-##Optionally, you application can support the following for extra credit:
+## Optionally, you application can support the following for extra credit:
 1. Post a video to a group
 2. Run from a cloud (Heroku, Amazon, google)
 3. Run on a mobile phone

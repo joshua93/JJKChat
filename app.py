@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from handler.user import UserHandler
 from handler.group import GroupHandler
 from handler.post import PostHandler
@@ -10,6 +10,12 @@ app = Flask(__name__)
 @app.route('/')
 def home():
     return "Welcome to JJKChat api"
+
+
+@app.route('/JJKChat/login', methods=['POST'])
+def loginUser():
+    print("Legaste")
+    return UserHandler().loginUser()
 
 #Get all users
 @app.route('/JJKChat/users', methods=['GET'])
@@ -58,6 +64,10 @@ def getOwnerByGroupID(gID):
 def getMembersByGroupID(gID):
     return GroupHandler().getMembersByGroupID(gID)
 
+@app.route('/ChatApp/group/<int:gID>/member/<int:pID>', methods=['POST'])
+def addMemberToGroup(gID, pID):
+    return GroupHandler().addMember(gID, pID)
+
 #Get all posts
 @app.route('/JJKChat/posts', methods=['GET'])
 def getAllPost():
@@ -98,6 +108,8 @@ def getNumberOfLikesPerDay():
 @app.route('/JJKChat/dislikes/count', methods=['GET'])
 def getNumberOfDislikesPerDay():
     return PostHandler().getNumberOfDislikesPerDay()
+
+
 
 
 if __name__ == '__main__':

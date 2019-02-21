@@ -12,6 +12,10 @@ class UserDAO:
     def getAllUsers(self):
         return Data().users
 
+    def loginUser(self, username, password):
+        login = "Login Succesfull" + username
+        return login
+
     def getUserByID(self, uID):
         user = list(filter(lambda u: u['user_id'] == uID, self.users))
         return user

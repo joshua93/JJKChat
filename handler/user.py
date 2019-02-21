@@ -8,6 +8,14 @@ class UserHandler:
         result = dao.getAllUsers()
         return jsonify(Users=result)
 
+    def loginUser(self):
+       # print(json)
+        dao = UserDAO()
+       # username = json['username']
+        #password = json['password']
+       # result = dao.loginUser(username,password)
+        return jsonify("Login")
+
     def getUserById(self, uID):
         dao = UserDAO()
         result = dao.getUserByID(uID)

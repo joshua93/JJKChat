@@ -1,7 +1,7 @@
 from flask import jsonify
 from dao.hashtag import HashtagDAO
 
-class Hashtag:
+class HashtagHandler:
 
     def getAllHashtags(self):
         dao = HashtagDAO()
@@ -18,11 +18,8 @@ class Hashtag:
         result = dao.getHashtagByPostId()
         return jsonify(result)
 
-    def getHashtagCount(self, text):
-        dao = HastagDAO()
-        result = dao.getHashtagCount()
-        return len(result)
-
-   # def getHashtagsByDate(self, date):
-    #    return jsonify(Hashtags=self.hashtags)
+    def getTrendingHashtag(self):
+        dao = HashtagDAO()
+        result = dao.getTrendingHashtag()
+        return jsonify(result)
 

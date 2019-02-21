@@ -86,3 +86,33 @@ class Data:
             {"user_id": 1, "contact_user_id": 10},
             {"user_id": 2, "contact_user_id": 2}
         ]
+
+        self.hashtags = [
+            {"hashtag_id": 1, "text": "#RSO^C", "post_id": 7, "hashtag_date": "11/19/2018"},
+            {"hashtag_id": 2, "text": "#CBL^E", "post_id": 1, "hashtag_date": "03/11/2018"},
+            {"hashtag_id": 3, "text": "#PNQI", "post_id": 9, "hashtag_date": "09/22/2018"},
+            {"hashtag_id": 4, "text": "#AZPN", "post_id": 6, "hashtag_date": "12/22/2018"},
+            {"hashtag_id": 5, "text": "#DYN", "post_id": 1, "hashtag_date": "09/22/2018"},
+            {"hashtag_id": 6, "text": "#USB", "post_id": 4, "hashtag_date": "02/09/2019"},
+            {"hashtag_id": 7, "text": "#IAC", "post_id": 7, "hashtag_date": "09/26/2018"},
+            {"hashtag_id": 8, "text": "#SASR", "post_id": 1, "hashtag_date": "02/22/2018"},
+            {"hashtag_id": 9, "text": "#ENBL", "post_id": 10, "hashtag_date": "06/07/2018"},
+            {"hashtag_id": 10, "text": "#OKS", "post_id": 5, "hashtag_date": "10/01/2018"},
+            {"hashtag_id": 11, "text": "#TCRX", "post_id": 5, "hashtag_date": "07/14/2018"},
+            {"hashtag_id": 12, "text": "#UPS", "post_id": 2, "hashtag_date": "01/27/2019"},
+            {"hashtag_id": 13, "text": "#ROLL", "post_id": 2, "hashtag_date": "04/07/2018"},
+            {"hashtag_id": 14, "text": "#MLI", "post_id": 8, "hashtag_date": "04/06/2018"},
+            {"hashtag_id": 15, "text": "#EROS", "post_id": 9, "hashtag_date": "04/26/2018"},
+            {"hashtag_id": 16, "text": "#TTC", "post_id": 3, "hashtag_date": "08/11/2018"},
+            {"hashtag_id": 17, "text": "#PNC^P", "post_id": 2, "hashtag_date": "06/07/2018"},
+            {"hashtag_id": 18, "text": "#HONE", "post_id": 7, "hashtag_date": "04/27/2018"},
+            {"hashtag_id": 19, "text": "#SSNI", "post_id": 5, "hashtag_date": "03/23/2018"},
+            {"hashtag_id": 20, "text": "#DSPG", "post_id": 8, "hashtag_date": "04/09/2018"},
+            {"hashtag_id": 21, "text": "#PPX", "post_id": 3, "hashtag_date": "05/08/2018"},
+            {"hashtag_id": 22, "text": "#CHUBA", "post_id": 5, "hashtag_date": "06/22/2018"},
+            {"hashtag_id": 23, "text": "#MINI", "post_id": 1, "hashtag_date": "02/05/2019"},
+            {"hashtag_id": 24, "text": "#SYT", "post_id": 2, "hashtag_date": "09/02/2018"},
+            {"hashtag_id": 25, "text": "#PN", "post_id": 1, "hashtag_date": "08/18/2018"},
+            {"hashtag_id": 26, "text": "#MINI", "post_id": 8, "hashtag_date": "02/06/2019"}
+
+        ]

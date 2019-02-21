@@ -9,9 +9,7 @@ fairly complex data structures.
 4. Gain further experience with Web programming concepts including REST and HTTP.
 
 ## Overview
-You will design, implement and test a simple database application for photo messaging in a
-social context, like Instagram but based on chat groups. The application has a UI that runs these
-operations, backed by a database engine:
+You will design, implement and test a simple database application for photo messaging in a social context, like Instagram but based on chat groups. The application has a UI that runs these operations, backed by a database engine:
 1. Register a user with the application
 2. Login to the application
 3. Create a chat group with a given name
@@ -45,12 +43,7 @@ In addition, you will develop a web-based dashboard that will provide statistics
 You will be given a more specific list of statistics later on.
 
 The data in the application is managed by a relational database system, and exposed to the
-client applications through a REST API. You will build the database application and REST API,
-which form the backend of the system. Your database engine must be relational, and you must
-implement the code in either Java, Python, or JavaScript. The backend will provide server-side
-support for the operations mentioned before.
-Your solution MUST follow the Model-View-Controller Design Pattern. In this scheme, your
-solution will be organized as follows:
+client applications through a REST API. You will build the database application and REST API, which form the backend of the system. Your database engine must be relational, and you must implement the code in either Java, Python, or JavaScript. The backend will provide server-side support for the operations mentioned before. Your solution MUST follow the Model-View-Controller Design Pattern. In this scheme, your solution will be organized as follows:
 1) View – applications, JavaScript pages, and HTML pages will handle all interaction
 with the users and will show results from operations performed on the database. This
 is the client code for the application. The client MUST NOT interact directly with the

@@ -87,19 +87,6 @@ def getTrendingTopic():
 def getNumberOfPostPerDay():
     return PostHandler().getNumberOfPostPerDay()
 
-<<<<<<< HEAD
-# @app.route('/JJKChat/replies/count', methods=['GET'])
-# def getTrendingTopic(gID):
-#     return PostHandler().getTrendingTopic(gID)
-#
-# @app.route('/JJKChat/likes/count', methods=['GET'])
-# def getTrendingTopic(gID):
-#     return PostHandler().getTrendingTopic(gID)
-#
-# @app.route('/JJKChat/dislikes/count', methods=['GET'])
-# def getTrendingTopic(gID):
-#     return PostHandler().getTrendingTopic(gID)
-=======
 @app.route('/JJKChat/replies/count', methods=['GET'])
 def getNumberOfRepliesPerDay():
     return PostHandler().getNumberOfRepliesPerDay()
@@ -111,7 +98,7 @@ def getNumberOfLikesPerDay():
 @app.route('/JJKChat/dislikes/count', methods=['GET'])
 def getNumberOfDislikesPerDay():
     return PostHandler().getNumberOfDislikesPerDay()
->>>>>>> de86d7b2275dac27bbe882cc9a746b802d019f51
+
 
 if __name__ == '__main__':
     app.run()

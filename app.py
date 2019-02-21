@@ -14,13 +14,15 @@ def home():
 
 @app.route('/JJKChat/login', methods=['POST'])
 def loginUser():
-    print("Legaste")
     return UserHandler().loginUser()
 
 #Get all users
 @app.route('/JJKChat/users', methods=['GET'])
 def getAllUsers():
-    return UserHandler().getAllUsers()
+    if request.args:
+        return UserHandler().searchUser(request.args)
+    else:
+        return UserHandler().getAllUsers()
 
 #Get specific user by ID
 @app.route('/JJKChat/users/<int:uID>', methods=['GET'])
@@ -45,9 +47,13 @@ def getMemberOfGroupsByUserID(uID):
 
 
 #Get all groups
-@app.route('/JJKChat/groups', methods=['GET'])
+@app.route('/JJKChat/groups', methods=['GET','POST'])
 def getGroup():
-    return GroupHandler().getAllgroups()
+    if request.method == 'POST':
+        return GroupHandler().createGroup()
+    if request.method == 'GET':
+        return GroupHandler().getAllgroups()
+
 
 #Get specific group by ID
 @app.route('/JJKChat/groups/<int:gID>', methods=['GET'])

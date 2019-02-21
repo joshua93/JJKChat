@@ -8,6 +8,10 @@ class GroupHandler:
         result = dao.getAllGroups()
         return jsonify(Users=result)
 
+    def createGroup(self):
+        return jsonify("Group Created")
+
+
     def getGroupById(self, gID):
         dao = GroupDAO()
         result = dao.getGroupByID(gID)

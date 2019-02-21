@@ -36,3 +36,16 @@ class UserHandler:
         result = dao.getMemberOfGroupsByUserID(uID)
         return jsonify(result)
 
+
+    def searchUser(self, args):
+        first_name = args.get("first_name")
+        email = args.get("email")
+        phone = args.get("phone")
+        dao = UserDAO()
+        if email:
+            result = dao.getUserByEmail(email)
+        elif phone:
+            result = dao.getUserByPhone(phone)
+        elif first_name:
+            result = dao.getUserByFirstName(first_name)
+        return jsonify(result)

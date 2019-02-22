@@ -59,6 +59,7 @@ class UserDAO:
     def registerUser(self,username, password, firstname, lastname, phone, email):
         return "5"
 
-
+    def addContact(self,uID, firstname, lastname, phone, email):
+        return "Done"
 
 

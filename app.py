@@ -42,8 +42,9 @@ def getOwnedGroupByUserID(uID):
 @app.route('/JJKChat/users/<int:uID>/contacts', methods=['GET','POST'])
 def getContactsByUserID(uID):
     if request.method == 'POST':
-        return UserHandler().addContactToContactList(uID,request.json)
-    return UserHandler().getContactsbyUserID(uID)
+        return UserHandler().addUserToContactList(uID, request.json)
+    if request.method == 'GET':
+        return UserHandler().getContactsbyUserID(uID)
 
 #Gets to what groups a users is member of
 @app.route('/JJKChat/users/<int:uID>/member', methods=['GET'])

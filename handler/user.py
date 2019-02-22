@@ -61,10 +61,21 @@ class UserHandler:
         result = dao.getMemberOfGroupsByUserID(uID)
         return jsonify(result)
 
-    def addContactToContactList(self,uID,args):
+    def addUserToContactList(self, uID, json):
         dao = UserDAO()
-        return jsonify("Contact added")
-
+        if len(json) != 4:
+            return jsonify(Error="Malformed post request"), 400
+        else:
+            firstname = json['firstname']
+            lastname = json['lastname']
+            phone = json['phone']
+            email = json['email']
+            if firstname and lastname and phone and email:
+                uID = dao.registerUser(uID, firstname, lastname, phone, email)
+                result = "User was added to contactlist"
+                return jsonify(result), 201
+            else:
+                return jsonify(Error="Unexpected attributes in post request"), 400
 
     def searchUser(self, args):
         first_name = args.get("name")

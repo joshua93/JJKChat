@@ -22,6 +22,9 @@ class GroupHandler:
             else:
                 return jsonify(Error="Unexpected attributes in post request"), 400
 
+    def deleteGroup(self, json):
+        return 'Group deleted'
+
     def getGroupById(self, gID):
         dao = GroupDAO()
         result = dao.getGroupByID(gID)
@@ -37,8 +40,11 @@ class GroupHandler:
         result = dao.getMembersByGroupID(gID)
         return jsonify(Members= result)
 
-    def addMember(self):
+    def addMember(self, gID, json):
         return "Member Added to Group"
+
+    def removeMember(self,gID,json):
+        return "Member removed"
 
     def searchGroup(self,args):
         groupname = args.get("groupname")

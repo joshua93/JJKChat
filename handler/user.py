@@ -77,6 +77,9 @@ class UserHandler:
             else:
                 return jsonify(Error="Unexpected attributes in post request"), 400
 
+    def removeContactsbyUserID(self,uID,json):
+        return "Contact removed"
+
     def searchUser(self, args):
         first_name = args.get("name")
         email = args.get("email")

@@ -39,12 +39,14 @@ def getOwnedGroupByUserID(uID):
     return UserHandler().getOwnedGroupByUserID(uID)
 
 #Gets contacts of a user
-@app.route('/JJKChat/users/<int:uID>/contacts', methods=['GET','POST'])
+@app.route('/JJKChat/users/<int:uID>/contact', methods=['GET','POST','DELETE'])
 def getContactsByUserID(uID):
     if request.method == 'POST':
         return UserHandler().addUserToContactList(uID, request.json)
     if request.method == 'GET':
         return UserHandler().getContactsbyUserID(uID)
+    if request.method == 'DELETE':
+        return UserHandler().removeContactsbyUserID(uID, request.json)
 
 #Gets to what groups a users is member of
 @app.route('/JJKChat/users/<int:uID>/member', methods=['GET'])
@@ -53,12 +55,14 @@ def getMemberOfGroupsByUserID(uID):
 
 
 #Get all groups
-@app.route('/JJKChat/groups', methods=['GET','POST'])
+@app.route('/JJKChat/groups', methods=['GET','POST','DELETE'])
 def getGroup():
     if request.method == 'GET':
         return GroupHandler().getAllgroups()
     if request.method == 'POST':
         return GroupHandler().createGroup(request.json)
+    if request.method == 'DELETE':
+        return GroupHandler().deleteGroup(request.json)
 
 #Get specific group by ID
 @app.route('/JJKChat/groups/<int:gID>', methods=['GET'])
@@ -71,13 +75,15 @@ def getOwnerByGroupID(gID):
     return GroupHandler().getGroupOwnerByID(gID)
 
 #Gets members of a group by group ID
-@app.route('/JJKChat/groups/<int:gID>/members', methods=['GET'])
+@app.route('/JJKChat/groups/<int:gID>/member', methods=['POST', 'GET','REMOVE'])
 def getMembersByGroupID(gID):
-    return GroupHandler().getMembersByGroupID(gID)
+    if request.method == 'GET':
+        return GroupHandler().getMembersByGroupID(gID)
+    if request.method == 'POST':
+        return GroupHandler().addMember(gID, request.json)
+    if request.method == 'POST':
+        return GroupHandler().removeMember(gID, request.json)
 
-@app.route('/ChatApp/group/<int:gID>/member/<int:pID>', methods=['POST'])
-def addMemberToGroup(gID, pID):
-    return GroupHandler().addMember(gID, pID)
 
 #Get all posts
 @app.route('/JJKChat/posts', methods=['GET'])

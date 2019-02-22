@@ -12,6 +12,10 @@ class UserDAO:
     def getAllUsers(self):
         return Data().users
 
+    def loginUser(self, username, password):
+        login = "Login Succesfull using " + username + " and " + password
+        return login
+
     def getUserByID(self, uID):
         user = list(filter(lambda u: u['user_id'] == uID, self.users))
         return user
@@ -52,6 +56,10 @@ class UserDAO:
         memberof = list(filter(lambda u: u['user_id'] == uID, self.members))
         return memberof
 
+    def registerUser(self,username, password, firstname, lastname, phone, email):
+        return "5"
 
+    def addContact(self,uID, firstname, lastname, phone, email):
+        return "Done"
 
 

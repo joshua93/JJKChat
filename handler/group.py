@@ -8,6 +8,23 @@ class GroupHandler:
         result = dao.getAllGroups()
         return jsonify(Users=result)
 
+    def createGroup(self, json):
+        dao = GroupDAO()
+        if len(json) != 2:
+            return jsonify(Error="Malformed post request"), 400
+        else:
+            groupname = json['groupname']
+            ownerId = json['ownerid']
+            if groupname and ownerId:
+                gID = dao.createGroup(groupname, ownerId)
+                result = "Group created id " + gID
+                return jsonify(result), 201
+            else:
+                return jsonify(Error="Unexpected attributes in post request"), 400
+
+    def deleteGroup(self, json):
+        return 'Group deleted'
+
     def getGroupById(self, gID):
         dao = GroupDAO()
         result = dao.getGroupByID(gID)
@@ -21,4 +38,17 @@ class GroupHandler:
     def getMembersByGroupID(self, gID):
         dao = GroupDAO()
         result = dao.getMembersByGroupID(gID)
-        return  jsonify(Members= result)
+        return jsonify(Members= result)
+
+    def addMember(self, gID, json):
+        return "Member Added to Group"
+
+    def removeMember(self,gID,json):
+        return "Member removed"
+
+    def searchGroup(self,args):
+        groupname = args.get("groupname")
+        dao = GroupDAO()
+        if groupname:
+            result = dao.getGroupByName(groupname)
+        return jsonify(result)

@@ -21,8 +21,12 @@ class GroupDAO:
         members = list(filter(lambda u: u['chat_group_id'] == gID, self.members))
         return members
 
+    def createGroup(self,groupname, ownerId):
+        return "5"
 
-
+    def getGroupByName(self,gName):
+        members = list(filter(lambda u: u['chat_group_name'] == gName, self.groups))
+        return members
 
 
 

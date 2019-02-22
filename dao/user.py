@@ -56,6 +56,9 @@ class UserDAO:
         memberof = list(filter(lambda u: u['user_id'] == uID, self.members))
         return memberof
 
+    def registerUser(self,username, password, firstname, lastname, phone, email):
+        return "5"
+
 
 
 

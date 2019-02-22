@@ -17,16 +17,17 @@ def loginUser():
     return UserHandler().loginUser(request.json)
 
 
-
 #Get all users
 @app.route('/JJKChat/users', methods=['GET','POST'])
 def getAllUsers():
+    if request.method == 'GET':
+        if len(request.args) >= 1:
+            return UserHandler().searchUser(request.args)
+        else:
+            return UserHandler().getAllUsers()
     if request.method == 'POST':
-        UserHandler().registerUser()
-    elif request.args:
-        return UserHandler().searchUser(request.args)
-    else:
-        return UserHandler().getAllUsers()
+        return UserHandler().registerUser(request.json)
+
 
 #Get specific user by ID
 @app.route('/JJKChat/users/<int:uID>', methods=['GET'])

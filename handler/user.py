@@ -23,8 +23,23 @@ class UserHandler:
         else:
             return jsonify(Error="Unexpected attributes in post request"), 400
 
-    def registerUser(self):
-        return jsonify("User Registered")
+    def registerUser(self, json):
+        dao = UserDAO()
+        if len(json) != 6:
+            return jsonify(Error="Malformed post request"), 400
+        else:
+            username = json['username']
+            password = json['password']
+            firstname = json['firstname']
+            lastname = json['lastname']
+            phone = json['phone']
+            email = json['email']
+            if username and password and firstname and lastname and phone and email:
+                uID = dao.registerUser(username, password, firstname, lastname, phone, email)
+                result = "User created with id " + uID
+                return jsonify(result), 201
+            else:
+                return jsonify(Error="Unexpected attributes in post request"), 400
 
     def getUserById(self, uID):
         dao = UserDAO()
@@ -52,9 +67,10 @@ class UserHandler:
 
 
     def searchUser(self, args):
-        first_name = args.get("first_name")
+        first_name = args.get("name")
         email = args.get("email")
         phone = args.get("phone")
+        username = args.get("username")
         dao = UserDAO()
         if email:
             result = dao.getUserByEmail(email)
@@ -62,4 +78,6 @@ class UserHandler:
             result = dao.getUserByPhone(phone)
         elif first_name:
             result = dao.getUserByFirstName(first_name)
+        elif username:
+            result =  dao.getUserByUsername(username)
         return jsonify(result)

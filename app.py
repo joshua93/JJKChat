@@ -11,11 +11,9 @@ app = Flask(__name__)
 def home():
     return "Welcome to JJKChat api"
 
-
 @app.route('/JJKChat/login', methods=['POST'])
 def loginUser():
     return UserHandler().loginUser(request.json)
-
 
 #Get all users
 @app.route('/JJKChat/users', methods=['GET','POST'])
@@ -56,11 +54,10 @@ def getMemberOfGroupsByUserID(uID):
 #Get all groups
 @app.route('/JJKChat/groups', methods=['GET','POST'])
 def getGroup():
-    if request.method == 'POST':
-        return GroupHandler().createGroup()
     if request.method == 'GET':
         return GroupHandler().getAllgroups()
-
+    if request.method == 'POST':
+        return GroupHandler().createGroup(request.json)
 
 #Get specific group by ID
 @app.route('/JJKChat/groups/<int:gID>', methods=['GET'])

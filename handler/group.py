@@ -9,6 +9,9 @@ class GroupHandler:
         return jsonify(Users=result)
 
     def createGroup(self):
+        # chat_group_name = json['chat_group_name']
+        # password = json['password']
+        # result = dao.loginUser(username,password)
         return jsonify("Group Created")
 
 
@@ -26,3 +29,6 @@ class GroupHandler:
         dao = GroupDAO()
         result = dao.getMembersByGroupID(gID)
         return  jsonify(Members= result)
+
+    def addMember(self):
+        return "Member Added to Group"

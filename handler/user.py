@@ -8,13 +8,23 @@ class UserHandler:
         result = dao.getAllUsers()
         return jsonify(Users=result)
 
-    def loginUser(self):
-       # print(json)
+    def loginUser(self, json):
         dao = UserDAO()
-       # username = json['username']
-        #password = json['password']
-       # result = dao.loginUser(username,password)
-        return jsonify("Login")
+        if json is None:
+            return jsonify(Error="Malformed post request"), 400
+
+        username = json['username']
+        password = json['password']
+
+        if username and password:
+            result = dao.loginUser(username,password)
+            return jsonify(result)
+
+        else:
+            return jsonify(Error="Unexpected attributes in post request"), 400
+
+    def registerUser(self):
+        return jsonify("User Registered")
 
     def getUserById(self, uID):
         dao = UserDAO()
@@ -35,6 +45,10 @@ class UserHandler:
         dao = UserDAO()
         result = dao.getMemberOfGroupsByUserID(uID)
         return jsonify(result)
+
+    def addContactToContactList(self,uID,args):
+        dao = UserDAO()
+        return jsonify("Contact added")
 
 
     def searchUser(self, args):

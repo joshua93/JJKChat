@@ -13,7 +13,7 @@ class UserDAO:
         return Data().users
 
     def loginUser(self, username, password):
-        login = "Login Succesfull" + username
+        login = "Login Succesfull using " + username + " and " + password
         return login
 
     def getUserByID(self, uID):

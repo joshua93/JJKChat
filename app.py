@@ -14,12 +14,16 @@ def home():
 
 @app.route('/JJKChat/login', methods=['POST'])
 def loginUser():
-    return UserHandler().loginUser()
+    return UserHandler().loginUser(request.json)
+
+
 
 #Get all users
-@app.route('/JJKChat/users', methods=['GET'])
+@app.route('/JJKChat/users', methods=['GET','POST'])
 def getAllUsers():
-    if request.args:
+    if request.method == 'POST':
+        UserHandler().registerUser()
+    elif request.args:
         return UserHandler().searchUser(request.args)
     else:
         return UserHandler().getAllUsers()
@@ -36,8 +40,10 @@ def getOwnedGroupByUserID(uID):
     return UserHandler().getOwnedGroupByUserID(uID)
 
 #Gets contacts of a user
-@app.route('/JJKChat/users/<int:uID>/contacts', methods=['GET'])
+@app.route('/JJKChat/users/<int:uID>/contacts', methods=['GET','POST'])
 def getContactsByUserID(uID):
+    if request.method == 'POST':
+        return UserHandler().addContactToContactList(uID,request.json)
     return UserHandler().getContactsbyUserID(uID)
 
 #Gets to what groups a users is member of

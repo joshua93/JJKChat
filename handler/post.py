@@ -63,6 +63,21 @@ class PostHandler:
         result = dao.getNumberOfDislikesPerDay()
         return jsonify(Dislikes = result)
 
+    def getNumberOfLikesForGivenPost(self, pID):
+        dao = PostDAO()
+        result = dao.getNumberOfLikesForGivenPost(pID)
+        return jsonify(Likes = result)
+
+    def getNumberOfDislikesForGivenPost(self, pID):
+        dao = PostDAO()
+        result = dao.getNumberOfDislikesForGivenPost(pID)
+        return jsonify(Dislikes = result)
+
+    def getNumberOfRepliesForGivenPost(self, pID):
+        dao = PostDAO()
+        result = dao.getNumberOfRepliesForGivenPost(pID)
+        return jsonify(Replies = result)
+
     def addPost(self,json):
         dao = PostDAO()
         if len(json) != 2:
@@ -79,4 +94,3 @@ class PostHandler:
                 return jsonify(gID), 201
             else:
                 return jsonify(Error="Unexpected attributes in post request"), 400
-

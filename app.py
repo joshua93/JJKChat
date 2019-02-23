@@ -38,7 +38,7 @@ def getUserByID(uID):
 def getOwnedGroupByUserID(uID):
     return UserHandler().getOwnedGroupByUserID(uID)
 
-#Gets contacts of a user
+#Gets contacts of an user
 @app.route('/JJKChat/users/<int:uID>/contact', methods=['GET','POST','DELETE'])
 def getContactsByUserID(uID):
     if request.method == 'POST':
@@ -110,6 +110,7 @@ def getPostByGroupId(gID):
 def getTrendingTopic():
     return HashtagHandler().getTrendingHashtag()
 
+#Get total number of posts on a certain date
 @app.route('/JJKChat/post/count', methods=['GET'])
 def getNumberOfPostPerDay():
     return PostHandler().getNumberOfPostPerDay()
@@ -126,7 +127,17 @@ def getNumberOfLikesPerDay():
 def getNumberOfDislikesPerDay():
     return PostHandler().getNumberOfDislikesPerDay()
 
+@app.route('/JJKChat/likes/<int:pID>/count', methods=['GET'])
+def getNumberOfLikesForGivenPost(pID):
+    return PostHandler().getNumberOfLikesForGivenPost(pID)
 
+@app.route('/JJKChat/dislikes/<int:pID>/count', methods=['GET'])
+def getNumberOfDislikesForGivenPost(pID):
+    return PostHandler().getNumberOfDislikesForGivenPost(pID)
+
+@app.route('/JJKChat/replies/<int:pID>/count', methods=['GET'])
+def getNumberOfRepliesForGivenPost(pID):
+    return PostHandler().getNumberOfRepliesForGivenPost(pID)
 
 
 if __name__ == '__main__':

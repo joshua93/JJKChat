@@ -95,3 +95,8 @@ class UserHandler:
         elif username:
             result =  dao.getUserByUsername(username)
         return jsonify(result)
+
+    def getMostActiveUserByDate(self, date):
+        dao = UserDAO()
+        result = dao.getMostActiveUserByDate(date)
+        return jsonify(result)

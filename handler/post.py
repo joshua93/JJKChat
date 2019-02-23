@@ -62,3 +62,20 @@ class PostHandler:
         dao = PostDAO()
         result = dao.getNumberOfDislikesPerDay()
         return jsonify(Dislikes = result)
+
+    def getNumberOfLikesForGivenPost(self, pID):
+        dao = PostDAO()
+        result = dao.getNumberOfLikesForGivenPost(pID)
+        return jsonify(Likes = result)
+
+    def getNumberOfDislikesForGivenPost(self, pID):
+        dao = PostDAO()
+        result = dao.getNumberOfDislikesForGivenPost(pID)
+        return jsonify(Dislikes = result)
+
+    def getNumberOfRepliesForGivenPost(self, pID):
+        dao = PostDAO()
+        result = dao.getNumberOfRepliesForGivenPost(pID)
+        return jsonify(Replies = result)
+
+

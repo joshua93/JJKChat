@@ -78,4 +78,19 @@ class PostHandler:
         result = dao.getNumberOfRepliesForGivenPost(pID)
         return jsonify(Replies = result)
 
+    def addPost(self,json):
+        dao = PostDAO()
+        if len(json) != 2:
+            return jsonify(Error="Malformed post request"), 400
+        else:
+            groupID = json['groupID']
+            author = json['author']
+            message = json['message']
+            media = json['media']
 
+            if groupID and author and message and media:
+                gID = dao.addPost(groupID, author,message, media)
+
+                return jsonify(gID), 201
+            else:
+                return jsonify(Error="Unexpected attributes in post request"), 400

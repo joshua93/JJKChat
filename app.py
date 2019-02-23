@@ -116,8 +116,8 @@ def getTrendingTopic():
 
 #Get total number of posts on a certain date
 @app.route('/JJKChat/post/count', methods=['GET'])
-def getNumberOfPostPerDay():
-    return PostHandler().getNumberOfPostPerDay()
+def getNumberOfPostPerDayByUser():
+    return PostHandler().getNumberOfPostPerDayByUser()
 
 @app.route('/JJKChat/replies/count', methods=['GET'])
 def getNumberOfRepliesPerDay():

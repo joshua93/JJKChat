@@ -95,7 +95,7 @@ class PostHandler:
             else:
                 return jsonify(Error="Unexpected attributes in post request"), 400
 
-    def getPostPerDayByUser(self,uID):
+    def getPostsPerDayByUser(self,uID):
         dao = PostDAO()
-        result = dao.getPostPerDayByUser(uID)
+        result = dao.getPostsPerDayByUser(uID)
         return jsonify(Posts = result)

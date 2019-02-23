@@ -47,5 +47,7 @@ class PostDAO:
     def getNumberOfDislikesPerDay(self):
         return 15 #Just for demonstration
 
+    def addPost(self, gID, aID, message,media):
+        return "Message posted id 5"
 
 

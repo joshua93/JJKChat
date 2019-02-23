@@ -86,9 +86,13 @@ def getMembersByGroupID(gID):
 
 
 #Get all posts
-@app.route('/JJKChat/posts', methods=['GET'])
+@app.route('/JJKChat/posts', methods=['GET','POST'])
 def getAllPost():
-    return PostHandler().getAllPost()
+    if request.method == 'GET':
+        return PostHandler().getAllPost()
+    elif request.method == 'POST':
+        return PostHandler().addPost(request.json)
+
 
 #Get specific post by Id
 @app.route('/JJKChat/posts/<int:pID>', methods=['GET'])

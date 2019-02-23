@@ -143,6 +143,11 @@ def getNumberOfDislikesForGivenPost(pID):
 def getNumberOfRepliesForGivenPost(pID):
     return PostHandler().getNumberOfRepliesForGivenPost(pID)
 
+#Get specific user posts by user id
+@app.route('/JJKChat/user/<int:uID>/post/today', methods=['GET'])
+def getPostsPerDayByUser(uID):
+    return PostHandler().getPostsPerDayByUser(uID)
+
 
 if __name__ == '__main__':
     app.run()

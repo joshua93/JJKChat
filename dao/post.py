@@ -60,4 +60,8 @@ class PostDAO:
     def addPost(self, gID, aID, message,media):
         return "Message posted id 5"
 
+    def getPostsPerDayByUser(self, uID):
+        return len(self.posts) #Just for demonstration
+ 
+
 

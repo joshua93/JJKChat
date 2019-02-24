@@ -78,7 +78,7 @@ class PostHandler:
         result = dao.getNumberOfRepliesForGivenPost(pID)
         return jsonify(Replies = result)
 
-    def addPost(self,json):
+    def addPost(self,gID, json):
         dao = PostDAO()
         if len(json) != 2:
             return jsonify(Error="Malformed post request"), 400

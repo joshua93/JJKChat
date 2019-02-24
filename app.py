@@ -11,11 +11,12 @@ app = Flask(__name__)
 def home():
     return "Welcome to JJKChat api"
 
+# Operation 2 Login an existing user
 @app.route('/JJKChat/login', methods=['POST'])
 def loginUser():
     return UserHandler().loginUser(request.json)
 
-#Get all users
+# Operation 1; Get all users #Search for a user #Register a user
 @app.route('/JJKChat/users', methods=['GET','POST'])
 def getAllUsers():
     if request.method == 'GET':
@@ -25,6 +26,42 @@ def getAllUsers():
             return UserHandler().getAllUsers()
     if request.method == 'POST':
         return UserHandler().registerUser(request.json)
+
+# Operation 3, 8 Get all groups Create a chatgroup Delete a Chatgroup
+@app.route('/JJKChat/groups', methods=['GET','POST','DELETE'])
+def getGroup():
+    if request.method == 'GET':
+        return GroupHandler().getAllgroups()
+    if request.method == 'POST':
+        return GroupHandler().createGroup(request.json)
+    if request.method == 'DELETE':
+        return GroupHandler().deleteGroup(request.json)
+
+
+# Operation 4, 7 Gets contacts of an user . Add user to contacts
+@app.route('/JJKChat/users/<int:uID>/contact', methods=['GET','POST','DELETE'])
+def getContactsByUserID(uID):
+    if request.method == 'POST':
+        return UserHandler().addUserToContactList(uID, request.json)
+    if request.method == 'GET':
+        return UserHandler().getContactsbyUserID(uID)
+    if request.method == 'DELETE':
+        return UserHandler().removeContactsbyUserID(uID, request.json)
+
+# Operation 5, 6 Gets members of a group by group ID
+@app.route('/JJKChat/groups/<int:gID>/member', methods=['POST', 'GET','DELETE'])
+def getMembersByGroupID(gID):
+    if request.method == 'GET':
+        return GroupHandler().getMembersByGroupID(gID)
+    if request.method == 'POST':
+        return GroupHandler().addMember(gID, request.json)
+    if request.method == 'DELETE':
+        return GroupHandler().removeMember(gID, request.json)
+
+#Get post by group id
+@app.route('/JJKChat/group/<int:gID>/post', methods=['GET'])
+def getPostByGroupId(gID):
+    return PostHandler().getPostByGroupId(gID)
 
 
 #Get specific user by ID
@@ -38,15 +75,7 @@ def getUserByID(uID):
 def getOwnedGroupByUserID(uID):
     return UserHandler().getOwnedGroupByUserID(uID)
 
-#Gets contacts of an user
-@app.route('/JJKChat/users/<int:uID>/contact', methods=['GET','POST','DELETE'])
-def getContactsByUserID(uID):
-    if request.method == 'POST':
-        return UserHandler().addUserToContactList(uID, request.json)
-    if request.method == 'GET':
-        return UserHandler().getContactsbyUserID(uID)
-    if request.method == 'DELETE':
-        return UserHandler().removeContactsbyUserID(uID, request.json)
+
 
 #Gets to what groups a users is member of
 @app.route('/JJKChat/users/<int:uID>/member', methods=['GET'])
@@ -54,15 +83,6 @@ def getMemberOfGroupsByUserID(uID):
     return UserHandler().getMemberOfGroupsByUserID(uID)
 
 
-#Get all groups
-@app.route('/JJKChat/groups', methods=['GET','POST','DELETE'])
-def getGroup():
-    if request.method == 'GET':
-        return GroupHandler().getAllgroups()
-    if request.method == 'POST':
-        return GroupHandler().createGroup(request.json)
-    if request.method == 'DELETE':
-        return GroupHandler().deleteGroup(request.json)
 
 #Get specific group by ID
 @app.route('/JJKChat/groups/<int:gID>', methods=['GET'])
@@ -74,15 +94,6 @@ def getGroupByID(gID):
 def getOwnerByGroupID(gID):
     return GroupHandler().getGroupOwnerByID(gID)
 
-#Gets members of a group by group ID
-@app.route('/JJKChat/groups/<int:gID>/member', methods=['POST', 'GET','REMOVE'])
-def getMembersByGroupID(gID):
-    if request.method == 'GET':
-        return GroupHandler().getMembersByGroupID(gID)
-    if request.method == 'POST':
-        return GroupHandler().addMember(gID, request.json)
-    if request.method == 'POST':
-        return GroupHandler().removeMember(gID, request.json)
 
 
 #Get all posts

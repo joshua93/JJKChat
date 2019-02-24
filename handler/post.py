@@ -99,3 +99,9 @@ class PostHandler:
         dao = PostDAO()
         result = dao.getPostsPerDayByUser(uID)
         return jsonify(Posts = result)
+
+
+    def getNumberOfPostPerDayByUser(self, uID):
+        dao = PostDAO()
+        result = "5"
+        return  jsonify(result)

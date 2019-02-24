@@ -122,28 +122,32 @@ def getPostsByUserID(uID):
 def getPostByGroupId(gID):
     return PostHandler().getPostByGroupId(gID)
 
-#Get the trending topic via hashtags
+# Statistics 1; Get the trending topic via hashtags
 @app.route('/JJKChat/hashtag/top', methods=['GET'])
 def getTrendingTopic():
     return HashtagHandler().getTrendingHashtag()
 
-#Get total number of posts on a certain date
-@app.route('/JJKChat/post/count', methods=['GET'])
-def getNumberOfPostPerDayByUser():
-    return PostHandler().getNumberOfPostPerDayByUser()
+# Statistics 2 Get total number of posts on a certain date
+@app.route('/JJKChat/user/<int:uID>/post/count', methods=['GET'])
+def getNumberOfPostPerDayByUser(uID):
+    return PostHandler().getNumberOfPostPerDayByUser(uID)
 
+# Statistics 3
 @app.route('/JJKChat/replies/count', methods=['GET'])
 def getNumberOfRepliesPerDay():
     return PostHandler().getNumberOfRepliesPerDay()
 
+# Statistics 4
 @app.route('/JJKChat/likes/count', methods=['GET'])
 def getNumberOfLikesPerDay():
     return PostHandler().getNumberOfLikesPerDay()
 
+#statistics 5
 @app.route('/JJKChat/dislikes/count', methods=['GET'])
 def getNumberOfDislikesPerDay():
     return PostHandler().getNumberOfDislikesPerDay()
 
+#Statistics 9
 @app.route('/JJKChat/likes/<int:pID>/count', methods=['GET'])
 def getNumberOfLikesForGivenPost(pID):
     return PostHandler().getNumberOfLikesForGivenPost(pID)
@@ -152,11 +156,12 @@ def getNumberOfLikesForGivenPost(pID):
 def getNumberOfDislikesForGivenPost(pID):
     return PostHandler().getNumberOfDislikesForGivenPost(pID)
 
+#Statistics 8
 @app.route('/JJKChat/replies/<int:pID>/count', methods=['GET'])
 def getNumberOfRepliesForGivenPost(pID):
     return PostHandler().getNumberOfRepliesForGivenPost(pID)
 
-#Get specific user posts number by user id
+#Statistics 7 Get specific user posts number by user id
 @app.route('/JJKChat/user/<int:uID>/post/today', methods=['GET'])
 def getPostsPerDayByUser(uID):
     return PostHandler().getPostsPerDayByUser(uID)

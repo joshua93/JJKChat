@@ -22,7 +22,17 @@ class GroupHandler:
                 return jsonify(Error="Unexpected attributes in post request"), 400
 
     def deleteGroup(self, json):
-        return 'Group deleted'
+        dao = GroupDAO()
+        if len(json) != 2:
+            return jsonify(Error="Malformed post request"), 400
+        else:
+            groupId = json['groupId']
+            ownerId = json['ownerid']
+            if groupId and ownerId:
+                result = dao.deleteGroup(groupId, ownerId)
+                return jsonify(result), 201
+            else:
+                return jsonify(Error="Unexpected attributes in post request"), 400
 
     def getGroupById(self, gID):
         dao = GroupDAO()

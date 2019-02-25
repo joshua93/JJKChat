@@ -25,6 +25,10 @@ class GroupDAO:
         gID = "Group " + groupname + " created " + ownerId
         return gID
 
+    def deleteGroup(self,groupname, ownerId):
+        gID = "Group " + groupname + " deleted " + ownerId
+        return gID
+
     def getGroupByName(self,gName):
         members = list(filter(lambda u: u['chat_group_name'] == gName, self.groups))
         return members

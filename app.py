@@ -58,7 +58,7 @@ def getMembersByGroupID(gID):
     if request.method == 'DELETE':
         return GroupHandler().removeMember(gID, request.json)
 
-# Operation 9, 10 Get post by group id
+# Operation 9, 10, 13 Get post by group id
 @app.route('/JJKChat/group/<int:gID>/post', methods=['GET','POST'])
 def getPostByGroupId(gID):
     if request.method == 'GET':

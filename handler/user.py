@@ -70,8 +70,12 @@ class UserHandler:
             lastname = json['lastname']
             phone = json['phone']
             email = json['email']
-            if firstname and lastname and phone and email:
-                uID = dao.registerUser(uID, firstname, lastname, phone, email)
+            if firstname and lastname and phone:
+                uID = dao.addContact(uID, firstname, lastname, phone, None)
+                result = "User was added to contactlist"
+                return jsonify(result), 201
+            elif firstname and lastname and email:
+                uID = dao.addContact(uID, firstname, lastname, None, email)
                 result = "User was added to contactlist"
                 return jsonify(result), 201
             else:

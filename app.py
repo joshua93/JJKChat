@@ -117,10 +117,10 @@ def getPostByID(pID):
 def getPostsByUserID(uID):
     return PostHandler().getPostsByUserID(uID)
 
-#Get post by group id
-@app.route('/JJKChat/group/<int:gID>/post', methods=['GET'])
-def getPostByGroupId(gID):
-    return PostHandler().getPostByGroupId(gID)
+# #Get post by group id
+# @app.route('/JJKChat/group/<int:gID>/post', methods=['GET'])
+# def getPostByGroupId(gID):
+#     return PostHandler().getPostByGroupId(gID)
 
 # Statistics 1; Get the trending topic via hashtags
 @app.route('/JJKChat/hashtag/top', methods=['GET'])

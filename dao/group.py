@@ -22,11 +22,15 @@ class GroupDAO:
         return members
 
     def createGroup(self,groupname, ownerId):
-        return "3"
+        gID = "Group " + groupname + " created " + ownerId
+        return gID
 
     def getGroupByName(self,gName):
         members = list(filter(lambda u: u['chat_group_name'] == gName, self.groups))
         return members
+
+    def addContactTogroup(self,gId,uID):
+        return "Contact added to group"
 
 
 

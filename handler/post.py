@@ -105,3 +105,9 @@ class PostHandler:
         dao = PostDAO()
         result = "5"
         return  jsonify(result)
+
+    def react(self, gID, json):
+        return "You reacted to this post"
+
+    def getReaction(self, json):
+        return"55 likes"

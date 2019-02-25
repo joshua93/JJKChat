@@ -58,13 +58,20 @@ def getMembersByGroupID(gID):
     if request.method == 'DELETE':
         return GroupHandler().removeMember(gID, request.json)
 
-# Operation 9 Get post by group id
+# Operation 9, 10 Get post by group id
 @app.route('/JJKChat/group/<int:gID>/post', methods=['GET','POST'])
 def getPostByGroupId(gID):
     if request.method == 'GET':
         return PostHandler().getPostByGroupId(gID)
     elif request.method == 'POST':
         return PostHandler().addPost(gID,request.json)
+
+@app.route('/JJKChat/group/<int:gID>/post/react', methods=['GET','POST'])
+def getPostByGroupId(gID):
+    if request.method == 'GET':
+        return PostHandler().getReaction(request.json)
+    elif request.method == 'POST':
+        return PostHandler().react(gID,request.json)
 
 
 #Get specific user by ID

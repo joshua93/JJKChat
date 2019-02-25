@@ -32,6 +32,9 @@ class GroupDAO:
     def addContactTogroup(self,gId,uID):
         return "Contact added to group"
 
+    def removeContactFromGroup(self,gId,uID):
+        return "Contact removed from group"
+
 
 
 

@@ -52,7 +52,16 @@ class GroupHandler:
                 return jsonify(Error="Unexpected attributes in post request"), 400
 
     def removeMember(self,gID,json):
-        return "Member removed"
+        dao = GroupDAO()
+        if len(json) != 1:
+            return jsonify(Error="Malformed post request"), 400
+        else:
+            contactid = json['contactid']
+            if contactid:
+                result = dao.removeContactFromGroup(gID, contactid)
+                return jsonify(result), 201
+            else:
+                return jsonify(Error="Unexpected attributes in post request"), 400
 
     def searchGroup(self,args):
         groupname = args.get("groupname")

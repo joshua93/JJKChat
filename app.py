@@ -67,7 +67,7 @@ def getPostByGroupId(gID):
         return PostHandler().addPost(gID,request.json)
 
 @app.route('/JJKChat/group/<int:gID>/post/react', methods=['GET','POST'])
-def getPostByGroupId(gID):
+def reactToaPost(gID):
     if request.method == 'GET':
         return PostHandler().getReaction(request.json)
     elif request.method == 'POST':

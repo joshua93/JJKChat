@@ -173,6 +173,11 @@ def getNumberOfRepliesForGivenPost(pID):
 def getPostsPerDayByUser(uID):
     return PostHandler().getPostsPerDayByUser(uID)
 
+@app.route('/JJKChat/user/mostactive', methods=['GET'])
+def getMostActiveUser():
+    return UserHandler().getMostActiveUser()
+
+
 
 if __name__ == '__main__':
     app.run()

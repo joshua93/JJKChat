@@ -62,7 +62,7 @@ class UserDAO:
     def addContact(self,uID, firstname, lastname, phone, email):
         return "Done"
 
-    def getMostActiveUserByDate(self, date):
+    def getMostActiveUser(self):
         return list(filter(lambda u: u['user_id'] == 2, self.contacts))  #Second user of Data table. Just for demonstration
 
 

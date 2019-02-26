@@ -62,3 +62,52 @@ class PostHandler:
         dao = PostDAO()
         result = dao.getNumberOfDislikesPerDay()
         return jsonify(Dislikes = result)
+
+    def getNumberOfLikesForGivenPost(self, pID):
+        dao = PostDAO()
+        result = dao.getNumberOfLikesForGivenPost(pID)
+        return jsonify(Likes = result)
+
+    def getNumberOfDislikesForGivenPost(self, pID):
+        dao = PostDAO()
+        result = dao.getNumberOfDislikesForGivenPost(pID)
+        return jsonify(Dislikes = result)
+
+    def getNumberOfRepliesForGivenPost(self, pID):
+        dao = PostDAO()
+        result = dao.getNumberOfRepliesForGivenPost(pID)
+        return jsonify(Replies = result)
+
+    def addPost(self,gID, json):
+        dao = PostDAO()
+        if len(json) != 2:
+            return jsonify(Error="Malformed post request"), 400
+        else:
+            groupID = json['groupID']
+            author = json['author']
+            message = json['message']
+            media = json['media']
+
+            if groupID and author and message and media:
+                gID = dao.addPost(groupID, author,message, media)
+
+                return jsonify(gID), 201
+            else:
+                return jsonify(Error="Unexpected attributes in post request"), 400
+
+    def getPostsPerDayByUser(self,uID):
+        dao = PostDAO()
+        result = dao.getPostsPerDayByUser(uID)
+        return jsonify(Posts = result)
+
+
+    def getNumberOfPostPerDayByUser(self, uID):
+        dao = PostDAO()
+        result = "5"
+        return  jsonify(result)
+
+    def react(self, gID, json):
+        return "You reacted to this post"
+
+    def getReaction(self, json):
+        return"55 likes"

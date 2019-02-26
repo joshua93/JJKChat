@@ -16,14 +16,23 @@ class GroupHandler:
             groupname = json['groupname']
             ownerId = json['ownerid']
             if groupname and ownerId:
-                gID = dao.createGroup(groupname, ownerId)
-                result = "Group created id " + gID
+                result = dao.createGroup(groupname, ownerId)
                 return jsonify(result), 201
             else:
                 return jsonify(Error="Unexpected attributes in post request"), 400
 
     def deleteGroup(self, json):
-        return 'Group deleted'
+        dao = GroupDAO()
+        if len(json) != 2:
+            return jsonify(Error="Malformed post request"), 400
+        else:
+            groupId = json['groupId']
+            ownerId = json['ownerid']
+            if groupId and ownerId:
+                result = dao.deleteGroup(groupId, ownerId)
+                return jsonify(result), 201
+            else:
+                return jsonify(Error="Unexpected attributes in post request"), 400
 
     def getGroupById(self, gID):
         dao = GroupDAO()
@@ -41,10 +50,28 @@ class GroupHandler:
         return jsonify(Members= result)
 
     def addMember(self, gID, json):
-        return "Member Added to Group"
+        dao = GroupDAO()
+        if len(json) != 1:
+            return jsonify(Error="Malformed post request"), 400
+        else:
+            contactid = json['contactid']
+            if contactid :
+                result = dao.addContactTogroup(gID, contactid)
+                return jsonify(result), 201
+            else:
+                return jsonify(Error="Unexpected attributes in post request"), 400
 
     def removeMember(self,gID,json):
-        return "Member removed"
+        dao = GroupDAO()
+        if len(json) != 1:
+            return jsonify(Error="Malformed post request"), 400
+        else:
+            contactid = json['contactid']
+            if contactid:
+                result = dao.removeContactFromGroup(gID, contactid)
+                return jsonify(result), 201
+            else:
+                return jsonify(Error="Unexpected attributes in post request"), 400
 
     def searchGroup(self,args):
         groupname = args.get("groupname")

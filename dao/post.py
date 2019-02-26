@@ -48,4 +48,20 @@ class PostDAO:
         return 15 #Just for demonstration
 
 
+    def getNumberOfLikesForGivenPost(self, pID):
+        return 20 #Just for demonstration
+
+    def getNumberOfDislikesForGivenPost(self, pID):
+        return 13 #Just for demonstration
+
+    def getNumberOfRepliesForGivenPost(self, pID):
+        return 34 #Just for demonstration
+
+    def addPost(self, gID, aID, message,media):
+        return "Message posted id 5"
+
+    def getPostsPerDayByUser(self, uID):
+        return len(self.posts) #Just for demonstration
+ 
+
 

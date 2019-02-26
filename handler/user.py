@@ -63,13 +63,22 @@ class UserHandler:
 
     def addUserToContactList(self, uID, json):
         dao = UserDAO()
-        if json['firstname']==None or json['lastname']==None or (json['phone']==None or json['email']==None):
+        if json.get('firstname')==None or json.get('lastname')==None\
+                or not(json.get('phone')==None or json.get('email')==None):
             return jsonify(Error="Malformed post request"), 400
         else:
             firstname = json['firstname']
             lastname = json['lastname']
-            phone = json['phone']
-            email = json['email']
+
+            if json.get('phone')!=None:
+                phone = json['phone']
+                email = None
+            elif json.get('email')!=None:
+                email = json['email']
+                phone = None
+            else:
+                phone = email = None
+
             if firstname and lastname and phone:
                 uID = dao.addContact(uID, firstname, lastname, phone, None)
                 result = "User was added to contactlist"

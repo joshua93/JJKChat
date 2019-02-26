@@ -109,7 +109,7 @@ class UserHandler:
             result =  dao.getUserByUsername(username)
         return jsonify(result)
 
-    def getMostActiveUserByDate(self, date):
+    def getMostActiveUser(self):
         dao = UserDAO()
-        result = dao.getMostActiveUserByDate(date)
+        result = dao.getMostActiveUser()
         return jsonify(result)

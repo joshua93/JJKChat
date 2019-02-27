@@ -3,9 +3,10 @@ from handler.user import UserHandler
 from handler.group import GroupHandler
 from handler.post import PostHandler
 from handler.hashtag import HashtagHandler
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
-
+CORS(app)
 
 @app.route('/')
 def home():

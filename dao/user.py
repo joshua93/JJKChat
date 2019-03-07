@@ -1,7 +1,12 @@
 from dao.data import Data
+import psycopg2
 
 
 class UserDAO:
+
+    def __init__(self):
+        DATABASE_URL = 'postgres://postgres:databaseclass@localhost:5432/jjkchat'
+        self.conn = psycopg2._connect(DATABASE_URL)
 
     users = Data().users
     groups = Data().groups
@@ -9,16 +14,33 @@ class UserDAO:
     posts = Data().posts
     members = Data().group_members
 
+    # def getAllUsers(self):
+    #     return Data().users
+
     def getAllUsers(self):
-        return Data().users
+        cursor = self.conn.cursor()
+        query = "select * from users;"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
 
     def loginUser(self, username, password):
         login = "Login Succesfull using " + username + " and " + password
         return login
 
-    def getUserByID(self, uID):
-        user = list(filter(lambda u: u['user_id'] == uID, self.users))
-        return user
+    # def getUserByID(self, uID):
+    #     user = list(filter(lambda u: u['user_id'] == uID, self.users))
+    #     return user
+
+    def getUserByID(self,uID):
+        cursor = self.conn.cursor()
+        query = "select * from users where user_id = %s;"
+        cursor.execute(query,(uID,))
+        result = cursor.fetchone()
+        return result
 
     def getUserByFirstName(self,uFN):
         user = list(filter(lambda u: u['first_name'] == uFN, self.users))

@@ -77,7 +77,7 @@ class UserHandler:
     def getContactsbyUserID(self,uID):
         dao = UserDAO()
         result = dao.getContactsByUserID(uID)
-        return jsonify(Contacts = result)
+        return jsonify(result)
 
     def getMemberOfGroupsByUserID(self,uID):
         dao = UserDAO()

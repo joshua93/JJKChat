@@ -66,9 +66,19 @@ class UserDAO:
         group = list(filter(lambda u: u['owner_id'] == uID, self.groups))
         return group
 
-    def getContactsByUserID(self,uID):
-        contacts = list(filter(lambda u: u['user_id'] == uID, self.contacts))
-        return contacts
+    # def getContactsByUserID(self,uID):
+    #     contacts = list(filter(lambda u: u['user_id'] == uID, self.contacts))
+    #     return contacts
+
+    def getContactsByUserID(self, uID):
+        cursor = self.conn.cursor()
+        query = "select * from contact INNER JOIN users on contact.contact_user_id = users.user_id where contact.user_id = %s;"
+        cursor.execute(query,(uID,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
 
     def getReplyByUserID(self,uID):
         posts = list(filter(lambda u: u['user_id'] == uID, self.users))

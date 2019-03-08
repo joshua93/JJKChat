@@ -21,9 +21,6 @@ class PostHandler:
             mapped_result.append(mapPostToDict(r))
         return jsonify(mapped_result)
 
-
-        return jsonify(Posts=result)
-
     def getPostByID(self, pID):
         dao = PostDAO()
         result = dao.getPostByID(pID)

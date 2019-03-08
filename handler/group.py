@@ -8,6 +8,16 @@ def mapGroupToDict(row):
     result['owner_id'] = row[2]
     return result
 
+def mapUserToDict(row):
+    result = {}
+    result['user_id'] = row[0]
+    result['first_name'] = row[1]
+    result['last_name'] = row[2]
+    result['email'] = row[3]
+    result['phone'] = row[4]
+    result['username'] = row[5]
+    return result
+
 class GroupHandler:
     # def getAllgroups(self):
     #     dao = GroupDAO()
@@ -57,7 +67,8 @@ class GroupHandler:
     def getGroupOwnerByID(self, gID):
         dao = GroupDAO()
         result = dao.getGroupOwnerByID(gID)
-        return jsonify(Owner= result)
+        mapped_result = mapUserToDict(result)
+        return jsonify(mapped_result)
 
     def getMembersByGroupID(self, gID):
         dao = GroupDAO()

@@ -1,13 +1,25 @@
 from dao.data import Data
-
+import psycopg2
 
 class GroupDAO:
+    def __init__(self):
+        DATABASE_URL = 'postgres://postgres:databaseclass@localhost:5432/jjkchat'
+        self.conn = psycopg2._connect(DATABASE_URL)
 
     groups = Data().groups
     members = Data().group_members
 
+    # def getAllGroups(self):
+    #     return self.groups
     def getAllGroups(self):
-        return self.groups
+        cursor = self.conn.cursor()
+        query = "select * from chat_groups"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
 
     def getGroupByID(self, gID):
         group = list(filter(lambda u: u['chat_group_id'] == gID, self.groups))

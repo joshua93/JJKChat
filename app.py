@@ -31,7 +31,7 @@ def getAllUsers():
 @app.route('/JJKChat/groups', methods=['GET','POST','DELETE'])
 def getGroup():
     if request.method == 'GET':
-        return GroupHandler().getAllgroups()
+        return GroupHandler().getAllGroups()
     if request.method == 'POST':
         return GroupHandler().createGroup(request.json)
     if request.method == 'DELETE':

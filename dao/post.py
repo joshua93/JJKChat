@@ -4,7 +4,8 @@ import psycopg2
 
 class PostDAO:
     def __init__(self):
-        DATABASE_URL = 'postgres://postgres:databaseclass@localhost:5432/jjkchat'
+        #DATABASE_URL = 'postgres://postgres:databaseclass@localhost:5432/jjkchat'
+        DATABASE_URL = 'postgres://cjyslzsdlngjec:38ee7f76f1b1345d5096d3f913b87155742a7d39c6c507ae4359a6b4a03c99ff@ec2-50-19-208-11.compute-1.amazonaws.com:5432/d95sj7ufkghhjj'
         self.conn = psycopg2._connect(DATABASE_URL)
 
     posts = Data().posts

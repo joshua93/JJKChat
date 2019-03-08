@@ -59,8 +59,11 @@ class UserDAO:
         return user
 
     def getUserByUsername(self, uUn):
-        user = list(filter(lambda u: u['username'] == uUn, self.users))
-        return user
+        cursor = self.conn.cursor()
+        query = "select * from users where username = %s;"
+        cursor.execute(query,(uUn,))
+        result = cursor.fetchone()
+        return result
 
     def getOwnedGroupByUserID(self, uID):
         group = list(filter(lambda u: u['owner_id'] == uID, self.groups))

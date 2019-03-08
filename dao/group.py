@@ -33,8 +33,13 @@ class GroupDAO:
         return result
 
     def getMembersByGroupID(self,gID):
-        members = list(filter(lambda u: u['chat_group_id'] == gID, self.members))
-        return members
+        cursor = self.conn.cursor()
+        query = "select username from chat_group_members natural inner join users where chat_group_id = %s"
+        cursor.execute(query, (gID,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
 
     def createGroup(self,groupname, ownerId):
         gID = "Group " + groupname + " created " + ownerId

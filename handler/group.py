@@ -73,7 +73,7 @@ class GroupHandler:
     def getMembersByGroupID(self, gID):
         dao = GroupDAO()
         result = dao.getMembersByGroupID(gID)
-        return jsonify(Members= result)
+        return jsonify(result)
 
     def addMember(self, gID, json):
         dao = GroupDAO()

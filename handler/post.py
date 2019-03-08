@@ -1,11 +1,27 @@
 from flask import jsonify
 from dao.post import PostDAO
 
+def mapPostToDict(row):
+    result = {}
+    result['post_id'] = row[0]
+    result['media'] = row[1]
+    result['message'] = row[2]
+    result['post_date'] = row[3]
+    result['chat_group_id'] = row[4]
+    result['post_author_id']= row[4]
+    return result
+
 
 class PostHandler:
     def getAllPost(self):
         dao = PostDAO()
         result = dao.getAllPost()
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapPostToDict(r))
+        return jsonify(mapped_result)
+
+
         return jsonify(Posts=result)
 
     def getPostByID(self, pID):

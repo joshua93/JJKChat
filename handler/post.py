@@ -49,7 +49,7 @@ class PostHandler:
     def getPostByGroupId(self,gID):
         dao = PostDAO()
         result = dao.getPostByGroupId(gID)
-        return jsonify(Post = result)
+        return jsonify(result)
 
     def getLikesByPostId(self,pID):
         dao = PostDAO()

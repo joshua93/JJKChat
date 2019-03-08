@@ -49,7 +49,7 @@ def getContactsByUserID(uID):
         return UserHandler().removeContactsbyUserID(uID, request.json)
 
 # Operation 5, 6 Gets members of a group by group ID
-@app.route('/JJKChat/groups/<int:gID>/member', methods=['POST', 'GET','DELETE'])
+@app.route('/JJKChat/group/<int:gID>/member', methods=['POST', 'GET','DELETE'])
 def getMembersByGroupID(gID):
     if request.method == 'GET':
         return GroupHandler().getMembersByGroupID(gID)

@@ -44,8 +44,13 @@ class PostDAO:
         return posts
 
     def getPostByGroupId(self, gID):
-        posts = list(filter(lambda u: u['chat_group_id'] == gID, self.posts))
-        return posts
+        cursor = self.conn.cursor()
+        query = "select * from post where chat_group_id = %s"
+        cursor.execute(query,(gID,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
 
     def getLikesByPostId(self, pID):
         likes = list(filter(lambda u: u['post_id'] == pID, self.posts))

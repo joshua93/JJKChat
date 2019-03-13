@@ -31,7 +31,7 @@ def getAllUsers():
 @app.route('/JJKChat/groups', methods=['GET','POST','DELETE'])
 def getGroup():
     if request.method == 'GET':
-        return GroupHandler().getAllgroups()
+        return GroupHandler().getAllGroups()
     if request.method == 'POST':
         return GroupHandler().createGroup(request.json)
     if request.method == 'DELETE':
@@ -49,7 +49,7 @@ def getContactsByUserID(uID):
         return UserHandler().removeContactsbyUserID(uID, request.json)
 
 # Operation 5, 6 Gets members of a group by group ID
-@app.route('/JJKChat/groups/<int:gID>/member', methods=['POST', 'GET','DELETE'])
+@app.route('/JJKChat/group/<int:gID>/member', methods=['POST', 'GET','DELETE'])
 def getMembersByGroupID(gID):
     if request.method == 'GET':
         return GroupHandler().getMembersByGroupID(gID)

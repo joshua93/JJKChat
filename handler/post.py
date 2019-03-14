@@ -8,7 +8,7 @@ def mapPostToDict(row):
     result['message'] = row[2]
     result['post_date'] = row[3]
     result['chat_group_id'] = row[4]
-    result['post_author_id']= row[4]
+    result['post_author_id']= row[5]
     return result
 
 

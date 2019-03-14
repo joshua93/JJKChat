@@ -1,9 +1,11 @@
 from dao.data import Data
 import psycopg2
+from config.dbconfig import pg_config
 
 class GroupDAO:
     def __init__(self):
-        DATABASE_URL = 'postgres://postgres:databaseclass@localhost:5432/jjkchat'
+        #DATABASE_URL = 'postgres://postgres:databaseclass@localhost:5432/jjkchat'
+        DATABASE_URL = "dbname=%s user=%s password=%s host=%s" % (pg_config['dbname'], pg_config['user'], pg_config['passwd'], pg_config['host'])
         self.conn = psycopg2._connect(DATABASE_URL)
 
     groups = Data().groups

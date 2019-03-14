@@ -1,12 +1,37 @@
 from flask import jsonify
 from dao.group import GroupDAO
 
+def mapGroupToDict(row):
+    result = {}
+    result['chat_group_id'] = row[0]
+    result['chat_name'] = row[1]
+    result['owner_id'] = row[2]
+    return result
+
+def mapUserToDict(row):
+    result = {}
+    result['user_id'] = row[0]
+    result['first_name'] = row[1]
+    result['last_name'] = row[2]
+    result['email'] = row[3]
+    result['phone'] = row[4]
+    result['username'] = row[5]
+    return result
 
 class GroupHandler:
-    def getAllgroups(self):
+    # def getAllgroups(self):
+    #     dao = GroupDAO()
+    #     result = dao.getAllGroups()
+    #     return jsonify(Users=result)
+
+    def getAllGroups(self):
         dao = GroupDAO()
         result = dao.getAllGroups()
-        return jsonify(Users=result)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapGroupToDict(r))
+        return jsonify(mapped_result)
+
 
     def createGroup(self, json):
         dao = GroupDAO()
@@ -42,12 +67,13 @@ class GroupHandler:
     def getGroupOwnerByID(self, gID):
         dao = GroupDAO()
         result = dao.getGroupOwnerByID(gID)
-        return jsonify(Owner= result)
+        mapped_result = mapUserToDict(result)
+        return jsonify(mapped_result)
 
     def getMembersByGroupID(self, gID):
         dao = GroupDAO()
         result = dao.getMembersByGroupID(gID)
-        return jsonify(Members= result)
+        return jsonify(result)
 
     def addMember(self, gID, json):
         dao = GroupDAO()

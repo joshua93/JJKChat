@@ -1,7 +1,12 @@
 from dao.data import Data
+import psycopg2
 
 
 class UserDAO:
+
+    def __init__(self):
+        DATABASE_URL = 'postgres://postgres:databaseclass@localhost:5432/jjkchat'
+        self.conn = psycopg2._connect(DATABASE_URL)
 
     users = Data().users
     groups = Data().groups
@@ -9,16 +14,33 @@ class UserDAO:
     posts = Data().posts
     members = Data().group_members
 
+    # def getAllUsers(self):
+    #     return Data().users
+
     def getAllUsers(self):
-        return Data().users
+        cursor = self.conn.cursor()
+        query = "select * from users;"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
 
     def loginUser(self, username, password):
         login = "Login Succesfull using " + username + " and " + password
         return login
 
-    def getUserByID(self, uID):
-        user = list(filter(lambda u: u['user_id'] == uID, self.users))
-        return user
+    # def getUserByID(self, uID):
+    #     user = list(filter(lambda u: u['user_id'] == uID, self.users))
+    #     return user
+
+    def getUserByID(self,uID):
+        cursor = self.conn.cursor()
+        query = "select * from users where user_id = %s;"
+        cursor.execute(query,(uID,))
+        result = cursor.fetchone()
+        return result
 
     def getUserByFirstName(self,uFN):
         user = list(filter(lambda u: u['first_name'] == uFN, self.users))
@@ -37,16 +59,29 @@ class UserDAO:
         return user
 
     def getUserByUsername(self, uUn):
-        user = list(filter(lambda u: u['username'] == uUn, self.users))
-        return user
+        cursor = self.conn.cursor()
+        query = "select * from users where username = %s;"
+        cursor.execute(query,(uUn,))
+        result = cursor.fetchone()
+        return result
 
     def getOwnedGroupByUserID(self, uID):
         group = list(filter(lambda u: u['owner_id'] == uID, self.groups))
         return group
 
-    def getContactsByUserID(self,uID):
-        contacts = list(filter(lambda u: u['user_id'] == uID, self.contacts))
-        return contacts
+    # def getContactsByUserID(self,uID):
+    #     contacts = list(filter(lambda u: u['user_id'] == uID, self.contacts))
+    #     return contacts
+
+    def getContactsByUserID(self, uID):
+        cursor = self.conn.cursor()
+        query = "select * from contact INNER JOIN users on contact.contact_user_id = users.user_id where contact.user_id = %s;"
+        cursor.execute(query,(uID,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
 
     def getReplyByUserID(self,uID):
         posts = list(filter(lambda u: u['user_id'] == uID, self.users))

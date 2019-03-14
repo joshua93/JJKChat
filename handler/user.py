@@ -2,11 +2,33 @@ from flask import jsonify
 from dao.user import UserDAO
 
 
+def mapUserToDict(row):
+    result = {}
+    result['user_id'] = row[0]
+    result['first_name'] = row[1]
+    result['last_name'] = row[2]
+    result['email'] = row[3]
+    result['phone'] = row[4]
+    result['password'] = row[5]
+    result['username'] = row[6]
+    return result
+
+
+
 class UserHandler:
+    # def getAllUsers(self):
+    #     dao = UserDAO()
+    #     result = dao.getAllUsers()
+    #     return jsonify(Users=result)
+
     def getAllUsers(self):
         dao = UserDAO()
         result = dao.getAllUsers()
-        return jsonify(Users=result)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapUserToDict(r))
+        return jsonify(mapped_result)
+
 
     def loginUser(self, json):
         dao = UserDAO()
@@ -44,7 +66,8 @@ class UserHandler:
     def getUserById(self, uID):
         dao = UserDAO()
         result = dao.getUserByID(uID)
-        return jsonify(User=result)
+        mapped_result = mapUserToDict(result)
+        return jsonify(mapped_result)
 
     def getOwnedGroupByUserID(self, uID):
         dao = UserDAO()
@@ -54,7 +77,7 @@ class UserHandler:
     def getContactsbyUserID(self,uID):
         dao = UserDAO()
         result = dao.getContactsByUserID(uID)
-        return jsonify(Contacts = result)
+        return jsonify(result)
 
     def getMemberOfGroupsByUserID(self,uID):
         dao = UserDAO()

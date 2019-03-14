@@ -1,11 +1,27 @@
 from dao.data import Data
+import psycopg2
 
 
 class PostDAO:
+    def __init__(self):
+        DATABASE_URL = 'postgres://postgres:databaseclass@localhost:5432/jjkchat'
+        self.conn = psycopg2._connect(DATABASE_URL)
+
     posts = Data().posts
 
+    # def getAllPost(self):
+    #     return self.posts
+
     def getAllPost(self):
-        return self.posts
+        cursor = self.conn.cursor()
+        query = "select * from post"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+
 
     def getPostByID(self, pID):
         post = list(filter(lambda u: u['post_id'] == pID, self.posts))
@@ -28,8 +44,13 @@ class PostDAO:
         return posts
 
     def getPostByGroupId(self, gID):
-        posts = list(filter(lambda u: u['chat_group_id'] == gID, self.posts))
-        return posts
+        cursor = self.conn.cursor()
+        query = "select * from post where chat_group_id = %s"
+        cursor.execute(query,(gID,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
 
     def getLikesByPostId(self, pID):
         likes = list(filter(lambda u: u['post_id'] == pID, self.posts))

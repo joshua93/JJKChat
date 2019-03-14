@@ -92,6 +92,15 @@ class PostDAO:
 
     def getPostsPerDayByUser(self, uID):
         return len(self.posts) #Just for demonstration
+
+    def getListOfUsersWhoReactedPost(self, pID, reaction):
+        cursor = self.conn.cursor()
+        query = "SELECT username FROM reactions NATURAL INNER JOIN users WHERE post_id = %s AND reaction = %s"
+        cursor.execute(query, (pID,reaction, ))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
  
 
 

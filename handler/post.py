@@ -124,3 +124,14 @@ class PostHandler:
 
     def getReaction(self, json):
         return"55 likes"
+
+    def getListOfUsersWhoLikedPost(self, pID):
+        dao = PostDAO()
+        result = dao.getListOfUsersWhoReactedPost(pID, "like")
+        return jsonify(result)
+
+    def getListOfUsersWhoDislikedPost(self, pID):
+        dao = PostDAO()
+        result = dao.getListOfUsersWhoReactedPost(pID, "dislike")
+        return jsonify(result)
+

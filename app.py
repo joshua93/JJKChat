@@ -156,6 +156,7 @@ def getNumberOfDislikesPerDay():
     return PostHandler().getNumberOfDislikesPerDay()
 
 #Statistics 9
+#********************METODO TEMPORERO. LA IDEA ES PASARLE EL REACTION COMO PARAMETRO*****************
 @app.route('/JJKChat/likes/<int:pID>/count', methods=['GET'])
 def getNumberOfLikesForGivenPost(pID):
     return PostHandler().getNumberOfLikesForGivenPost(pID)
@@ -177,6 +178,15 @@ def getPostsPerDayByUser(uID):
 @app.route('/JJKChat/user/mostactive', methods=['GET'])
 def getMostActiveUser():
     return UserHandler().getMostActiveUser()
+
+#********************METODO TEMPORERO. LA IDEA ES PASARLE EL REACTION COMO PARAMETRO*****************
+@app.route('/JJKChat/post/<int:pID>/likes', methods=['GET'])
+def getListOfUsersWhoLikedPost(pID):
+    return PostHandler().getListOfUsersWhoLikedPost(pID)
+
+@app.route('/JJKChat/post/<int:pID>/dislikes', methods=['GET'])
+def getListOfUsersWhoDislikedPost(pID):
+    return PostHandler().getListOfUsersWhoDislikedPost(pID)
 
 
 

@@ -51,7 +51,7 @@ class GroupHandler:
         if len(json) != 2:
             return jsonify(Error="Malformed post request"), 400
         else:
-            groupId = json['groupId']
+            groupId = json['groupid']
             ownerId = json['ownerid']
             if groupId and ownerId:
                 result = dao.deleteGroup(groupId, ownerId)

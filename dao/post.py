@@ -54,9 +54,12 @@ class PostDAO:
             result.append(row)
         return result
 
+    #Depracated use getNumberOfLikesForGivenPost instead
     def getLikesByPostId(self, pID):
-        likes = list(filter(lambda u: u['post_id'] == pID, self.posts))
-        return likes
+        #cursor = self.conn.cursor()
+        #query = "select count(*) from post natural inner join reactions where post_id=%s and reaction='like'"
+        #cursor.execute(query,(pID,))
+        return None
 
     def getNumberOfPostPerDay(self):
         return len(self.posts)
@@ -72,7 +75,11 @@ class PostDAO:
 
 
     def getNumberOfLikesForGivenPost(self, pID):
-        return 20 #Just for demonstration
+        cursor = self.conn.cursor()
+        query = "select count(*) from post natural inner join reactions where post_id=%s and reaction='like'"
+        cursor.execute(query,(pID,))
+        likes = cursor.fetchone()
+        return likes 
 
     def getNumberOfDislikesForGivenPost(self, pID):
         return 13 #Just for demonstration

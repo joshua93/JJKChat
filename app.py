@@ -5,6 +5,7 @@ from handler.post import PostHandler
 from handler.hashtag import HashtagHandler
 
 app = Flask(__name__)
+app.config['JSON_SORT_KEYS'] = False
 
 
 @app.route('/')

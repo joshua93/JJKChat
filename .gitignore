@@ -4,4 +4,3 @@
 venv/*
 *.pyc
 config/dbconfig.py
-config/dbconfig.py

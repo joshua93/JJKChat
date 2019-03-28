@@ -46,10 +46,18 @@ class PostHandler:
         result = dao.getPostsByUserID(uID)
         return jsonify(Post = result)
 
+    # def getPostByGroupId(self,gID):
+    #     dao = PostDAO()
+    #     result = dao.getPostByGroupId(gID)
+    #     return jsonify(result)
+
     def getPostByGroupId(self,gID):
         dao = PostDAO()
         result = dao.getPostByGroupId(gID)
-        return jsonify(result)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapPostToDict(r))
+        return jsonify(mapped_result)
 
     def getLikesByPostId(self,pID):
         dao = PostDAO()

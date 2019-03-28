@@ -84,11 +84,11 @@ class PostDAO:
     def getNumberOfDislikesForGivenPost(self, pID):
         cursor = self.conn.cursor()
         query = "SELECT count(*) FROM reactions where post_id = %s and reaction ='dislike'"
-        cursor.execute(query, (pID,))
-        dislikes = cursor.fetchone()
-        return dislikes
+        cursor.execute(query,(pID,))
+        dislike = cursor.fetchone()
+        return dislike
 
-def getNumberOfRepliesForGivenPost(self, pID):
+    def getNumberOfRepliesForGivenPost(self, pID):
         return 34 #Just for demonstration
 
     def addPost(self, gID, aID, message,media):

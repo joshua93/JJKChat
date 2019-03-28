@@ -47,7 +47,21 @@ class PostDAO:
 
     def getPostByGroupId(self, gID):
         cursor = self.conn.cursor()
-        query = "select * from post where chat_group_id = %s"
+        #query = "select * from post where chat_group_id = %s"
+
+        query = """with plikes as 
+	(select post_id, count(*) as likes
+	from reactions
+	where reaction = 'like'
+	GROUP BY post_id),
+ pdislikes as 
+	(select post_id, count(*) as dislikes
+	from reactions
+	where reaction = 'dislike'
+	GROUP BY post_id)
+SELECT post.post_id, post.media, post.message, post.post_date, post.chat_group_id, post.user_id,likes, dislikes, users.username, users.first_name, users.last_name 
+FROM post natural inner join users LEFT JOIN plikes on post.post_id = plikes.post_id LEFT JOIN pdislikes on post.post_id = pdislikes.post_id
+where post.chat_group_id =%s;"""
         cursor.execute(query,(gID,))
         result = []
         for row in cursor:

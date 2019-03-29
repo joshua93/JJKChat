@@ -26,6 +26,15 @@ def mapPostToDict2(row):
     result['last_name'] = row[10]
     return result
 
+def mapToReactDict(row):
+    result = {}
+    result['username'] = row[0]
+    result['user_id'] = row[1]
+    result['first_name'] = row[2]
+    result['last_name'] = row[3]
+    result['reaction_date'] = row[4]
+    return result
+
 
 class PostHandler:
     def getAllPost(self):
@@ -151,10 +160,16 @@ class PostHandler:
     def getListOfUsersWhoLikedPost(self, pID):
         dao = PostDAO()
         result = dao.getListOfUsersWhoReactedPost(pID, "like")
-        return jsonify(result)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapToReactDict(r))
+        return jsonify(mapped_result)
 
     def getListOfUsersWhoDislikedPost(self, pID):
         dao = PostDAO()
         result = dao.getListOfUsersWhoReactedPost(pID, "dislike")
-        return jsonify(result)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapToReactDict(r))
+        return jsonify(mapped_result)
 

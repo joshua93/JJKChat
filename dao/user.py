@@ -90,8 +90,13 @@ class UserDAO:
         return posts
 
     def getMemberOfGroupsByUserID(self,uID):
-        memberof = list(filter(lambda u: u['user_id'] == uID, self.members))
-        return memberof
+        cursor = self.conn.cursor()
+        query = "select cgm.chat_group_id, cgm.user_id from chat_groups as cg inner join chat_group_members as cgm on cgm.chat_group_id = cg.chat_group_id where cgm.user_id = %s;"
+        cursor.execute(query,(uID),)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
 
     def registerUser(self,username, password, firstname, lastname, phone, email):
         return "5"

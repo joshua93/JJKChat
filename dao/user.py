@@ -91,8 +91,8 @@ class UserDAO:
 
     def getMemberOfGroupsByUserID(self,uID):
         cursor = self.conn.cursor()
-        query = "select cgm.chat_group_id, cgm.user_id from chat_groups as cg inner join chat_group_members as cgm on cgm.chat_group_id = cg.chat_group_id where cgm.user_id = %s;"
-        cursor.execute(query,(uID),)
+        query = "select cg.chat_group_id, cg.chat_name , cg.user_id from chat_groups as cg inner join chat_group_members as cgm on cgm.chat_group_id = cg.chat_group_id where cgm.user_id = %s;"
+        cursor.execute(query,(uID,))
         result = []
         for row in cursor:
             result.append(row)

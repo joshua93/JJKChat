@@ -70,10 +70,14 @@ class GroupHandler:
         mapped_result = mapUserToDict(result)
         return jsonify(mapped_result)
 
+    ##Edited by Jesi
     def getMembersByGroupID(self, gID):
         dao = GroupDAO()
         result = dao.getMembersByGroupID(gID)
-        return jsonify(result)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapUserToDict(r))
+        return jsonify(mapped_result)
 
     def addMember(self, gID, json):
         dao = GroupDAO()

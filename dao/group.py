@@ -37,7 +37,7 @@ class GroupDAO:
     ##Changed by Jesi
     def getMembersByGroupID(self,gID):
         cursor = self.conn.cursor()
-        query = "select username, first_name, last_name, phone, email from chat_group_members natural inner join users where chat_group_id = %s"
+        query = "select user_id, first_name, last_name, email, phone, username from chat_group_members natural inner join users where chat_group_id = %s"
         cursor.execute(query, (gID,))
         result = []
         for row in cursor:

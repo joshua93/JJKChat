@@ -13,6 +13,13 @@ def mapUserToDict(row):
     result['username'] = row[6]
     return result
 
+def mapGroupToDict(row):
+    result = {}
+    result['chat_group_id'] = row[0]
+    result['chat_name'] = row[1]
+    result['owner_id'] = row[2]
+    return result
+
 
 
 class UserHandler:
@@ -82,7 +89,10 @@ class UserHandler:
     def getMemberOfGroupsByUserID(self,uID):
         dao = UserDAO()
         result = dao.getMemberOfGroupsByUserID(uID)
-        return jsonify(result)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapGroupToDict(r))
+        return jsonify(mapped_result)
 
     def addUserToContactList(self, uID, json):
         dao = UserDAO()

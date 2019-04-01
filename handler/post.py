@@ -11,6 +11,30 @@ def mapPostToDict(row):
     result['post_author_id']= row[5]
     return result
 
+def mapPostToDict2(row):
+    result = {}
+    result['post_id'] = row[0]
+    result['media'] = row[1]
+    result['message'] = row[2]
+    result['post_date'] = row[3]
+    result['chat_group_id'] = row[4]
+    result['post_author_id']= row[5]
+    result['likes'] = row[6]
+    result['dislikes'] = row[7]
+    result['username'] = row[8]
+    result['first_name'] = row[9]
+    result['last_name'] = row[10]
+    return result
+
+def mapToReactDict(row):
+    result = {}
+    result['username'] = row[0]
+    result['user_id'] = row[1]
+    result['first_name'] = row[2]
+    result['last_name'] = row[3]
+    result['reaction_date'] = row[4]
+    return result
+
 
 class PostHandler:
     def getAllPost(self):
@@ -56,7 +80,7 @@ class PostHandler:
         result = dao.getPostByGroupId(gID)
         mapped_result = []
         for r in result:
-            mapped_result.append(mapPostToDict(r))
+            mapped_result.append(mapPostToDict2(r))
         return jsonify(mapped_result)
 
     def getLikesByPostId(self,pID):
@@ -136,10 +160,16 @@ class PostHandler:
     def getListOfUsersWhoLikedPost(self, pID):
         dao = PostDAO()
         result = dao.getListOfUsersWhoReactedPost(pID, "like")
-        return jsonify(result)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapToReactDict(r))
+        return jsonify(mapped_result)
 
     def getListOfUsersWhoDislikedPost(self, pID):
         dao = PostDAO()
         result = dao.getListOfUsersWhoReactedPost(pID, "dislike")
-        return jsonify(result)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapToReactDict(r))
+        return jsonify(mapped_result)
 

@@ -79,7 +79,10 @@ class UserHandler:
     def getOwnedGroupByUserID(self, uID):
         dao = UserDAO()
         result = dao.getOwnedGroupByUserID(uID)
-        return jsonify(Groups=result)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapGroupToDict(r))
+        return jsonify(result)
 
     def getContactsbyUserID(self,uID):
         dao = UserDAO()

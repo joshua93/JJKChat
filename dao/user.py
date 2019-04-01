@@ -68,8 +68,13 @@ class UserDAO:
         return result
 
     def getOwnedGroupByUserID(self, uID):
-        group = list(filter(lambda u: u['owner_id'] == uID, self.groups))
-        return group
+        cursor = self.conn.cursor()
+        query ="SELECT * FROM chat_groups WHERE user_id = %s"
+        cursor.execute(query,(uID,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
 
     # def getContactsByUserID(self,uID):
     #     contacts = list(filter(lambda u: u['user_id'] == uID, self.contacts))

@@ -35,6 +35,12 @@ def mapToReactDict(row):
     result['reaction_date'] = row[4]
     return result
 
+def mapLiketoDict(row):
+    result = {}
+    result['post_id'] = row[0]
+    result['likes'] = row[1]
+    return result
+
 
 class PostHandler:
     def getAllPost(self):
@@ -111,7 +117,8 @@ class PostHandler:
     def getNumberOfLikesForGivenPost(self, pID):
         dao = PostDAO()
         result = dao.getNumberOfLikesForGivenPost(pID)
-        return jsonify(result)
+        mapped_result = mapLiketoDict(result)
+        return jsonify(mapped_result)
 
     def getNumberOfDislikesForGivenPost(self, pID):
         dao = PostDAO()

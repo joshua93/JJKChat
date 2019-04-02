@@ -20,7 +20,13 @@ def mapGroupToDict(row):
     result['owner_id'] = row[2]
     return result
 
-
+def mapUserMinToDict(row):
+    result = {}
+    result['user_id'] = row[0]
+    result['first_name'] = row[1]
+    result['last_name'] = row[2]
+    result['username'] = row[3]
+    return result
 
 class UserHandler:
     # def getAllUsers(self):
@@ -87,7 +93,10 @@ class UserHandler:
     def getContactsbyUserID(self,uID):
         dao = UserDAO()
         result = dao.getContactsByUserID(uID)
-        return jsonify(result)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapUserMinToDict(r))
+        return jsonify(mapped_result)
 
     def getMemberOfGroupsByUserID(self,uID):
         dao = UserDAO()

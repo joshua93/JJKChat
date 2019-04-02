@@ -90,7 +90,7 @@ where post.chat_group_id =%s;"""
 
     def getNumberOfLikesForGivenPost(self, pID):
         cursor = self.conn.cursor()
-        query = "SELECT count(*) FROM reactions where post_id = %s and reaction ='like'"
+        query = "SELECT post_id, count(*) as likes FROM reactions  where post_id = %s and reaction ='like' GROUP BY post_id"
         cursor.execute(query,(pID,))
         likes = cursor.fetchone()
         return likes 

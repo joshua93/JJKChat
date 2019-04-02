@@ -159,11 +159,11 @@ def getNumberOfDislikesPerDay():
 
 #Statistics 9
 #********************METODO TEMPORERO. LA IDEA ES PASARLE EL REACTION COMO PARAMETRO*****************
-@app.route('/JJKChat/likes/<int:pID>/count', methods=['GET'])
+@app.route('/JJKChat/post/<int:pID>/likes/count', methods=['GET'])
 def getNumberOfLikesForGivenPost(pID):
     return PostHandler().getNumberOfLikesForGivenPost(pID)
 
-@app.route('/JJKChat/dislikes/<int:pID>/count', methods=['GET'])
+@app.route('/JJKChat/post/<int:pID>/dislikes/count', methods=['GET'])
 def getNumberOfDislikesForGivenPost(pID):
     return PostHandler().getNumberOfDislikesForGivenPost(pID)
 

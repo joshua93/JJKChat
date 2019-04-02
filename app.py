@@ -52,7 +52,7 @@ def getContactsByUserID(uID):
 
 # Operation 5, 6 Gets members of a group by group ID
 # Implemented GET
-@app.route('/JJKChat/group/<int:gID>/member', methods=['POST', 'GET','DELETE'])
+@app.route('/JJKChat/group/<int:gID>/members', methods=['POST', 'GET','DELETE'])
 def getMembersByGroupID(gID):
     if request.method == 'GET':
         return GroupHandler().getMembersByGroupID(gID)

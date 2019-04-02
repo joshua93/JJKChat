@@ -97,7 +97,7 @@ where post.chat_group_id =%s;"""
 
     def getNumberOfDislikesForGivenPost(self, pID):
         cursor = self.conn.cursor()
-        query = "SELECT count(*) FROM reactions where post_id = %s and reaction ='dislike'"
+        query = "SELECT post_id, count(*) as dislike FROM reactions  where post_id = %s and reaction ='dislike' GROUP BY post_id"
         cursor.execute(query,(pID,))
         dislike = cursor.fetchone()
         return dislike

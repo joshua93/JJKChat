@@ -25,32 +25,12 @@ class UserDAO:
             result.append(row)
         return result
 
-    def loginUser(self, username, password):
-        login = "Login Succesfull using " + username + " and " + password
-        return login
-
     def getUserByID(self,uID):
         cursor = self.conn.cursor()
         query = "select user_id, first_name, last_name, email, phone, username from users where user_id = %s;"
         cursor.execute(query,(uID,))
         result = cursor.fetchone()
         return result
-
-    def getUserByFirstName(self,uFN):
-        user = list(filter(lambda u: u['first_name'] == uFN, self.users))
-        return user
-
-    def getUserByLastName(self, uLN):
-        user = list(filter(lambda u: u['last_name'] == uLN, self.users))
-        return user
-
-    def getUserByPhone(self, uPn):
-        user = list(filter(lambda u: u['phone'] == uPn, self.users))
-        return user
-
-    def getUserByEmail(self, uEm):
-        user = list(filter(lambda u: u['email'] == uEm, self.users))
-        return user
 
     def getUserByUsername(self, uUn):
         cursor = self.conn.cursor()
@@ -77,10 +57,6 @@ class UserDAO:
             result.append(row)
         return result
 
-    def getReplyByUserID(self,uID):
-        posts = list(filter(lambda u: u['user_id'] == uID, self.users))
-        return posts
-
     def getMemberOfGroupsByUserID(self,uID):
         cursor = self.conn.cursor()
         query = "select cg.chat_group_id, cg.chat_name , cg.user_id from chat_groups as cg inner join chat_group_members as cgm on cgm.chat_group_id = cg.chat_group_id where cgm.user_id = %s;"
@@ -89,6 +65,30 @@ class UserDAO:
         for row in cursor:
             result.append(row)
         return result
+
+    def loginUser(self, username, password):
+        login = "Login Succesfull using " + username + " and " + password
+        return login
+
+    def getUserByFirstName(self,uFN):
+        user = list(filter(lambda u: u['first_name'] == uFN, self.users))
+        return user
+
+    def getUserByLastName(self, uLN):
+        user = list(filter(lambda u: u['last_name'] == uLN, self.users))
+        return user
+
+    def getUserByPhone(self, uPn):
+        user = list(filter(lambda u: u['phone'] == uPn, self.users))
+        return user
+
+    def getUserByEmail(self, uEm):
+        user = list(filter(lambda u: u['email'] == uEm, self.users))
+        return user
+
+    def getReplyByUserID(self,uID):
+        posts = list(filter(lambda u: u['user_id'] == uID, self.users))
+        return posts
 
     def registerUser(self,username, password, firstname, lastname, phone, email):
         return "5"

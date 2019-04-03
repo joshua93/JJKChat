@@ -39,7 +39,7 @@ class UserHandler:
         result = dao.getAllUsers()
         mapped_result = []
         for r in result:
-            mapped_result.append(mapUserToDict(r))
+            mapped_result.append(mapUserMinToDict(r))
         return jsonify(mapped_result)
 
 
@@ -143,6 +143,7 @@ class UserHandler:
         email = args.get("email")
         phone = args.get("phone")
         username = args.get("username")
+        user_id = args.get("user_id")
         dao = UserDAO()
         if email:
             result = dao.getUserByEmail(email)
@@ -152,6 +153,8 @@ class UserHandler:
             result = dao.getUserByFirstName(first_name)
         elif username:
             result =  dao.getUserByUsername(username)
+        elif user_id:
+            result = dao.getUserByID(user_id)
         return jsonify(result)
 
     def getMostActiveUser(self):

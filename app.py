@@ -22,7 +22,7 @@ def loginUser():
 @app.route('/JJKChat/users', methods=['GET','POST'])
 def getAllUsers():
     if request.method == 'GET':
-        if len(request.args) >= 1:
+        if request.args:
             return UserHandler().searchUser(request.args)
         else:
             return UserHandler().getAllUsers()

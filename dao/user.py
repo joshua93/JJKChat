@@ -39,7 +39,7 @@ class UserDAO:
 
     def getUserByID(self,uID):
         cursor = self.conn.cursor()
-        query = "select * from users where user_id = %s;"
+        query = "select user_id, first_name, last_name, email, phone, username from users where user_id = %s;"
         cursor.execute(query,(uID,))
         result = cursor.fetchone()
         return result
@@ -62,7 +62,7 @@ class UserDAO:
 
     def getUserByUsername(self, uUn):
         cursor = self.conn.cursor()
-        query = "select * from users where username = %s;"
+        query = "select user_id, first_name, last_name, email, phone, username from users where username = %s;"
         cursor.execute(query,(uUn,))
         result = cursor.fetchone()
         return result

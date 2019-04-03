@@ -9,8 +9,7 @@ def mapUserToDict(row):
     result['last_name'] = row[2]
     result['email'] = row[3]
     result['phone'] = row[4]
-    result['password'] = row[5]
-    result['username'] = row[6]
+    result['username'] = row[5]
     return result
 
 def mapGroupToDict(row):
@@ -152,10 +151,13 @@ class UserHandler:
         elif first_name:
             result = dao.getUserByFirstName(first_name)
         elif username:
-            result =  dao.getUserByUsername(username)
+            result = dao.getUserByUsername(username)
         elif user_id:
             result = dao.getUserByID(user_id)
-        return jsonify(result)
+
+        mapped_result = mapUserToDict(result)
+
+        return jsonify(mapped_result)
 
     def getMostActiveUser(self):
         dao = UserDAO()

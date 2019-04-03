@@ -68,9 +68,9 @@ class UserHandler:
             mapped_result.append(mapUserToDict(r))
         return jsonify(mapped_result)
 
-    def getMemberOfGroupsByUserID(self,uID):
+    def getToWhatGroupUserIsMember(self, uID):
         dao = UserDAO()
-        result = dao.getMemberOfGroupsByUserID(uID)
+        result = dao.getToWhatGroupUserIsMember(uID)
         mapped_result = []
         for r in result:
             mapped_result.append(mapGroupToDict(r))

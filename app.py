@@ -13,12 +13,12 @@ CORS(app)
 def home():
     return "Welcome to JJKChat api"
 
-# Operation 2 Login an existing user
+#Login an existing user
 @app.route('/JJKChat/login', methods=['POST'])
 def loginUser():
     return UserHandler().loginUser(request.json)
 
-# Operation 1; Get all users #Search for a user #Register a user
+#Get all users #Search for a user #Register a user
 @app.route('/JJKChat/users', methods=['GET','POST'])
 def getAllUsers():
     if request.method == 'GET':
@@ -29,7 +29,7 @@ def getAllUsers():
     if request.method == 'POST':
         return UserHandler().registerUser(request.json)
 
-# Operation 3, 8 Get all groups Create a chatgroup Delete a Chatgroup
+#Get all groups Create a chatgroup Delete a Chatgroup
 @app.route('/JJKChat/groups', methods=['GET','POST','DELETE'])
 def getGroup():
     if request.method == 'GET':
@@ -39,7 +39,7 @@ def getGroup():
     if request.method == 'DELETE':
         return GroupHandler().deleteGroup(request.json)
 
-# Operation 4, 7 Gets contacts of an user . Add user to contacts
+#Gets contacts of an user . Add user to contacts
 @app.route('/JJKChat/users/<int:uID>/contact', methods=['GET','POST','DELETE'])
 def getContactsByUserID(uID):
     if request.method == 'POST':
@@ -49,8 +49,7 @@ def getContactsByUserID(uID):
     if request.method == 'DELETE':
         return UserHandler().removeContactsbyUserID(uID, request.json)
 
-# Operation 5, 6 Gets members of a group by group ID
-# Implemented GET
+#Gets members of a group by group ID
 @app.route('/JJKChat/group/<int:gID>/members', methods=['POST', 'GET','DELETE'])
 def getMembersByGroupID(gID):
     if request.method == 'GET':
@@ -60,7 +59,7 @@ def getMembersByGroupID(gID):
     if request.method == 'DELETE':
         return GroupHandler().removeMember(gID, request.json)
 
-# Operation 9, 10, 13 Get post by group id
+#Get all posts by group id
 @app.route('/JJKChat/group/<int:gID>/post', methods=['GET','POST'])
 def getPostByGroupId(gID):
     if request.method == 'GET':
@@ -80,8 +79,7 @@ def reactToaPost(gID):
 def getUserByID(uID):
     return UserHandler().getUserById(uID)
 
-
-#get what groups th e user is owner of
+#get what groups the user is owner of
 @app.route('/JJKChat/users/<int:uID>/ownedgroups', methods=['GET'])
 def getOwnedGroupByUserID(uID):
     return UserHandler().getOwnedGroupByUserID(uID)
@@ -89,7 +87,7 @@ def getOwnedGroupByUserID(uID):
 #Gets to what groups a users is member of
 @app.route('/JJKChat/users/<int:uID>/member', methods=['GET'])
 def getMemberOfGroupsByUserID(uID):
-    return UserHandler().getMemberOfGroupsByUserID(uID)
+    return UserHandler().getToWhatGroupUserIsMember(uID)
 
 #Get specific group by ID
 @app.route('/JJKChat/groups/<int:gID>', methods=['GET'])

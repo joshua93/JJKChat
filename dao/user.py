@@ -57,7 +57,7 @@ class UserDAO:
             result.append(row)
         return result
 
-    def getMemberOfGroupsByUserID(self,uID):
+    def getToWhatGroupUserIsMember(self, uID):
         cursor = self.conn.cursor()
         query = "select cg.chat_group_id, cg.chat_name , cg.user_id from chat_groups as cg inner join chat_group_members as cgm on cgm.chat_group_id = cg.chat_group_id where cgm.user_id = %s;"
         cursor.execute(query,(uID,))

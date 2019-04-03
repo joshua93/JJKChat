@@ -2,11 +2,8 @@ from flask import jsonify
 from dao.group import GroupDAO
 from dictionaryMapping import *
 
+
 class GroupHandler:
-    # def getAllgroups(self):
-    #     dao = GroupDAO()
-    #     result = dao.getAllGroups()
-    #     return jsonify(Users=result)
 
     def getAllGroups(self):
         dao = GroupDAO()
@@ -15,7 +12,6 @@ class GroupHandler:
         for r in result:
             mapped_result.append(mapGroupToDict(r))
         return jsonify(mapped_result)
-
 
     def createGroup(self, json):
         dao = GroupDAO()
@@ -54,7 +50,6 @@ class GroupHandler:
         mapped_result = mapUserToDict(result)
         return jsonify(mapped_result)
 
-    ##Edited by Jesi
     def getMembersByGroupID(self, gID):
         dao = GroupDAO()
         result = dao.getMembersByGroupID(gID)

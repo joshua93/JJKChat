@@ -39,7 +39,6 @@ def getGroup():
     if request.method == 'DELETE':
         return GroupHandler().deleteGroup(request.json)
 
-
 # Operation 4, 7 Gets contacts of an user . Add user to contacts
 @app.route('/JJKChat/users/<int:uID>/contact', methods=['GET','POST','DELETE'])
 def getContactsByUserID(uID):
@@ -76,7 +75,6 @@ def reactToaPost(gID):
     elif request.method == 'POST':
         return PostHandler().react(gID,request.json)
 
-
 #Get specific user by ID
 @app.route('/JJKChat/users/<int:uID>', methods=['GET'])
 def getUserByID(uID):
@@ -88,14 +86,10 @@ def getUserByID(uID):
 def getOwnedGroupByUserID(uID):
     return UserHandler().getOwnedGroupByUserID(uID)
 
-
-
 #Gets to what groups a users is member of
 @app.route('/JJKChat/users/<int:uID>/member', methods=['GET'])
 def getMemberOfGroupsByUserID(uID):
     return UserHandler().getMemberOfGroupsByUserID(uID)
-
-
 
 #Get specific group by ID
 @app.route('/JJKChat/groups/<int:gID>', methods=['GET'])
@@ -107,15 +101,11 @@ def getGroupByID(gID):
 def getOwnerByGroupID(gID):
     return GroupHandler().getGroupOwnerByID(gID)
 
-
-
 #Get all posts
 @app.route('/JJKChat/posts', methods=['GET','POST'])
 def getAllPost():
     if request.method == 'GET':
         return PostHandler().getAllPost()
-
-
 
 #Get specific post by Id
 @app.route('/JJKChat/posts/<int:pID>', methods=['GET'])
@@ -126,11 +116,6 @@ def getPostByID(pID):
 @app.route('/JJKChat/user/<int:uID>/post', methods=['GET'])
 def getPostsByUserID(uID):
     return PostHandler().getPostsByUserID(uID)
-
-# #Get post by group id
-# @app.route('/JJKChat/group/<int:gID>/post', methods=['GET'])
-# def getPostByGroupId(gID):
-#     return PostHandler().getPostByGroupId(gID)
 
 # Statistics 1; Get the trending topic via hashtags
 @app.route('/JJKChat/hashtag/top', methods=['GET'])

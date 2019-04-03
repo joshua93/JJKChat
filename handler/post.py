@@ -2,7 +2,9 @@ from flask import jsonify
 from dao.post import PostDAO
 from dictionaryMapping import *
 
+
 class PostHandler:
+
     def getAllPost(self):
         dao = PostDAO()
         result = dao.getAllPost()
@@ -36,11 +38,6 @@ class PostHandler:
         result = dao.getPostsByUserID(uID)
         return jsonify(Post = result)
 
-    # def getPostByGroupId(self,gID):
-    #     dao = PostDAO()
-    #     result = dao.getPostByGroupId(gID)
-    #     return jsonify(result)
-
     def getPostByGroupId(self,gID):
         dao = PostDAO()
         result = dao.getPostByGroupId(gID)
@@ -48,11 +45,6 @@ class PostHandler:
         for r in result:
             mapped_result.append(mapPostToDict2(r))
         return jsonify(mapped_result)
-
-    def getLikesByPostId(self,pID):
-        dao = PostDAO()
-        result = dao.getLikesByPostId(pID)
-        return jsonify(Likes = result)
 
     def getNumberOfPostPerDay(self):
         dao = PostDAO()
@@ -112,7 +104,6 @@ class PostHandler:
         dao = PostDAO()
         result = dao.getPostsPerDayByUser(uID)
         return jsonify(Posts = result)
-
 
     def getNumberOfPostPerDayByUser(self, uID):
         dao = PostDAO()

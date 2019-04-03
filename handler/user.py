@@ -2,11 +2,8 @@ from flask import jsonify
 from dao.user import UserDAO
 from dictionaryMapping import *
 
+
 class UserHandler:
-    # def getAllUsers(self):
-    #     dao = UserDAO()
-    #     result = dao.getAllUsers()
-    #     return jsonify(Users=result)
 
     def getAllUsers(self):
         dao = UserDAO()
@@ -15,7 +12,6 @@ class UserHandler:
         for r in result:
             mapped_result.append(mapUserToDict(r))
         return jsonify(mapped_result)
-
 
     def loginUser(self, json):
         dao = UserDAO()

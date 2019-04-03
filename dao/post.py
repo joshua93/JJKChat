@@ -4,15 +4,13 @@ from config.dbconfig import pg_config
 
 
 class PostDAO:
+
     def __init__(self):
         #DATABASE_URL = 'postgres://postgres:databaseclass@localhost:5432/jjkchat'
         DATABASE_URL = "dbname=%s user=%s password=%s host=%s" % (pg_config['dbname'], pg_config['user'], pg_config['passwd'], pg_config['host'])
         self.conn = psycopg2._connect(DATABASE_URL)
 
     posts = Data().posts
-
-    # def getAllPost(self):
-    #     return self.posts
 
     def getAllPost(self):
         cursor = self.conn.cursor()
@@ -22,8 +20,6 @@ class PostDAO:
         for row in cursor:
             result.append(row)
         return result
-
-
 
     def getPostByID(self, pID):
         post = list(filter(lambda u: u['post_id'] == pID, self.posts))
@@ -68,13 +64,6 @@ where post.chat_group_id =%s;"""
             result.append(row)
         return result
 
-    #Depracated use getNumberOfLikesForGivenPost instead
-    def getLikesByPostId(self, pID):
-        #cursor = self.conn.cursor()
-        #query = "select count(*) from post natural inner join reactions where post_id=%s and reaction='like'"
-        #cursor.execute(query,(pID,))
-        return None
-
     def getNumberOfPostPerDay(self):
         return len(self.posts)
 
@@ -86,7 +75,6 @@ where post.chat_group_id =%s;"""
 
     def getNumberOfDislikesPerDay(self):
         return 15 #Just for demonstration
-
 
     def getNumberOfLikesForGivenPost(self, pID):
         cursor = self.conn.cursor()
@@ -119,6 +107,3 @@ where post.chat_group_id =%s;"""
         for row in cursor:
             result.append(row)
         return result
- 
-
-

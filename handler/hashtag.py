@@ -1,6 +1,7 @@
 from flask import jsonify
 from dao.hashtag import HashtagDAO
 
+
 class HashtagHandler:
 
     def getAllHashtags(self):

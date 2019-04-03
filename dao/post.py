@@ -4,15 +4,13 @@ from config.dbconfig import pg_config
 
 
 class PostDAO:
+
     def __init__(self):
         #DATABASE_URL = 'postgres://postgres:databaseclass@localhost:5432/jjkchat'
         DATABASE_URL = "dbname=%s user=%s password=%s host=%s" % (pg_config['dbname'], pg_config['user'], pg_config['passwd'], pg_config['host'])
         self.conn = psycopg2._connect(DATABASE_URL)
 
     posts = Data().posts
-
-    # def getAllPost(self):
-    #     return self.posts
 
     def getAllPost(self):
         cursor = self.conn.cursor()
@@ -22,8 +20,6 @@ class PostDAO:
         for row in cursor:
             result.append(row)
         return result
-
-
 
     def getPostByID(self, pID):
         post = list(filter(lambda u: u['post_id'] == pID, self.posts))
@@ -68,13 +64,6 @@ where post.chat_group_id =%s;"""
             result.append(row)
         return result
 
-    #Depracated use getNumberOfLikesForGivenPost instead
-    def getLikesByPostId(self, pID):
-        #cursor = self.conn.cursor()
-        #query = "select count(*) from post natural inner join reactions where post_id=%s and reaction='like'"
-        #cursor.execute(query,(pID,))
-        return None
-
     def getNumberOfPostPerDay(self):
         return len(self.posts)
 
@@ -87,17 +76,16 @@ where post.chat_group_id =%s;"""
     def getNumberOfDislikesPerDay(self):
         return 15 #Just for demonstration
 
-
     def getNumberOfLikesForGivenPost(self, pID):
         cursor = self.conn.cursor()
-        query = "SELECT count(*) FROM reactions where post_id = %s and reaction ='like'"
+        query = "SELECT post_id, count(*) as likes FROM reactions  where post_id = %s and reaction ='like' GROUP BY post_id"
         cursor.execute(query,(pID,))
         likes = cursor.fetchone()
         return likes 
 
     def getNumberOfDislikesForGivenPost(self, pID):
         cursor = self.conn.cursor()
-        query = "SELECT count(*) FROM reactions where post_id = %s and reaction ='dislike'"
+        query = "SELECT post_id, count(*) as dislike FROM reactions  where post_id = %s and reaction ='dislike' GROUP BY post_id"
         cursor.execute(query,(pID,))
         dislike = cursor.fetchone()
         return dislike
@@ -113,12 +101,9 @@ where post.chat_group_id =%s;"""
 
     def getListOfUsersWhoReactedPost(self, pID, reaction):
         cursor = self.conn.cursor()
-        query = "SELECT username , user_id, first_name, last_name, reaction_date FROM reactions NATURAL INNER JOIN users WHERE post_id = %s AND reaction = %s"
+        query = "SELECT  user_id, first_name, last_name, username,reaction_date FROM reactions NATURAL INNER JOIN users WHERE post_id = %s AND reaction = %s"
         cursor.execute(query, (pID,reaction, ))
         result = []
         for row in cursor:
             result.append(row)
         return result
- 
-
-

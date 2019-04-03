@@ -19,5 +19,3 @@ class HashtagDAO:
     def getTrendingHashtag(self):
         hashtag = list(filter(lambda u: u['text'] == '#MINI', self.hashtags))
         return hashtag
-
-

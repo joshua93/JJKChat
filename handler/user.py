@@ -1,32 +1,9 @@
 from flask import jsonify
 from dao.user import UserDAO
-
-
-def mapUserToDict(row):
-    result = {}
-    result['user_id'] = row[0]
-    result['first_name'] = row[1]
-    result['last_name'] = row[2]
-    result['email'] = row[3]
-    result['phone'] = row[4]
-    result['password'] = row[5]
-    result['username'] = row[6]
-    return result
-
-def mapGroupToDict(row):
-    result = {}
-    result['chat_group_id'] = row[0]
-    result['chat_name'] = row[1]
-    result['owner_id'] = row[2]
-    return result
-
+from dictionaryMapping import *
 
 
 class UserHandler:
-    # def getAllUsers(self):
-    #     dao = UserDAO()
-    #     result = dao.getAllUsers()
-    #     return jsonify(Users=result)
 
     def getAllUsers(self):
         dao = UserDAO()
@@ -35,7 +12,6 @@ class UserHandler:
         for r in result:
             mapped_result.append(mapUserToDict(r))
         return jsonify(mapped_result)
-
 
     def loginUser(self, json):
         dao = UserDAO()
@@ -87,7 +63,10 @@ class UserHandler:
     def getContactsbyUserID(self,uID):
         dao = UserDAO()
         result = dao.getContactsByUserID(uID)
-        return jsonify(result)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapUserToDict(r))
+        return jsonify(mapped_result)
 
     def getMemberOfGroupsByUserID(self,uID):
         dao = UserDAO()
@@ -134,6 +113,7 @@ class UserHandler:
         email = args.get("email")
         phone = args.get("phone")
         username = args.get("username")
+        user_id = args.get("user_id")
         dao = UserDAO()
         if email:
             result = dao.getUserByEmail(email)
@@ -142,8 +122,13 @@ class UserHandler:
         elif first_name:
             result = dao.getUserByFirstName(first_name)
         elif username:
-            result =  dao.getUserByUsername(username)
-        return jsonify(result)
+            result = dao.getUserByUsername(username)
+        elif user_id:
+            result = dao.getUserByID(user_id)
+
+        mapped_result = mapUserToDict(result)
+
+        return jsonify(mapped_result)
 
     def getMostActiveUser(self):
         dao = UserDAO()

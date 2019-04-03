@@ -1,42 +1,10 @@
 from flask import jsonify
 from dao.post import PostDAO
-
-def mapPostToDict(row):
-    result = {}
-    result['post_id'] = row[0]
-    result['media'] = row[1]
-    result['message'] = row[2]
-    result['post_date'] = row[3]
-    result['chat_group_id'] = row[4]
-    result['post_author_id']= row[5]
-    return result
-
-def mapPostToDict2(row):
-    result = {}
-    result['post_id'] = row[0]
-    result['media'] = row[1]
-    result['message'] = row[2]
-    result['post_date'] = row[3]
-    result['chat_group_id'] = row[4]
-    result['post_author_id']= row[5]
-    result['likes'] = row[6]
-    result['dislikes'] = row[7]
-    result['username'] = row[8]
-    result['first_name'] = row[9]
-    result['last_name'] = row[10]
-    return result
-
-def mapToReactDict(row):
-    result = {}
-    result['username'] = row[0]
-    result['user_id'] = row[1]
-    result['first_name'] = row[2]
-    result['last_name'] = row[3]
-    result['reaction_date'] = row[4]
-    return result
+from dictionaryMapping import *
 
 
 class PostHandler:
+
     def getAllPost(self):
         dao = PostDAO()
         result = dao.getAllPost()
@@ -70,11 +38,6 @@ class PostHandler:
         result = dao.getPostsByUserID(uID)
         return jsonify(Post = result)
 
-    # def getPostByGroupId(self,gID):
-    #     dao = PostDAO()
-    #     result = dao.getPostByGroupId(gID)
-    #     return jsonify(result)
-
     def getPostByGroupId(self,gID):
         dao = PostDAO()
         result = dao.getPostByGroupId(gID)
@@ -82,11 +45,6 @@ class PostHandler:
         for r in result:
             mapped_result.append(mapPostToDict2(r))
         return jsonify(mapped_result)
-
-    def getLikesByPostId(self,pID):
-        dao = PostDAO()
-        result = dao.getLikesByPostId(pID)
-        return jsonify(Likes = result)
 
     def getNumberOfPostPerDay(self):
         dao = PostDAO()
@@ -111,12 +69,14 @@ class PostHandler:
     def getNumberOfLikesForGivenPost(self, pID):
         dao = PostDAO()
         result = dao.getNumberOfLikesForGivenPost(pID)
-        return jsonify(result)
+        mapped_result = mapReacCountToDict(result)
+        return jsonify(mapped_result)
 
     def getNumberOfDislikesForGivenPost(self, pID):
         dao = PostDAO()
         result = dao.getNumberOfDislikesForGivenPost(pID)
-        return jsonify(Dislikes = result)
+        mapped_result = mapReacCountToDict(result)
+        return jsonify(mapped_result)
 
     def getNumberOfRepliesForGivenPost(self, pID):
         dao = PostDAO()
@@ -144,7 +104,6 @@ class PostHandler:
         dao = PostDAO()
         result = dao.getPostsPerDayByUser(uID)
         return jsonify(Posts = result)
-
 
     def getNumberOfPostPerDayByUser(self, uID):
         dao = PostDAO()

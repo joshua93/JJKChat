@@ -1,28 +1,9 @@
 from flask import jsonify
 from dao.group import GroupDAO
+from dictionaryMapping import *
 
-def mapGroupToDict(row):
-    result = {}
-    result['chat_group_id'] = row[0]
-    result['chat_name'] = row[1]
-    result['owner_id'] = row[2]
-    return result
-
-def mapUserToDict(row):
-    result = {}
-    result['user_id'] = row[0]
-    result['first_name'] = row[1]
-    result['last_name'] = row[2]
-    result['email'] = row[3]
-    result['phone'] = row[4]
-    result['username'] = row[5]
-    return result
 
 class GroupHandler:
-    # def getAllgroups(self):
-    #     dao = GroupDAO()
-    #     result = dao.getAllGroups()
-    #     return jsonify(Users=result)
 
     def getAllGroups(self):
         dao = GroupDAO()
@@ -31,7 +12,6 @@ class GroupHandler:
         for r in result:
             mapped_result.append(mapGroupToDict(r))
         return jsonify(mapped_result)
-
 
     def createGroup(self, json):
         dao = GroupDAO()
@@ -70,7 +50,6 @@ class GroupHandler:
         mapped_result = mapUserToDict(result)
         return jsonify(mapped_result)
 
-    ##Edited by Jesi
     def getMembersByGroupID(self, gID):
         dao = GroupDAO()
         result = dao.getMembersByGroupID(gID)

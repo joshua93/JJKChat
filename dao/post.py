@@ -12,7 +12,7 @@ class PostDAO:
 
     posts = Data().posts
 
-    def getAllPost(self):
+    def getAllPosts(self):
         cursor = self.conn.cursor()
         query = "select * from post"
         cursor.execute(query)
@@ -21,7 +21,7 @@ class PostDAO:
             result.append(row)
         return result
 
-    def getPostByGroupId(self, gID):
+    def getPostsByGroupID(self, gID):
         cursor = self.conn.cursor()
         #query = "select * from post where chat_group_id = %s"
 
@@ -42,24 +42,17 @@ class PostDAO:
             result.append(row)
         return result
 
-    def getNumberOfLikesForGivenPost(self, pID):
+    def getNumberOfReactionsForGivenPost(self, pID, reaction):
         cursor = self.conn.cursor()
-        query = "SELECT post_id, count(*) as likes FROM reactions  where post_id = %s and reaction ='like' GROUP BY post_id"
-        cursor.execute(query, (pID,))
+        query = "SELECT post_id, count(*) as likes FROM reactions  where post_id = %s and reaction =%s GROUP BY post_id"
+        cursor.execute(query, (pID, reaction, ))
         likes = cursor.fetchone()
         return likes
 
-    def getNumberOfDislikesForGivenPost(self, pID):
-        cursor = self.conn.cursor()
-        query = "SELECT post_id, count(*) as dislike FROM reactions  where post_id = %s and reaction ='dislike' GROUP BY post_id"
-        cursor.execute(query, (pID,))
-        dislike = cursor.fetchone()
-        return dislike
-
     def getListOfUsersWhoReactedPost(self, pID, reaction):
         cursor = self.conn.cursor()
-        query = "SELECT  user_id, first_name, last_name, username,reaction_date FROM reactions NATURAL INNER JOIN users WHERE post_id = %s AND reaction = %s"
-        cursor.execute(query, (pID,reaction, ))
+        query = "SELECT  user_id, first_name, last_name, username, reaction_date FROM reactions NATURAL INNER JOIN users WHERE post_id = %s AND reaction = %s"
+        cursor.execute(query, (pID, reaction, ))
         result = []
         for row in cursor:
             result.append(row)

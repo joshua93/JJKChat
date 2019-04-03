@@ -70,6 +70,9 @@ class UserDAO:
         login = "Login Succesfull using " + username + " and " + password
         return login
 
+    def registerUser(self,username, password, firstname, lastname, phone, email):
+        return "5"
+
     def getUserByFirstName(self,uFN):
         user = list(filter(lambda u: u['first_name'] == uFN, self.users))
         return user
@@ -89,9 +92,6 @@ class UserDAO:
     def getReplyByUserID(self,uID):
         posts = list(filter(lambda u: u['user_id'] == uID, self.users))
         return posts
-
-    def registerUser(self,username, password, firstname, lastname, phone, email):
-        return "5"
 
     def addContact(self,uID, firstname, lastname, phone, email):
         return "Done"

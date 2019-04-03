@@ -13,6 +13,26 @@ class GroupHandler:
             mapped_result.append(mapGroupToDict(r))
         return jsonify(mapped_result)
 
+    def getGroupOwnerByGroupID(self, gID):
+        dao = GroupDAO()
+        result = dao.getGroupOwnerByGroupID(gID)
+        mapped_result = mapUserToDict(result)
+        return jsonify(mapped_result)
+
+    def getGroupMembersByGroupID(self, gID):
+        dao = GroupDAO()
+        result = dao.getGroupMembersByGroupID(gID)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapUserToDict(r))
+        return jsonify(mapped_result)
+
+    def getGroupByGroupID(self, gID):
+        dao = GroupDAO()
+        result = dao.getGroupByGroupID(gID)
+        mapped_result = mapGroupToDict(result)
+        return jsonify(mapped_result)
+
     def createGroup(self, json):
         dao = GroupDAO()
         if len(json) != 2:
@@ -38,25 +58,6 @@ class GroupHandler:
                 return jsonify(result), 201
             else:
                 return jsonify(Error="Unexpected attributes in post request"), 400
-
-    def getGroupById(self, gID):
-        dao = GroupDAO()
-        result = dao.getGroupByID(gID)
-        return jsonify(User=result)
-
-    def getGroupOwnerByID(self, gID):
-        dao = GroupDAO()
-        result = dao.getGroupOwnerByID(gID)
-        mapped_result = mapUserToDict(result)
-        return jsonify(mapped_result)
-
-    def getMembersByGroupID(self, gID):
-        dao = GroupDAO()
-        result = dao.getMembersByGroupID(gID)
-        mapped_result = []
-        for r in result:
-            mapped_result.append(mapUserToDict(r))
-        return jsonify(mapped_result)
 
     def addMember(self, gID, json):
         dao = GroupDAO()
@@ -87,4 +88,4 @@ class GroupHandler:
         dao = GroupDAO()
         if groupname:
             result = dao.getGroupByName(groupname)
-        return jsonify(result)
+            return jsonify(result)

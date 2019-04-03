@@ -22,14 +22,14 @@ class GroupDAO:
             result.append(row)
         return result
 
-    def getGroupOwnerByID(self,gID):
+    def getGroupOwnerByGroupID(self, gID):
         cursor = self.conn.cursor()
         query = "select user_id, first_name, last_name , email, phone, username  from chat_groups natural inner JOIN users where chat_group_id = %s "
         cursor.execute(query, (gID,))
         result = cursor.fetchone()
         return result
 
-    def getMembersByGroupID(self,gID):
+    def getGroupMembersByGroupID(self, gID):
         cursor = self.conn.cursor()
         query = "select user_id, first_name, last_name, email, phone,  username from chat_group_members natural inner join users where chat_group_id = %s"
         cursor.execute(query, (gID,))
@@ -38,9 +38,12 @@ class GroupDAO:
             result.append(row)
         return result
 
-    def getGroupByID(self, gID):
-        group = list(filter(lambda u: u['chat_group_id'] == gID, self.groups))
-        return group
+    def getGroupByGroupID(self, gID):
+        cursor = self.conn.cursor()
+        query = "SELECT * FROM chat_groups WHERE chat_group_id = %s"
+        cursor.execute(query, (gID,))
+        result = cursor.fetchone()
+        return result
 
     def createGroup(self,groupname, ownerId):
         gID = "Group " + groupname + " created " + ownerId

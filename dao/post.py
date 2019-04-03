@@ -113,7 +113,7 @@ where post.chat_group_id =%s;"""
 
     def getListOfUsersWhoReactedPost(self, pID, reaction):
         cursor = self.conn.cursor()
-        query = "SELECT username , user_id, first_name, last_name, reaction_date FROM reactions NATURAL INNER JOIN users WHERE post_id = %s AND reaction = %s"
+        query = "SELECT  user_id, first_name, last_name, username,reaction_date FROM reactions NATURAL INNER JOIN users WHERE post_id = %s AND reaction = %s"
         cursor.execute(query, (pID,reaction, ))
         result = []
         for row in cursor:

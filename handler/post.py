@@ -1,46 +1,6 @@
 from flask import jsonify
 from dao.post import PostDAO
-
-def mapPostToDict(row):
-    result = {}
-    result['post_id'] = row[0]
-    result['media'] = row[1]
-    result['message'] = row[2]
-    result['post_date'] = row[3]
-    result['chat_group_id'] = row[4]
-    result['post_author_id']= row[5]
-    return result
-
-def mapPostToDict2(row):
-    result = {}
-    result['post_id'] = row[0]
-    result['media'] = row[1]
-    result['message'] = row[2]
-    result['post_date'] = row[3]
-    result['chat_group_id'] = row[4]
-    result['post_author_id']= row[5]
-    result['likes'] = row[6]
-    result['dislikes'] = row[7]
-    result['username'] = row[8]
-    result['first_name'] = row[9]
-    result['last_name'] = row[10]
-    return result
-
-def mapToReactDict(row):
-    result = {}
-    result['username'] = row[0]
-    result['user_id'] = row[1]
-    result['first_name'] = row[2]
-    result['last_name'] = row[3]
-    result['reaction_date'] = row[4]
-    return result
-
-def mapReactionToDict(row):
-    result = {}
-    result['post_id'] = row[0]
-    result['reactions'] = row[1]
-    return result
-
+from dictionaryMapping import *
 
 class PostHandler:
     def getAllPost(self):
@@ -117,13 +77,13 @@ class PostHandler:
     def getNumberOfLikesForGivenPost(self, pID):
         dao = PostDAO()
         result = dao.getNumberOfLikesForGivenPost(pID)
-        mapped_result = mapReactionToDict(result)
+        mapped_result = mapReacCountToDict(result)
         return jsonify(mapped_result)
 
     def getNumberOfDislikesForGivenPost(self, pID):
         dao = PostDAO()
         result = dao.getNumberOfDislikesForGivenPost(pID)
-        mapped_result = mapReactionToDict(result)
+        mapped_result = mapReacCountToDict(result)
         return jsonify(mapped_result)
 
     def getNumberOfRepliesForGivenPost(self, pID):

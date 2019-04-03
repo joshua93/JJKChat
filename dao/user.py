@@ -21,7 +21,7 @@ class UserDAO:
 
     def getAllUsers(self):
         cursor = self.conn.cursor()
-        query = "select user_id, first_name, last_name, username from users;"
+        query = "select user_id, first_name, last_name, email, phone, username from users;"
         cursor.execute(query)
         result = []
         for row in cursor:
@@ -82,7 +82,7 @@ class UserDAO:
 
     def getContactsByUserID(self, uID):
         cursor = self.conn.cursor()
-        query = "select contact_user_id, first_name, last_name, username from contact INNER JOIN users on contact.contact_user_id = users.user_id where contact.user_id = %s;"
+        query = "select contact_user_id, first_name, last_name, email, phone, username from contact INNER JOIN users on contact.contact_user_id = users.user_id where contact.user_id = %s;"
         cursor.execute(query,(uID,))
         result = []
         for row in cursor:

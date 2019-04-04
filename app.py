@@ -7,7 +7,7 @@ from handler.hashtag import HashtagHandler
 from flask_cors import CORS, cross_origin
 import os
 
-UPLOAD_FOLDER = '/Users/kennethpadro/PycharmProjects/JJKChat/static'
+UPLOAD_FOLDER = '/Users/kennethpadro/PycharmProjects/JJKChat/static' #change to get dynamic
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
 

@@ -1,32 +1,9 @@
 from flask import jsonify
 from dao.user import UserDAO
-
-
-def mapUserToDict(row):
-    result = {}
-    result['user_id'] = row[0]
-    result['first_name'] = row[1]
-    result['last_name'] = row[2]
-    result['email'] = row[3]
-    result['phone'] = row[4]
-    result['password'] = row[5]
-    result['username'] = row[6]
-    return result
-
-def mapGroupToDict(row):
-    result = {}
-    result['chat_group_id'] = row[0]
-    result['chat_name'] = row[1]
-    result['owner_id'] = row[2]
-    return result
-
+from dictionaryMapping import *
 
 
 class UserHandler:
-    # def getAllUsers(self):
-    #     dao = UserDAO()
-    #     result = dao.getAllUsers()
-    #     return jsonify(Users=result)
 
     def getAllUsers(self):
         dao = UserDAO()
@@ -36,6 +13,57 @@ class UserHandler:
             mapped_result.append(mapUserToDict(r))
         return jsonify(mapped_result)
 
+    def getUserById(self, uID):
+        dao = UserDAO()
+        result = dao.getUserByID(uID)
+        mapped_result = mapUserToDict(result)
+        return jsonify(mapped_result)
+
+    def getOwnedGroupByUserID(self, uID):
+        dao = UserDAO()
+        result = dao.getOwnedGroupByUserID(uID)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapGroupToDict(r))
+        return jsonify(mapped_result)
+
+    def getContactsbyUserID(self, uID):
+        dao = UserDAO()
+        result = dao.getContactsByUserID(uID)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapUserToDict(r))
+        return jsonify(mapped_result)
+
+    def getToWhatGroupUserIsMember(self, uID):
+        dao = UserDAO()
+        result = dao.getToWhatGroupUserIsMember(uID)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapGroupToDict(r))
+        return jsonify(mapped_result)
+
+    def searchUser(self, args):
+        first_name = args.get("name")
+        email = args.get("email")
+        phone = args.get("phone")
+        username = args.get("username")
+        user_id = args.get("user_id")
+        dao = UserDAO()
+        if email:
+            result = dao.getUserByEmail(email)
+        elif phone:
+            result = dao.getUserByPhone(phone)
+        elif first_name:
+            result = dao.getUserByFirstName(first_name)
+        elif username:
+            result = dao.getUserByUsername(username)
+        elif user_id:
+            result = dao.getUserByID(user_id)
+
+        mapped_result = mapUserToDict(result)
+
+        return jsonify(mapped_result)
 
     def loginUser(self, json):
         dao = UserDAO()
@@ -70,33 +98,6 @@ class UserHandler:
             else:
                 return jsonify(Error="Unexpected attributes in post request"), 400
 
-    def getUserById(self, uID):
-        dao = UserDAO()
-        result = dao.getUserByID(uID)
-        mapped_result = mapUserToDict(result)
-        return jsonify(mapped_result)
-
-    def getOwnedGroupByUserID(self, uID):
-        dao = UserDAO()
-        result = dao.getOwnedGroupByUserID(uID)
-        mapped_result = []
-        for r in result:
-            mapped_result.append(mapGroupToDict(r))
-        return jsonify(mapped_result)
-
-    def getContactsbyUserID(self,uID):
-        dao = UserDAO()
-        result = dao.getContactsByUserID(uID)
-        return jsonify(result)
-
-    def getMemberOfGroupsByUserID(self,uID):
-        dao = UserDAO()
-        result = dao.getMemberOfGroupsByUserID(uID)
-        mapped_result = []
-        for r in result:
-            mapped_result.append(mapGroupToDict(r))
-        return jsonify(mapped_result)
-
     def addUserToContactList(self, uID, json):
         dao = UserDAO()
         if json.get('firstname')==None or json.get('lastname')==None\
@@ -128,22 +129,6 @@ class UserHandler:
 
     def removeContactsbyUserID(self,uID,json):
         return "Contact removed"
-
-    def searchUser(self, args):
-        first_name = args.get("name")
-        email = args.get("email")
-        phone = args.get("phone")
-        username = args.get("username")
-        dao = UserDAO()
-        if email:
-            result = dao.getUserByEmail(email)
-        elif phone:
-            result = dao.getUserByPhone(phone)
-        elif first_name:
-            result = dao.getUserByFirstName(first_name)
-        elif username:
-            result =  dao.getUserByUsername(username)
-        return jsonify(result)
 
     def getMostActiveUser(self):
         dao = UserDAO()

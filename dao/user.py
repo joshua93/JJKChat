@@ -16,33 +16,62 @@ class UserDAO:
     posts = Data().posts
     members = Data().group_members
 
-    # def getAllUsers(self):
-    #     return Data().users
-
     def getAllUsers(self):
         cursor = self.conn.cursor()
-        query = "select * from users;"
+        query = "select user_id, first_name, last_name, email, phone, username from users;"
         cursor.execute(query)
         result = []
         for row in cursor:
             result.append(row)
         return result
 
+    def getUserByID(self,uID):
+        cursor = self.conn.cursor()
+        query = "select user_id, first_name, last_name, email, phone, username from users where user_id = %s;"
+        cursor.execute(query,(uID,))
+        result = cursor.fetchone()
+        return result
+
+    def getUserByUsername(self, uUn):
+        cursor = self.conn.cursor()
+        query = "select user_id, first_name, last_name, email, phone, username from users where username = %s;"
+        cursor.execute(query,(uUn,))
+        result = cursor.fetchone()
+        return result
+
+    def getOwnedGroupByUserID(self, uID):
+        cursor = self.conn.cursor()
+        query ="SELECT * FROM chat_groups WHERE user_id = %s"
+        cursor.execute(query,(uID,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getContactsByUserID(self, uID):
+        cursor = self.conn.cursor()
+        query = "select contact_user_id, first_name, last_name, email, phone, username from contact INNER JOIN users on contact.contact_user_id = users.user_id where contact.user_id = %s;"
+        cursor.execute(query,(uID,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getToWhatGroupUserIsMember(self, uID):
+        cursor = self.conn.cursor()
+        query = "select cg.chat_group_id, cg.chat_name , cg.user_id from chat_groups as cg inner join chat_group_members as cgm on cgm.chat_group_id = cg.chat_group_id where cgm.user_id = %s;"
+        cursor.execute(query,(uID,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
 
     def loginUser(self, username, password):
         login = "Login Succesfull using " + username + " and " + password
         return login
 
-    # def getUserByID(self, uID):
-    #     user = list(filter(lambda u: u['user_id'] == uID, self.users))
-    #     return user
-
-    def getUserByID(self,uID):
-        cursor = self.conn.cursor()
-        query = "select * from users where user_id = %s;"
-        cursor.execute(query,(uID,))
-        result = cursor.fetchone()
-        return result
+    def registerUser(self,username, password, firstname, lastname, phone, email):
+        return "5"
 
     def getUserByFirstName(self,uFN):
         user = list(filter(lambda u: u['first_name'] == uFN, self.users))
@@ -60,56 +89,12 @@ class UserDAO:
         user = list(filter(lambda u: u['email'] == uEm, self.users))
         return user
 
-    def getUserByUsername(self, uUn):
-        cursor = self.conn.cursor()
-        query = "select * from users where username = %s;"
-        cursor.execute(query,(uUn,))
-        result = cursor.fetchone()
-        return result
-
-    def getOwnedGroupByUserID(self, uID):
-        cursor = self.conn.cursor()
-        query ="SELECT * FROM chat_groups WHERE user_id = %s"
-        cursor.execute(query,(uID,))
-        result = []
-        for row in cursor:
-            result.append(row)
-        return result
-
-    # def getContactsByUserID(self,uID):
-    #     contacts = list(filter(lambda u: u['user_id'] == uID, self.contacts))
-    #     return contacts
-
-    def getContactsByUserID(self, uID):
-        cursor = self.conn.cursor()
-        query = "select * from contact INNER JOIN users on contact.contact_user_id = users.user_id where contact.user_id = %s;"
-        cursor.execute(query,(uID,))
-        result = []
-        for row in cursor:
-            result.append(row)
-        return result
-
-
     def getReplyByUserID(self,uID):
         posts = list(filter(lambda u: u['user_id'] == uID, self.users))
         return posts
-
-    def getMemberOfGroupsByUserID(self,uID):
-        cursor = self.conn.cursor()
-        query = "select cg.chat_group_id, cg.chat_name , cg.user_id from chat_groups as cg inner join chat_group_members as cgm on cgm.chat_group_id = cg.chat_group_id where cgm.user_id = %s;"
-        cursor.execute(query,(uID,))
-        result = []
-        for row in cursor:
-            result.append(row)
-        return result
-
-    def registerUser(self,username, password, firstname, lastname, phone, email):
-        return "5"
 
     def addContact(self,uID, firstname, lastname, phone, email):
         return "Done"
 
     def getMostActiveUser(self):
         return list(filter(lambda u: u['user_id'] == 2, self.contacts))  #Second user of Data table. Just for demonstration
-
-

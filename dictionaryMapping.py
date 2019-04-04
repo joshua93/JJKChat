@@ -61,3 +61,8 @@ def mapNumOfPostsToDict(row):
     result['total'] = row[1]
     return result
 
+def mapTrendingTopicToDict(row):
+    result = {}
+    result['hashtag'] = row[0]
+    result['position'] = row[1]
+    return result

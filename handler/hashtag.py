@@ -1,5 +1,6 @@
 from flask import jsonify
 from dao.hashtag import HashtagDAO
+from dictionaryMapping import *
 
 
 class HashtagHandler:
@@ -22,5 +23,8 @@ class HashtagHandler:
     def getTrendingHashtag(self):
         dao = HashtagDAO()
         result = dao.getTrendingHashtag()
-        return jsonify(result)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapTrendingTopicToDict(r))
+        return jsonify(mapped_result)
 

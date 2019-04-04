@@ -174,6 +174,5 @@ def getListOfUsersWhoDislikedPost(pID):
     return PostHandler().getListOfUsersWhoDislikedPost(pID)
 
 
-
 if __name__ == '__main__':
     app.run()

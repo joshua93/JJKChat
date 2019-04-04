@@ -55,4 +55,9 @@ def mapReacCountToDict(row):
     result['reactions'] = row[1]
     return result
 
+def mapNumOfPostsToDict(row):
+    result = {}
+    result['day'] = row[0]
+    result['total'] = row[1]
+    return result
 

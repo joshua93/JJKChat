@@ -77,7 +77,11 @@ class PostHandler:
     def getNumberOfPostPerDay(self):
         dao = PostDAO()
         result = dao.getNumberOfPostPerDay()
-        return jsonify(Posts = result)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapNumOfPostsToDict(r))
+        return jsonify(mapped_result)
+
 
     def getNumberOfRepliesPerDay(self):
         dao = PostDAO()

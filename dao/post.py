@@ -79,7 +79,13 @@ class PostDAO:
         return posts
 
     def getNumberOfPostPerDay(self):
-        return len(self.posts)
+        cursor = self.conn.cursor()
+        query = "SELECT post_date AS day, count(*) AS total FROM post GROUP BY post_date"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
 
     def getNumberOfRepliesPerDay(self):
         return len(self.posts) #Just for demonstration

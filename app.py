@@ -173,6 +173,9 @@ def getListOfUsersWhoLikedPost(pID):
 def getListOfUsersWhoDislikedPost(pID):
     return PostHandler().getListOfUsersWhoDislikedPost(pID)
 
+@app.route('/JJKChat/post/countperday', methods=['GET'])
+def getNumberOfPostPerDay():
+    return PostHandler().getNumberOfPostPerDay()
 
 
 if __name__ == '__main__':

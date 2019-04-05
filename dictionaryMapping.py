@@ -25,7 +25,7 @@ def mapPostToDict(row):
     result['post_author_id']= row[5]
     return result
 
-def mapPostToDict2(row):
+def mapPostToDict2(row, reply):
     result = {}
     result['post_id'] = row[0]
     result['media'] = row[1]
@@ -38,6 +38,8 @@ def mapPostToDict2(row):
     result['username'] = row[8]
     result['first_name'] = row[9]
     result['last_name'] = row[10]
+    result['replies'] = reply
+
     return result
 
 def mapToReactDict(row):
@@ -65,4 +67,13 @@ def mapTrendingTopicToDict(row):
     result = {}
     result['hashtag'] = row[0]
     result['position'] = row[1]
+    return result
+
+def mapReplyToDict(row):
+    result = {}
+    result['reply_id'] = row[0]
+    result['reply_date'] = row[1]
+    result['reply_message'] = row[2]
+    result['post_id'] = row[3]
+    result['user_id'] = row[4]
     return result

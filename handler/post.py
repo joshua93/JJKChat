@@ -17,8 +17,13 @@ class PostHandler:
         dao = PostDAO()
         result = dao.getPostsByGroupID(gID)
         mapped_result = []
+        children = []
         for r in result:
-            mapped_result.append(mapPostToDict2(r))
+            mapped_result.append(mapPostToDict2(r,self.getRepliesByPostID(r[0])))
+        return jsonify(mapped_result)
+
+
+
         return jsonify(mapped_result)
 
     def getNumberOfLikesForGivenPost(self, pID):
@@ -48,6 +53,14 @@ class PostHandler:
         for r in result:
             mapped_result.append(mapToReactDict(r))
         return jsonify(mapped_result)
+
+    def getRepliesByPostID(self, pID):
+        dao = PostDAO()
+        result = dao.getRepliesByPostID(pID)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapReplyToDict(r))
+        return mapped_result
 
     def getPostByID(self, pID):
         dao = PostDAO()

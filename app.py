@@ -115,6 +115,11 @@ def getAllPost():
 def getPostByID(pID):
     return PostHandler().getPostByID(pID)
 
+#Get replies from post by post id
+@app.route('/JJKChat/post/<int:pID>/replies', methods=['GET'])
+def getRepliesByPostID(pID):
+    return PostHandler().getRepliesByPostID(pID)
+
 
 # Statistics 2 Get total number of posts on a certain date
 @app.route('/JJKChat/user/<int:uID>/post/count', methods=['GET'])

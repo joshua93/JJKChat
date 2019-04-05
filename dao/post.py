@@ -87,6 +87,15 @@ class PostDAO:
             result.append(row)
         return result
 
+    def getRepliesByPostID(self, pID):
+        cursor = self.conn.cursor()
+        query = "SELECT reply_id, reply_date, reply_message, post_id, user_id FROM reply WHERE post_id = %s"
+        cursor.execute(query,(pID, ))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
     def getNumberOfRepliesPerDay(self):
         return len(self.posts) #Just for demonstration
 

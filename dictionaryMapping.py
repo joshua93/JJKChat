@@ -25,7 +25,7 @@ def mapPostToDict(row):
     result['post_author_id']= row[5]
     return result
 
-def mapPostToDict2(row, reply):
+def mapPostToDictDETAILED(row, reply):
     result = {}
     result['post_id'] = row[0]
     result['media'] = row[1]

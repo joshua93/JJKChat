@@ -58,6 +58,24 @@ class PostDAO:
             result.append(row)
         return result
 
+    def getNumberOfPostPerDay(self):
+        cursor = self.conn.cursor()
+        query = "SELECT post_date AS day, count(*) AS total FROM post GROUP BY post_date"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getRepliesByPostID(self, pID):
+        cursor = self.conn.cursor()
+        query = "SELECT reply_id, reply_date, reply_message, post_id, user_id FROM reply WHERE post_id = %s"
+        cursor.execute(query,(pID, ))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
     def getPostByID(self, pID):
         post = list(filter(lambda u: u['post_id'] == pID, self.posts))
         return post
@@ -77,24 +95,6 @@ class PostDAO:
     def getPostsByUserID(self, uID):
         posts = list(filter(lambda u: u['post_author_id'] == uID, self.posts))
         return posts
-
-    def getNumberOfPostPerDay(self):
-        cursor = self.conn.cursor()
-        query = "SELECT post_date AS day, count(*) AS total FROM post GROUP BY post_date"
-        cursor.execute(query)
-        result = []
-        for row in cursor:
-            result.append(row)
-        return result
-
-    def getRepliesByPostID(self, pID):
-        cursor = self.conn.cursor()
-        query = "SELECT reply_id, reply_date, reply_message, post_id, user_id FROM reply WHERE post_id = %s"
-        cursor.execute(query,(pID, ))
-        result = []
-        for row in cursor:
-            result.append(row)
-        return result
 
     def getNumberOfRepliesPerDay(self):
         return len(self.posts) #Just for demonstration

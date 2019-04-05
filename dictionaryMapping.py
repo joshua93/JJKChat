@@ -75,5 +75,7 @@ def mapReplyToDict(row):
     result['reply_date'] = row[1]
     result['reply_message'] = row[2]
     result['post_id'] = row[3]
-    result['user_id'] = row[4]
+    result['username'] = row[4]
+    result['first_name'] = row[5]
+    result['last_name'] = row[6]
     return result

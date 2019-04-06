@@ -9,6 +9,8 @@ class PostHandler:
     def getAllPost(self):
         dao = PostDAO()
         result = dao.getAllPosts()
+        if not result:
+            return jsonify(Error="Not found"), 404
         mapped_result = []
         for r in result:
             mapped_result.append(mapPostToDict(r))
@@ -17,6 +19,8 @@ class PostHandler:
     def getPostByGroupId(self,gID):
         dao = PostDAO()
         result = dao.getPostsByGroupID(gID)
+        if not result:
+            return jsonify(Error="Not found"), 404
         mapped_result = []
         for r in result:
             mapped_result.append(mapPostToDict2(r))
@@ -25,22 +29,24 @@ class PostHandler:
     def getNumberOfLikesForGivenPost(self, pID):
         dao = PostDAO()
         result = dao.getNumberOfReactionsForGivenPost(pID, "like")
-        mapped_result = []
-        for r in result:
-            mapped_result.append(mapReacCountToDict(r))
+        if not result:
+            return jsonify(Error="Not found"), 404
+        mapped_result = mapReacCountToDict(result)
         return jsonify(mapped_result)
 
     def getNumberOfDislikesForGivenPost(self, pID):
         dao = PostDAO()
         result = dao.getNumberOfReactionsForGivenPost(pID, "dislike")
-        mapped_result = []
-        for r in result:
-            mapped_result.append(mapReacCountToDict(r))
+        if not result:
+            return jsonify(Error="Not found"), 404
+        mapped_result = mapReacCountToDict(result)
         return jsonify(mapped_result)
 
     def getListOfUsersWhoLikedPost(self, pID):
         dao = PostDAO()
         result = dao.getListOfUsersWhoReactedPost(pID, "like")
+        if not result:
+            return jsonify(Error="Not found"), 404
         mapped_result = []
         for r in result:
             mapped_result.append(mapToReactDict(r))
@@ -49,6 +55,8 @@ class PostHandler:
     def getListOfUsersWhoDislikedPost(self, pID):
         dao = PostDAO()
         result = dao.getListOfUsersWhoReactedPost(pID, "dislike")
+        if not result:
+            return jsonify(Error="Not found"), 404
         mapped_result = []
         for r in result:
             mapped_result.append(mapToReactDict(r))
@@ -57,6 +65,8 @@ class PostHandler:
     def getNumberOfPostsPerDay(self):
         dao = PostDAO()
         result = dao.getNumberOfPostsPerDay()
+        if not result:
+            return jsonify(Error="Not found"), 404
         mapped_result = []
         for r in result:
             mapped_result.append(mapInteractionPerDayToDict(r))
@@ -65,6 +75,8 @@ class PostHandler:
     def getNumberOfRepliesPerDay(self):
         dao = PostDAO()
         result = dao.getNumberOfRepliesPerDay()
+        if not result:
+            return jsonify(Error="Not found"), 404
         mapped_result = []
         for r in result:
             mapped_result.append(mapInteractionPerDayToDict(r))
@@ -73,6 +85,8 @@ class PostHandler:
     def getNumberOfLikesPerDay(self):
         dao = PostDAO()
         result = dao.getNumberOfLikesPerDay()
+        if not result:
+            return jsonify(Error="Not found"), 404
         mapped_result = []
         for r in result:
             mapped_result.append(mapInteractionPerDayToDict(r))
@@ -81,6 +95,8 @@ class PostHandler:
     def getNumberOfDislikesPerDay(self):
         dao = PostDAO()
         result = dao.getNumberOfDislikesPerDay()
+        if not result:
+            return jsonify(Error="Not found"), 404
         mapped_result = []
         for r in result:
             mapped_result.append(mapInteractionPerDayToDict(r))
@@ -89,6 +105,8 @@ class PostHandler:
     def getNumberOfRepliesForGivenPost(self, pID):
         dao = PostDAO()
         result = dao.getNumberOfRepliesForGivenPost(pID)
+        if not result:
+            return jsonify(Error="Not found"), 404
         mapped_result = []
         for r in result:
             mapped_result.append(mapReplyCountToDict(r))
@@ -97,9 +115,9 @@ class PostHandler:
     def getNumberOfPostsPerDayByUser(self, uID):
         dao = PostDAO()
         result = dao.getNumberOfPostsPerDayByUser(uID)
-        mapped_result = []
-        for r in result:
-            mapped_result.append(mapInteractionPerDayToDict(r))
+        if not result:
+            return jsonify(Error="Not found"), 404
+        mapped_result = mapInteractionPerDayToDict(result)
         return jsonify(mapped_result)
 
     def getPostByID(self, pID):

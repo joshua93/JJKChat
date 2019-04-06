@@ -19,7 +19,10 @@ class UserDAO:
     def getAllUsers(self):
         cursor = self.conn.cursor()
         query = "select user_id, first_name, last_name, email, phone, username from users;"
-        cursor.execute(query)
+        try:
+            cursor.execute(query)
+        except psycopg2.Error as e:
+            return
         result = []
         for row in cursor:
             result.append(row)
@@ -28,21 +31,30 @@ class UserDAO:
     def getUserByID(self,uID):
         cursor = self.conn.cursor()
         query = "select user_id, first_name, last_name, email, phone, username from users where user_id = %s;"
-        cursor.execute(query,(uID,))
+        try:
+            cursor.execute(query,(uID,))
+        except psycopg2.Error as e:
+            return
         result = cursor.fetchone()
         return result
 
     def getUserByUsername(self, uUn):
         cursor = self.conn.cursor()
         query = "select user_id, first_name, last_name, email, phone, username from users where username = %s;"
-        cursor.execute(query,(uUn,))
+        try:
+            cursor.execute(query,(uUn,))
+        except psycopg2.Error as e:
+            return
         result = cursor.fetchone()
         return result
 
     def getOwnedGroupByUserID(self, uID):
         cursor = self.conn.cursor()
         query ="SELECT * FROM chat_groups WHERE user_id = %s"
-        cursor.execute(query,(uID,))
+        try:
+            cursor.execute(query,(uID,))
+        except psycopg2.Error as e:
+            return
         result = []
         for row in cursor:
             result.append(row)
@@ -51,7 +63,10 @@ class UserDAO:
     def getContactsByUserID(self, uID):
         cursor = self.conn.cursor()
         query = "select contact_user_id, first_name, last_name, email, phone, username from contact INNER JOIN users on contact.contact_user_id = users.user_id where contact.user_id = %s;"
-        cursor.execute(query,(uID,))
+        try:
+            cursor.execute(query,(uID,))
+        except psycopg2.Error as e:
+            return
         result = []
         for row in cursor:
             result.append(row)
@@ -60,7 +75,33 @@ class UserDAO:
     def getToWhatGroupUserIsMember(self, uID):
         cursor = self.conn.cursor()
         query = "select cg.chat_group_id, cg.chat_name , cg.user_id from chat_groups as cg inner join chat_group_members as cgm on cgm.chat_group_id = cg.chat_group_id where cgm.user_id = %s;"
-        cursor.execute(query,(uID,))
+        try:
+            cursor.execute(query,(uID,))
+        except psycopg2.Error as e:
+            return
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getMostActiveUser(self):
+        cursor = self.conn.cursor()
+        query = """
+                     SELECT user_id, SUM(r) AS interactions
+                     FROM(
+                     SELECT user_id, count(*) AS r from reactions GROUP BY user_id
+                     UNION ALL
+                     SELECT user_id, count(*) FROM post GROUP BY user_id
+                     UNION ALL
+                     SELECT user_id, count(*) AS re FROM reply GROUP BY user_id
+                     ) AS queseyo
+                     GROUP BY user_id
+                     ORDER BY interactions DESC
+                     """
+        try:
+            cursor.execute(query)
+        except psycopg2.Error as e:
+            return
         result = []
         for row in cursor:
             result.append(row)
@@ -95,23 +136,3 @@ class UserDAO:
 
     def addContact(self,uID, firstname, lastname, phone, email):
         return "Done"
-
-    def getMostActiveUser(self):
-        cursor = self.conn.cursor()
-        query = """
-                  SELECT user_id, SUM(r) AS interactions
-                  FROM(
-                  SELECT user_id, count(*) AS r from reactions GROUP BY user_id
-                  UNION ALL
-                  SELECT user_id, count(*) FROM post GROUP BY user_id
-                  UNION ALL
-                  SELECT user_id, count(*) AS re FROM reply GROUP BY user_id
-                  ) AS queseyo
-                  GROUP BY user_id
-                  ORDER BY interactions DESC
-                  """
-        cursor.execute(query)
-        result = []
-        for row in cursor:
-            result.append(row)
-        return result

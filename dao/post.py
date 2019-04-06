@@ -15,7 +15,10 @@ class PostDAO:
     def getAllPosts(self):
         cursor = self.conn.cursor()
         query = "select * from post"
-        cursor.execute(query)
+        try:
+            cursor.execute(query)
+        except psycopg2.Error as e:
+            return
         result = []
         for row in cursor:
             result.append(row)
@@ -36,7 +39,10 @@ class PostDAO:
                 SELECT post.post_id, post.media, post.message, post.post_date, post.chat_group_id, post.user_id,likes, dislikes, users.username, users.first_name, users.last_name 
                 FROM post natural inner join users LEFT JOIN plikes on post.post_id = plikes.post_id LEFT JOIN pdislikes on post.post_id = pdislikes.post_id
                 WHERE post.chat_group_id =%s;"""
-        cursor.execute(query,(gID,))
+        try:
+            cursor.execute(query,(gID,))
+        except psycopg2.Error as e:
+            return
         result = []
         for row in cursor:
             result.append(row)
@@ -45,16 +51,21 @@ class PostDAO:
     def getNumberOfReactionsForGivenPost(self, pID, reaction):
         cursor = self.conn.cursor()
         query = "SELECT post_id, count(*) as likes FROM reactions  where post_id = %s and reaction =%s GROUP BY post_id"
-        cursor.execute(query, (pID, reaction, ))
-        result = []
-        for row in cursor:
-            result.append(row)
+        try:
+            cursor.execute(query, (pID, reaction,))
+        except psycopg2.Error as e:
+            return
+        result = cursor.fetchone()
+        print(result)
         return result
 
     def getListOfUsersWhoReactedPost(self, pID, reaction):
         cursor = self.conn.cursor()
         query = "SELECT  user_id, first_name, last_name, username, reaction_date FROM reactions NATURAL INNER JOIN users WHERE post_id = %s AND reaction = %s"
-        cursor.execute(query, (pID, reaction, ))
+        try:
+            cursor.execute(query, (pID, reaction, ))
+        except psycopg2.Error as e:
+            return
         result = []
         for row in cursor:
             result.append(row)
@@ -63,7 +74,10 @@ class PostDAO:
     def getNumberOfPostsPerDay(self):
         cursor = self.conn.cursor()
         query = "SELECT post_date AS day, count(*) AS total FROM post GROUP BY post_date"
-        cursor.execute(query)
+        try:
+            cursor.execute(query)
+        except psycopg2.Error as e:
+            return
         result = []
         for row in cursor:
             result.append(row)
@@ -72,7 +86,10 @@ class PostDAO:
     def getNumberOfRepliesPerDay(self):
         cursor = self.conn.cursor()
         query = "SELECT reply_date AS day, count(*) AS total FROM reply GROUP BY reply_date"
-        cursor.execute(query)
+        try:
+            cursor.execute(query)
+        except psycopg2.Error as e:
+            return
         result = []
         for row in cursor:
             result.append(row)
@@ -81,7 +98,10 @@ class PostDAO:
     def getNumberOfLikesPerDay(self):
         cursor = self.conn.cursor()
         query = "SELECT reaction_date AS day, count(*) AS total FROM reactions WHERE reaction = 'like' GROUP BY reaction_date"
-        cursor.execute(query)
+        try:
+            cursor.execute(query)
+        except psycopg2.Error as e:
+            return
         result = []
         for row in cursor:
             result.append(row)
@@ -90,7 +110,10 @@ class PostDAO:
     def getNumberOfDislikesPerDay(self):
         cursor = self.conn.cursor()
         query = "SELECT reaction_date AS day, count(*) AS total FROM reactions WHERE reaction = 'dislike' GROUP BY reaction_date"
-        cursor.execute(query)
+        try:
+            cursor.execute(query)
+        except psycopg2.Error as e:
+            return
         result = []
         for row in cursor:
             result.append(row)
@@ -99,7 +122,10 @@ class PostDAO:
     def getNumberOfRepliesForGivenPost(self, pID):
         cursor = self.conn.cursor()
         query = "SELECT post_id, count(*) AS total_replies FROM reply WHERE post_id = %s GROUP BY post_id"
-        cursor.execute(query, (pID,))
+        try:
+            cursor.execute(query, (pID,))
+        except psycopg2.Error as e:
+            return
         result = []
         for row in cursor:
             result.append(row)
@@ -108,10 +134,11 @@ class PostDAO:
     def getNumberOfPostsPerDayByUser(self, uID):
         cursor = self.conn.cursor()
         query = "SELECT post_date AS day, count(*) AS total FROM post WHERE user_id = %s GROUP BY post_date"
-        cursor.execute(query, (uID, ))
-        result = []
-        for row in cursor:
-            result.append(row)
+        try:
+            cursor.execute(query, (uID, ))
+        except psycopg2.Error as e:
+            return
+        result = cursor.fetchone()
         return result
 
     def getPostByID(self, pID):

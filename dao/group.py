@@ -16,7 +16,10 @@ class GroupDAO:
     def getAllGroups(self):
         cursor = self.conn.cursor()
         query = "select * from chat_groups"
-        cursor.execute(query)
+        try:
+            cursor.execute(query)
+        except psycopg2.Error as e:
+            return
         result = []
         for row in cursor:
             result.append(row)
@@ -25,14 +28,20 @@ class GroupDAO:
     def getGroupOwnerByGroupID(self, gID):
         cursor = self.conn.cursor()
         query = "select user_id, first_name, last_name , email, phone, username  from chat_groups natural inner JOIN users where chat_group_id = %s "
-        cursor.execute(query, (gID,))
+        try:
+            cursor.execute(query, (gID,))
+        except psycopg2.Error as e:
+            return
         result = cursor.fetchone()
         return result
 
     def getGroupMembersByGroupID(self, gID):
         cursor = self.conn.cursor()
         query = "select user_id, first_name, last_name, email, phone,  username from chat_group_members natural inner join users where chat_group_id = %s"
-        cursor.execute(query, (gID,))
+        try:
+            cursor.execute(query, (gID,))
+        except psycopg2.Error as e:
+            return
         result = []
         for row in cursor:
             result.append(row)
@@ -41,7 +50,10 @@ class GroupDAO:
     def getGroupByGroupID(self, gID):
         cursor = self.conn.cursor()
         query = "SELECT * FROM chat_groups WHERE chat_group_id = %s"
-        cursor.execute(query, (gID,))
+        try:
+            cursor.execute(query, (gID,))
+        except psycopg2.Error as e:
+            return
         result = cursor.fetchone()
         return result
 

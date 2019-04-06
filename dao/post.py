@@ -46,8 +46,11 @@ class PostDAO:
         cursor = self.conn.cursor()
         query = "SELECT post_id, count(*) as likes FROM reactions  where post_id = %s and reaction =%s GROUP BY post_id"
         cursor.execute(query, (pID, reaction, ))
-        likes = cursor.fetchone()
-        return likes
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
 
     def getListOfUsersWhoReactedPost(self, pID, reaction):
         cursor = self.conn.cursor()
@@ -88,20 +91,49 @@ class PostDAO:
         return result
 
     def getNumberOfRepliesPerDay(self):
-        return len(self.posts) #Just for demonstration
+        cursor = self.conn.cursor()
+        query = "SELECT reply_date AS day, count(*) AS total FROM reply GROUP BY reply_date"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
 
     def getNumberOfLikesPerDay(self):
-        return 25 #Just for demonstration
+        cursor = self.conn.cursor()
+        query = "SELECT reaction_date AS day, count(*) AS total FROM reactions WHERE reaction = 'like' GROUP BY reaction_date"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
 
     def getNumberOfDislikesPerDay(self):
-        return 15 #Just for demonstration
+        cursor = self.conn.cursor()
+        query = "SELECT reaction_date AS day, count(*) AS total FROM reactions WHERE reaction = 'dislike' GROUP BY reaction_date"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
 
     def getNumberOfRepliesForGivenPost(self, pID):
-        return 34 #Just for demonstration
+        cursor = self.conn.cursor()
+        query = "SELECT post_id, count(*) AS total_replies FROM reply WHERE post_id = %s GROUP BY post_id"
+        cursor.execute(query, (pID,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
 
     def addPost(self, gID, aID, message,media):
         return "Message posted id 5"
 
-    def getPostsPerDayByUser(self, uID):
-        return len(self.posts) #Just for demonstration
-
+    def getNumberOfPostsPerDayByUser(self, uID):
+        cursor = self.conn.cursor()
+        query = "SELECT post_date AS day, count(*) AS total FROM post WHERE user_id = %s GROUP BY post_date"
+        cursor.execute(query, (uID, ))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result

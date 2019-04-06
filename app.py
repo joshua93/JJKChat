@@ -118,8 +118,8 @@ def getPostByID(pID):
 
 # Statistics 2 Get total number of posts on a certain date
 @app.route('/JJKChat/user/<int:uID>/post/count', methods=['GET'])
-def getNumberOfPostPerDayByUser(uID):
-    return PostHandler().getNumberOfPostPerDayByUser(uID)
+def getPostsPerDayByUser(uID):
+    return PostHandler().getPostsPerDayByUser(uID)
 
 # Statistics 3
 @app.route('/JJKChat/replies/count', methods=['GET'])
@@ -152,9 +152,9 @@ def getNumberOfRepliesForGivenPost(pID):
     return PostHandler().getNumberOfRepliesForGivenPost(pID)
 
 #Statistics 7 Get specific user posts number by user id
-@app.route('/JJKChat/user/<int:uID>/post/today', methods=['GET'])
-def getPostsPerDayByUser(uID):
-    return PostHandler().getPostsPerDayByUser(uID)
+@app.route('/JJKChat/user/<int:uID>/postsperday', methods=['GET'])
+def getNumberOfPostsPerDayByUser(uID):
+    return PostHandler().getNumberOfPostsPerDayByUser(uID)
 
 @app.route('/JJKChat/user/mostactive', methods=['GET'])
 def getMostActiveUser():

@@ -1,6 +1,7 @@
 from flask import jsonify
 from dao.post import PostDAO
 from dictionaryMapping import *
+from dao.hashtag import HashtagDAO
 
 
 class PostHandler:
@@ -24,13 +25,18 @@ class PostHandler:
     def getNumberOfLikesForGivenPost(self, pID):
         dao = PostDAO()
         result = dao.getNumberOfReactionsForGivenPost(pID, "like")
-        mapped_result = mapReacCountToDict(result)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapReacCountToDict(r))
         return jsonify(mapped_result)
+
 
     def getNumberOfDislikesForGivenPost(self, pID):
         dao = PostDAO()
         result = dao.getNumberOfReactionsForGivenPost(pID, "dislike")
-        mapped_result = mapReacCountToDict(result)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapReacCountToDict(r))
         return jsonify(mapped_result)
 
     def getListOfUsersWhoLikedPost(self, pID):
@@ -79,32 +85,45 @@ class PostHandler:
         result = dao.getNumberOfPostPerDay()
         mapped_result = []
         for r in result:
-            mapped_result.append(mapNumOfPostsToDict(r))
+            mapped_result.append(mapInteractionPerDayToDict(r))
         return jsonify(mapped_result)
 
 
     def getNumberOfRepliesPerDay(self):
         dao = PostDAO()
         result = dao.getNumberOfRepliesPerDay()
-        return jsonify(Replies = result)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapInteractionPerDayToDict(r))
+        return jsonify(mapped_result)
 
     def getNumberOfLikesPerDay(self):
         dao = PostDAO()
         result = dao.getNumberOfLikesPerDay()
-        return jsonify(Likes = result)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapInteractionPerDayToDict(r))
+        return jsonify(mapped_result)
 
     def getNumberOfDislikesPerDay(self):
         dao = PostDAO()
         result = dao.getNumberOfDislikesPerDay()
-        return jsonify(Dislikes = result)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapInteractionPerDayToDict(r))
+        return jsonify(mapped_result)
 
     def getNumberOfRepliesForGivenPost(self, pID):
         dao = PostDAO()
         result = dao.getNumberOfRepliesForGivenPost(pID)
-        return jsonify(Replies = result)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapReplyCountToDict(r))
+        return jsonify(mapped_result)
 
     def addPost(self,gID, json):
         dao = PostDAO()
+        hdao = HashtagDAO
         if len(json) != 2:
             return jsonify(Error="Malformed post request"), 400
         else:
@@ -120,15 +139,14 @@ class PostHandler:
             else:
                 return jsonify(Error="Unexpected attributes in post request"), 400
 
-    def getPostsPerDayByUser(self,uID):
-        dao = PostDAO()
-        result = dao.getPostsPerDayByUser(uID)
-        return jsonify(Posts = result)
 
-    def getNumberOfPostPerDayByUser(self, uID):
+    def getNumberOfPostsPerDayByUser(self, uID):
         dao = PostDAO()
-        result = "5"
-        return  jsonify(result)
+        result = dao.getNumberOfPostsPerDayByUser(uID)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapInteractionPerDayToDict(r))
+        return jsonify(mapped_result)
 
     def react(self, gID, json):
         return "You reacted to this post"

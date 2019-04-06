@@ -51,7 +51,6 @@ class PostDAO:
             result.append(row)
         return result
 
-
     def getListOfUsersWhoReactedPost(self, pID, reaction):
         cursor = self.conn.cursor()
         query = "SELECT  user_id, first_name, last_name, username, reaction_date FROM reactions NATURAL INNER JOIN users WHERE post_id = %s AND reaction = %s"
@@ -60,26 +59,6 @@ class PostDAO:
         for row in cursor:
             result.append(row)
         return result
-
-    def getPostByID(self, pID):
-        post = list(filter(lambda u: u['post_id'] == pID, self.posts))
-        return post
-
-    def getMessageByPostID(self,pID):
-        message = list(filter(lambda u: u['post_id'] == pID, self.posts))
-        return message
-
-    def getMediaByPostID(self, pID):
-        media = list(filter(lambda u: u['post_id'] == pID, self.posts))
-        return media
-
-    def getAuthorByPostID(self, pID):
-        user = list(filter(lambda u: u['post_id'] == pID, self.posts))
-        return user
-
-    def getPostsByUserID(self, uID):
-        posts = list(filter(lambda u: u['post_author_id'] == uID, self.posts))
-        return posts
 
     def getNumberOfPostPerDay(self):
         cursor = self.conn.cursor()
@@ -126,9 +105,6 @@ class PostDAO:
             result.append(row)
         return result
 
-    def addPost(self, gID, aID, message,media):
-        return "Message posted id 5"
-
     def getNumberOfPostsPerDayByUser(self, uID):
         cursor = self.conn.cursor()
         query = "SELECT post_date AS day, count(*) AS total FROM post WHERE user_id = %s GROUP BY post_date"
@@ -137,3 +113,26 @@ class PostDAO:
         for row in cursor:
             result.append(row)
         return result
+
+    def getPostByID(self, pID):
+        post = list(filter(lambda u: u['post_id'] == pID, self.posts))
+        return post
+
+    def getMessageByPostID(self,pID):
+        message = list(filter(lambda u: u['post_id'] == pID, self.posts))
+        return message
+
+    def getMediaByPostID(self, pID):
+        media = list(filter(lambda u: u['post_id'] == pID, self.posts))
+        return media
+
+    def getAuthorByPostID(self, pID):
+        user = list(filter(lambda u: u['post_id'] == pID, self.posts))
+        return user
+
+    def getPostsByUserID(self, uID):
+        posts = list(filter(lambda u: u['post_author_id'] == uID, self.posts))
+        return posts
+
+    def addPost(self, gID, aID, message,media):
+        return "Message posted id 5"

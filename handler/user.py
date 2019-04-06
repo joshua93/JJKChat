@@ -65,6 +65,11 @@ class UserHandler:
 
         return jsonify(mapped_result)
 
+    def getMostActiveUser(self):
+        dao = UserDAO()
+        result = dao.getMostActiveUser()
+        return jsonify(result)
+
     def loginUser(self, json):
         dao = UserDAO()
         if json is None:
@@ -129,8 +134,3 @@ class UserHandler:
 
     def removeContactsbyUserID(self,uID,json):
         return "Contact removed"
-
-    def getMostActiveUser(self):
-        dao = UserDAO()
-        result = dao.getMostActiveUser()
-        return jsonify(result)

@@ -30,7 +30,6 @@ class PostHandler:
             mapped_result.append(mapReacCountToDict(r))
         return jsonify(mapped_result)
 
-
     def getNumberOfDislikesForGivenPost(self, pID):
         dao = PostDAO()
         result = dao.getNumberOfReactionsForGivenPost(pID, "dislike")
@@ -55,31 +54,6 @@ class PostHandler:
             mapped_result.append(mapToReactDict(r))
         return jsonify(mapped_result)
 
-    def getPostByID(self, pID):
-        dao = PostDAO()
-        result = dao.getPostByID(pID)
-        return jsonify(Post=result)
-
-    def getMessageByPostID(self, pID):
-        dao = PostDAO()
-        result = dao.getMessageByPostID(pID)
-        return jsonify(Message=result)
-
-    def getMediaByPostID(self,pID):
-        dao = PostDAO()
-        result = dao.getMediaByPostID(pID)
-        return jsonify(Contacts = result)
-
-    def getAuthorByPostID(self,pID):
-        dao = PostDAO()
-        result = dao.getAuthorByPostID(pID)
-        return jsonify(Author = result)
-
-    def getPostsByUserID(self,uID):
-        dao = PostDAO()
-        result = dao.getPostsByUserID(uID)
-        return jsonify(Post = result)
-
     def getNumberOfPostPerDay(self):
         dao = PostDAO()
         result = dao.getNumberOfPostPerDay()
@@ -87,7 +61,6 @@ class PostHandler:
         for r in result:
             mapped_result.append(mapInteractionPerDayToDict(r))
         return jsonify(mapped_result)
-
 
     def getNumberOfRepliesPerDay(self):
         dao = PostDAO()
@@ -121,6 +94,39 @@ class PostHandler:
             mapped_result.append(mapReplyCountToDict(r))
         return jsonify(mapped_result)
 
+    def getNumberOfPostsPerDayByUser(self, uID):
+        dao = PostDAO()
+        result = dao.getNumberOfPostsPerDayByUser(uID)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapInteractionPerDayToDict(r))
+        return jsonify(mapped_result)
+
+    def getPostByID(self, pID):
+        dao = PostDAO()
+        result = dao.getPostByID(pID)
+        return jsonify(Post=result)
+
+    def getMessageByPostID(self, pID):
+        dao = PostDAO()
+        result = dao.getMessageByPostID(pID)
+        return jsonify(Message=result)
+
+    def getMediaByPostID(self,pID):
+        dao = PostDAO()
+        result = dao.getMediaByPostID(pID)
+        return jsonify(Contacts = result)
+
+    def getAuthorByPostID(self,pID):
+        dao = PostDAO()
+        result = dao.getAuthorByPostID(pID)
+        return jsonify(Author = result)
+
+    def getPostsByUserID(self,uID):
+        dao = PostDAO()
+        result = dao.getPostsByUserID(uID)
+        return jsonify(Post = result)
+
     def addPost(self,gID, json):
         dao = PostDAO()
         hdao = HashtagDAO
@@ -138,15 +144,6 @@ class PostHandler:
                 return jsonify(gID), 201
             else:
                 return jsonify(Error="Unexpected attributes in post request"), 400
-
-
-    def getNumberOfPostsPerDayByUser(self, uID):
-        dao = PostDAO()
-        result = dao.getNumberOfPostsPerDayByUser(uID)
-        mapped_result = []
-        for r in result:
-            mapped_result.append(mapInteractionPerDayToDict(r))
-        return jsonify(mapped_result)
 
     def react(self, gID, json):
         return "You reacted to this post"

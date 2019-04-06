@@ -55,7 +55,7 @@ def mapReacCountToDict(row):
     result['reactions'] = row[1]
     return result
 
-def mapNumOfPostsToDict(row):
+def mapInteractionPerDayToDict(row):
     result = {}
     result['day'] = row[0]
     result['total'] = row[1]
@@ -65,4 +65,10 @@ def mapTrendingTopicToDict(row):
     result = {}
     result['hashtag'] = row[0]
     result['position'] = row[1]
+    return result
+
+def mapReplyCountToDict(row):
+    result = {}
+    result['post_id'] = row[0]
+    result['total_replies'] = row[1]
     return result

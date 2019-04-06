@@ -60,7 +60,7 @@ class PostDAO:
             result.append(row)
         return result
 
-    def getNumberOfPostPerDay(self):
+    def getNumberOfPostsPerDay(self):
         cursor = self.conn.cursor()
         query = "SELECT post_date AS day, count(*) AS total FROM post GROUP BY post_date"
         cursor.execute(query)

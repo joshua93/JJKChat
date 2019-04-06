@@ -68,7 +68,10 @@ class UserHandler:
     def getMostActiveUser(self):
         dao = UserDAO()
         result = dao.getMostActiveUser()
-        return jsonify(result)
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapMostActiveUserToDict(r))
+        return jsonify(mapped_result)
 
     def loginUser(self, json):
         dao = UserDAO()

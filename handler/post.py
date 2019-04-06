@@ -128,9 +128,12 @@ class PostHandler:
             return jsonify(Error="Not found"), 404
         mapped_result = mapInteractionPerDayToDict(result)
         return jsonify(mapped_result)
+
     def getRepliesByPostID(self, pID):
         dao = PostDAO()
         result = dao.getRepliesByPostID(pID)
+        if not result:
+            return jsonify(Error="Not found"), 404
         mapped_result = []
         for r in result:
             mapped_result.append(mapReplyToDict(r))

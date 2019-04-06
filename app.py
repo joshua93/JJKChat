@@ -121,19 +121,17 @@ def getAllPost():
 def getPostByID(pID):
     return PostHandler().getPostByID(pID)
 
-################################# MAYBE DELETE
 #Get replies from post by post id
 @app.route('/JJKChat/post/<int:pID>/replies', methods=['GET'])
 def getRepliesByPostID(pID):
     return PostHandler().getRepliesByPostID(pID)
 
-
+#DELETEEEEEEEEEEEE???
 # Statistics 2 Get total number of posts on a certain date
-@app.route('/JJKChat/user/<int:uID>/post/count', methods=['GET'])
-def getNumberOfPostPerDayByUser(uID):
-    return PostHandler().getNumberOfPostPerDayByUser(uID)
+# @app.route('/JJKChat/user/<int:uID>/post/count', methods=['GET'])
+# def getNumberOfPostPerDayByUser(uID):
+#     return PostHandler().getNumberOfPostPerDayByUser(uID)
 
-################################# MAYBE DELETE
 # Statistics 3
 @app.route('/JJKChat/replies/count', methods=['GET'])
 def getNumberOfRepliesPerDay():

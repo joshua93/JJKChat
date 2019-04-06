@@ -54,9 +54,9 @@ class PostHandler:
             mapped_result.append(mapToReactDict(r))
         return jsonify(mapped_result)
 
-    def getNumberOfPostPerDay(self):
+    def getNumberOfPostsPerDay(self):
         dao = PostDAO()
-        result = dao.getNumberOfPostPerDay()
+        result = dao.getNumberOfPostsPerDay()
         mapped_result = []
         for r in result:
             mapped_result.append(mapInteractionPerDayToDict(r))

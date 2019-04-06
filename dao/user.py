@@ -97,4 +97,21 @@ class UserDAO:
         return "Done"
 
     def getMostActiveUser(self):
-        return list(filter(lambda u: u['user_id'] == 2, self.contacts))  #Second user of Data table. Just for demonstration
+        cursor = self.conn.cursor()
+        query = """
+                  SELECT user_id, SUM(r) AS interactions
+                  FROM(
+                  SELECT user_id, count(*) AS r from reactions GROUP BY user_id
+                  UNION ALL
+                  SELECT user_id, count(*) FROM post GROUP BY user_id
+                  UNION ALL
+                  SELECT user_id, count(*) AS re FROM reply GROUP BY user_id
+                  ) AS queseyo
+                  GROUP BY user_id
+                  ORDER BY interactions DESC
+                  """
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result

@@ -87,6 +87,12 @@ def getPostByGroupId(gID):
     elif request.method == 'POST':
         return PostHandler().addPost(gID,request.json)
 
+#Get all posts by group id
+@app.route('/JJKChat/group/<int:gID>/detailedpost', methods=['GET'])
+def getPostByGroupIdDETAILED(gID):
+    if request.method == 'GET':
+        return PostHandler().getPostByGroupIdDETAILED(gID)
+
 @app.route('/JJKChat/group/<int:gID>/post/react', methods=['GET','POST'])
 def reactToaPost(gID):
     if request.method == 'GET':
@@ -115,6 +121,19 @@ def getAllPost():
 def getPostByID(pID):
     return PostHandler().getPostByID(pID)
 
+################################# MAYBE DELETE
+#Get replies from post by post id
+@app.route('/JJKChat/post/<int:pID>/replies', methods=['GET'])
+def getRepliesByPostID(pID):
+    return PostHandler().getRepliesByPostID(pID)
+
+
+# Statistics 2 Get total number of posts on a certain date
+@app.route('/JJKChat/user/<int:uID>/post/count', methods=['GET'])
+def getNumberOfPostPerDayByUser(uID):
+    return PostHandler().getNumberOfPostPerDayByUser(uID)
+
+################################# MAYBE DELETE
 # Statistics 3
 @app.route('/JJKChat/replies/count', methods=['GET'])
 def getNumberOfRepliesPerDay():

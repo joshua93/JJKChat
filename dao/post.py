@@ -139,6 +139,22 @@ class PostDAO:
         except psycopg2.Error as e:
             return
         result = cursor.fetchone()
+    def getNumberOfPostPerDay(self):
+        cursor = self.conn.cursor()
+        query = "SELECT post_date AS day, count(*) AS total FROM post GROUP BY post_date"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getRepliesByPostID(self, pID):
+        cursor = self.conn.cursor()
+        query = "SELECT reply_id, reply_date, reply_message, post_id, username, first_name, last_name FROM reply natural inner join users WHERE post_id =%s"
+        cursor.execute(query,(pID, ))
+        result = []
+        for row in cursor:
+            result.append(row)
         return result
 
     def getPostByID(self, pID):
@@ -160,6 +176,18 @@ class PostDAO:
     def getPostsByUserID(self, uID):
         posts = list(filter(lambda u: u['post_author_id'] == uID, self.posts))
         return posts
+
+    def getNumberOfRepliesPerDay(self):
+        return len(self.posts) #Just for demonstration
+
+    def getNumberOfLikesPerDay(self):
+        return 25 #Just for demonstration
+
+    def getNumberOfDislikesPerDay(self):
+        return 15 #Just for demonstration
+
+    def getNumberOfRepliesForGivenPost(self, pID):
+        return 34 #Just for demonstration
 
     def addPost(self, gID, aID, message,media):
         return "Message posted id 5"

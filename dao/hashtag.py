@@ -26,7 +26,10 @@ class HashtagDAO:
     def getTrendingHashtag(self):
         cursor = self.conn.cursor()
         query = "SELECT hashtag, ROW_NUMBER ( )  OVER(ORDER BY count(*) DESC) AS position FROM hashtags GROUP BY hashtag"
-        cursor.execute(query)
+        try:
+            cursor.execute(query)
+        except psycopg2.Error as e:
+            return
         result = []
         for row in cursor:
             result.append(row)

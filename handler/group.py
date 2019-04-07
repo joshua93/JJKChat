@@ -8,6 +8,8 @@ class GroupHandler:
     def getAllGroups(self):
         dao = GroupDAO()
         result = dao.getAllGroups()
+        if not result:
+            return jsonify(Error="Not found"), 404
         mapped_result = []
         for r in result:
             mapped_result.append(mapGroupToDict(r))
@@ -16,12 +18,16 @@ class GroupHandler:
     def getGroupOwnerByGroupID(self, gID):
         dao = GroupDAO()
         result = dao.getGroupOwnerByGroupID(gID)
+        if not result:
+            return jsonify(Error="Not found"), 404
         mapped_result = mapUserToDict(result)
         return jsonify(mapped_result)
 
     def getGroupMembersByGroupID(self, gID):
         dao = GroupDAO()
         result = dao.getGroupMembersByGroupID(gID)
+        if not result:
+            return jsonify(Error="Not found"), 404
         mapped_result = []
         for r in result:
             mapped_result.append(mapUserToDict(r))
@@ -30,6 +36,8 @@ class GroupHandler:
     def getGroupByGroupID(self, gID):
         dao = GroupDAO()
         result = dao.getGroupByGroupID(gID)
+        if not result:
+            return jsonify(Error="Not found"), 404
         mapped_result = mapGroupToDict(result)
         return jsonify(mapped_result)
 

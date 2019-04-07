@@ -87,6 +87,12 @@ def getPostByGroupId(gID):
     elif request.method == 'POST':
         return PostHandler().addPost(gID,request.json)
 
+#Get all posts by group id
+@app.route('/JJKChat/group/<int:gID>/detailedpost', methods=['GET'])
+def getPostByGroupIdDETAILED(gID):
+    if request.method == 'GET':
+        return PostHandler().getPostByGroupIdDETAILED(gID)
+
 @app.route('/JJKChat/group/<int:gID>/post/react', methods=['GET','POST'])
 def reactToaPost(gID):
     if request.method == 'GET':
@@ -115,11 +121,16 @@ def getAllPost():
 def getPostByID(pID):
     return PostHandler().getPostByID(pID)
 
+#Get replies from post by post id
+@app.route('/JJKChat/post/<int:pID>/replies', methods=['GET'])
+def getRepliesByPostID(pID):
+    return PostHandler().getRepliesByPostID(pID)
 
+#DELETEEEEEEEEEEEE???
 # Statistics 2 Get total number of posts on a certain date
-@app.route('/JJKChat/user/<int:uID>/post/count', methods=['GET'])
-def getNumberOfPostPerDayByUser(uID):
-    return PostHandler().getNumberOfPostPerDayByUser(uID)
+# @app.route('/JJKChat/user/<int:uID>/post/count', methods=['GET'])
+# def getNumberOfPostPerDayByUser(uID):
+#     return PostHandler().getNumberOfPostPerDayByUser(uID)
 
 # Statistics 3
 @app.route('/JJKChat/replies/count', methods=['GET'])
@@ -152,9 +163,9 @@ def getNumberOfRepliesForGivenPost(pID):
     return PostHandler().getNumberOfRepliesForGivenPost(pID)
 
 #Statistics 7 Get specific user posts number by user id
-@app.route('/JJKChat/user/<int:uID>/post/today', methods=['GET'])
-def getPostsPerDayByUser(uID):
-    return PostHandler().getPostsPerDayByUser(uID)
+@app.route('/JJKChat/user/<int:uID>/postsperday', methods=['GET'])
+def getNumberOfPostsPerDayByUser(uID):
+    return PostHandler().getNumberOfPostsPerDayByUser(uID)
 
 @app.route('/JJKChat/user/mostactive', methods=['GET'])
 def getMostActiveUser():
@@ -169,9 +180,10 @@ def getListOfUsersWhoLikedPost(pID):
 def getListOfUsersWhoDislikedPost(pID):
     return PostHandler().getListOfUsersWhoDislikedPost(pID)
 
+# Statistics 2 Get total number of posts on a certain date
 @app.route('/JJKChat/post/countperday', methods=['GET'])
-def getNumberOfPostPerDay():
-    return PostHandler().getNumberOfPostPerDay()
+def getNumberOfPostsPerDay():
+    return PostHandler().getNumberOfPostsPerDay()
 
 @app.route('/JJKChat/hashtag/trending', methods=['GET'])
 def getTrendingTopic():

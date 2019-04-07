@@ -8,6 +8,8 @@ class UserHandler:
     def getAllUsers(self):
         dao = UserDAO()
         result = dao.getAllUsers()
+        if not result:
+            return jsonify(Error="Not found"), 404
         mapped_result = []
         for r in result:
             mapped_result.append(mapUserToDict(r))
@@ -16,12 +18,16 @@ class UserHandler:
     def getUserById(self, uID):
         dao = UserDAO()
         result = dao.getUserByID(uID)
+        if not result:
+            return jsonify(Error="Not found"), 404
         mapped_result = mapUserToDict(result)
         return jsonify(mapped_result)
 
     def getOwnedGroupByUserID(self, uID):
         dao = UserDAO()
         result = dao.getOwnedGroupByUserID(uID)
+        if not result:
+            return jsonify(Error="Not found"), 404
         mapped_result = []
         for r in result:
             mapped_result.append(mapGroupToDict(r))
@@ -30,6 +36,8 @@ class UserHandler:
     def getContactsbyUserID(self, uID):
         dao = UserDAO()
         result = dao.getContactsByUserID(uID)
+        if not result:
+            return jsonify(Error="Not found"), 404
         mapped_result = []
         for r in result:
             mapped_result.append(mapUserToDict(r))
@@ -38,6 +46,8 @@ class UserHandler:
     def getToWhatGroupUserIsMember(self, uID):
         dao = UserDAO()
         result = dao.getToWhatGroupUserIsMember(uID)
+        if not result:
+            return jsonify(Error="Not found"), 404
         mapped_result = []
         for r in result:
             mapped_result.append(mapGroupToDict(r))
@@ -50,6 +60,7 @@ class UserHandler:
         username = args.get("username")
         user_id = args.get("user_id")
         dao = UserDAO()
+        result = None
         if email:
             result = dao.getUserByEmail(email)
         elif phone:
@@ -61,8 +72,20 @@ class UserHandler:
         elif user_id:
             result = dao.getUserByID(user_id)
 
+        if not result:
+            return jsonify(Error="Not found"), 404
         mapped_result = mapUserToDict(result)
 
+        return jsonify(mapped_result)
+
+    def getMostActiveUser(self):
+        dao = UserDAO()
+        result = dao.getMostActiveUser()
+        if not result:
+            return jsonify(Error="Not found"), 404
+        mapped_result = []
+        for r in result:
+            mapped_result.append(mapMostActiveUserToDict(r))
         return jsonify(mapped_result)
 
     def loginUser(self, json):
@@ -129,8 +152,3 @@ class UserHandler:
 
     def removeContactsbyUserID(self,uID,json):
         return "Contact removed"
-
-    def getMostActiveUser(self):
-        dao = UserDAO()
-        result = dao.getMostActiveUser()
-        return jsonify(result)

@@ -80,6 +80,7 @@ def mapMostActiveUserToDict(row):
     result['user_id'] = row[0]
     result['interactions'] = row[1]
     return result
+
 def mapReplyToDict(row):
     result = {}
     result['reply_id'] = row[0]

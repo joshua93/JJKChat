@@ -87,7 +87,7 @@ class UserDAO:
     def getMostActiveUser(self):
         cursor = self.conn.cursor()
         query = """
-                     SELECT user_id, SUM(r) AS interactions
+                     SELECT user_id, CAST (SUM(r) AS INTEGER)AS interactions
                      FROM(
                      SELECT user_id, count(*) AS r from reactions GROUP BY user_id
                      UNION ALL

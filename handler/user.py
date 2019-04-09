@@ -85,7 +85,7 @@ class UserHandler:
             return jsonify(Error="Not found"), 404
         mapped_result = []
         for r in result:
-            mapped_result.append(str(mapMostActiveUserToDict(r)))
+            mapped_result.append(mapMostActiveUserToDict(r))
         return jsonify(mapped_result)
 
     def loginUser(self, json):

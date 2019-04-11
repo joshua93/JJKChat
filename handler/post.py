@@ -190,8 +190,17 @@ class PostHandler:
             else:
                 return jsonify(Error="Unexpected attributes in post request"), 400
 
-    def react(self, gID, json):
-        return "You reacted to this post"
+    def react(self,json):
+        if json is None:
+            return jsonify(Error="Malformed post request"), 400
+        else:
+            user_id = json['user_id']
+            post_id = json['post_id']
+            dao = PostDAO()
+            result = dao.reactToPost(user_id,post_id)
+            return jsonify("Post created")
+
+
 
     def getReaction(self, json):
         return"55 likes"

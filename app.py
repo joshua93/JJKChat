@@ -131,13 +131,6 @@ def getPostByGroupIdDETAILED(gID):
     if request.method == 'GET':
         return PostHandler().getPostByGroupIdDETAILED(gID)
 
-@app.route('/JJKChat/group/<int:gID>/post/react', methods=['GET','POST'])
-def reactToaPost(gID):
-    if request.method == 'GET':
-        return PostHandler().getReaction(request.json)
-    elif request.method == 'POST':
-        return PostHandler().react(gID,request.json)
-
 #Get specific group by ID
 @app.route('/JJKChat/group/<int:gID>', methods=['GET'])
 def getGroupByID(gID):
@@ -163,6 +156,10 @@ def getPostByID(pID):
 @app.route('/JJKChat/post/<int:pID>/replies', methods=['GET'])
 def getRepliesByPostID(pID):
     return PostHandler().getRepliesByPostID(pID)
+
+@app.route('/JJKChat/post/react', methods=['POST'])
+def reactToaPost():
+        return PostHandler().react(request.json)
 
 #DELETEEEEEEEEEEEE???
 # Statistics 2 Get total number of posts on a certain date

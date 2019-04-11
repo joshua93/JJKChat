@@ -186,3 +186,13 @@ class PostDAO:
 
     def addPost(self, gID, aID, message,media):
         return "Message posted id 5"
+
+    def reactToPost(self,uID,pID):
+        cursor = self.conn.cursor()
+        query = "INSERT INTO reactions VALUES ('like',%s,%s,now()) RETURNING  user_id, post_id"
+        cursor.execute(query, (uID, pID,))
+        result = cursor.fetchone()
+        (uID, pID) = result[0], result[1]
+        self.conn.commit()
+        return uID, pID
+

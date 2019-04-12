@@ -56,6 +56,10 @@ def home():
 def loginUser():
     return UserHandler().loginUser(request.json)
 
+@app.route('/JJKChat/register', methods=['POST'])
+def registerUser():
+    return UserHandler().registerUser(request.json)
+
 #Get all users #Search for a user #Register a user
 @app.route('/JJKChat/user', methods=['GET','POST'])
 def getAllUsers():
@@ -64,8 +68,6 @@ def getAllUsers():
             return UserHandler().searchUser(request.args)
         else:
             return UserHandler().getAllUsers()
-    if request.method == 'POST':
-        return UserHandler().registerUser(request.json)
 
 #Gets contacts of an user . Add user to contacts
 @app.route('/JJKChat/user/<int:uID>/contact', methods=['GET','POST','DELETE'])

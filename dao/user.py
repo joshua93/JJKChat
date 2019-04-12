@@ -109,11 +109,22 @@ class UserDAO:
         return result
 
     def loginUser(self, username, password):
-        login = "Login Succesfull using " + username + " and " + password
-        return login
+        cursor = self.conn.cursor()
+        query = "SELECT user_id, password = %s as authenticate from person where username = %s"
+        cursor.execute(query, (password, username,))
+        result = cursor.fetchone()
+        if not result:
+            return None
+        return result
 
-    def registerUser(self,username, password, firstname, lastname, phone, email):
-        return "5"
+    def registerUser(self,first_name, last_name, email, phone, password, username):
+        cursor = self.conn.cursor()
+        query = "INSERT INTO users (first_name, last_name, email, phone, password, username) VALUES(%s,%s,%s,%s,%s,%s) RETURNING user_id;"
+        cursor.execute(query, (first_name, last_name, email, phone, password, username,))
+        result = cursor.fetchone()
+        user_id = result[0]
+        self.conn.commit()
+        return user_id
 
     def getUserByFirstName(self,uFN):
         user = list(filter(lambda u: u['first_name'] == uFN, self.users))

@@ -196,3 +196,13 @@ class PostDAO:
         self.conn.commit()
         return uID, pID
 
+    def dislikeaPost(self,uID,pID):
+        cursor = self.conn.cursor()
+        query = "INSERT INTO reactions VALUES ('dislike',%s,%s,now()) RETURNING  user_id, post_id"
+        cursor.execute(query, (uID, pID,))
+        result = cursor.fetchone()
+        (uID, pID) = result[0], result[1]
+        self.conn.commit()
+        return uID, pID
+
+

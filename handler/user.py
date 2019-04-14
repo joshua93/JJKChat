@@ -98,8 +98,13 @@ class UserHandler:
 
         if username and password:
             result = dao.loginUser(username,password)
-            return jsonify(result)
+            if not result:
+                return jsonify(Error="Error Not Found"), 404
+            mapped = {}
+            mapped['user_id'] = result[0]
+            mapped['authenticated'] = result[1]
 
+            return jsonify(Authentication = mapped)
         else:
             return jsonify(Error="Unexpected attributes in post request"), 400
 
@@ -115,9 +120,8 @@ class UserHandler:
             phone = json['phone']
             email = json['email']
             if username and password and firstname and lastname and phone and email:
-                uID = dao.registerUser(username, password, firstname, lastname, phone, email)
-                result = "User created with id " + uID
-                return jsonify(result), 201
+                user_id = dao.registerUser(username, password, firstname, lastname, phone, email)
+                return jsonify(user_id), 201
             else:
                 return jsonify(Error="Unexpected attributes in post request"), 400
 

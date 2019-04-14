@@ -26,7 +26,6 @@ class PostHandler:
             mapped_result.append(mapPostToDict(r))
         return jsonify(mapped_result)
 
-
     def getPostByGroupIdDETAILED(self,gID):
         dao = PostDAO()
         result = dao.getPostsByGroupID(gID)
@@ -209,8 +208,6 @@ class PostHandler:
             dao = PostDAO()
             result = dao.dislikeaPost(user_id,post_id)
             return jsonify(result)
-
-
 
     def getReaction(self, json):
         return"55 likes"

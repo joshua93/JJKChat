@@ -125,6 +125,35 @@ class UserHandler:
             else:
                 return jsonify(Error="Unexpected attributes in post request"), 400
 
+    # def addUserToContactList(self, uID, json):
+    #     dao = UserDAO()
+    #     if json.get('firstname')==None or json.get('lastname')==None\
+    #             or not(json.get('phone')==None or json.get('email')==None):
+    #         return jsonify(Error="Malformed post request"), 400
+    #     else:
+    #         firstname = json['firstname']
+    #         lastname = json['lastname']
+    #
+    #         if json.get('phone')!=None:
+    #             phone = json['phone']
+    #             email = None
+    #         elif json.get('email')!=None:
+    #             email = json['email']
+    #             phone = None
+    #         else:
+    #             phone = email = None
+    #
+    #         if firstname and lastname and phone:
+    #             uID = dao.addContact(uID, firstname, lastname, phone, None)
+    #             result = "User was added to contactlist"
+    #             return jsonify(result), 201
+    #         elif firstname and lastname and email:
+    #             uID = dao.addContact(uID, firstname, lastname, None, email)
+    #             result = "User was added to contactlist"
+    #             return jsonify(result), 201
+    #         else:
+    #             return jsonify(Error="Unexpected attributes in post request"), 400
+
     def addUserToContactList(self, uID, json):
         dao = UserDAO()
         if json.get('firstname')==None or json.get('lastname')==None\
@@ -153,6 +182,7 @@ class UserHandler:
                 return jsonify(result), 201
             else:
                 return jsonify(Error="Unexpected attributes in post request"), 400
+
 
     def removeContactsbyUserID(self,uID,json):
         return "Contact removed"

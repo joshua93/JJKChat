@@ -146,5 +146,8 @@ class UserDAO:
         posts = list(filter(lambda u: u['user_id'] == uID, self.users))
         return posts
 
-    def addContact(self,uID, firstname, lastname, phone, email):
+    def addContact(self, uID, contact_uID):
+        cursor = self.conn.cursor()
+        query = "INSERT INTO contact VALUES(%s,%s) RETURNING user_id;"
+        cursor.execute(query, (uID, contact_uID,))
         return "Done"

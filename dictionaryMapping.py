@@ -77,9 +77,10 @@ def mapReplyCountToDict(row):
 
 def mapMostActiveUserToDict(row):
     result = {}
-    result['post_id'] = row[0]
+    result['user_id'] = row[0]
     result['interactions'] = row[1]
     return result
+
 def mapReplyToDict(row):
     result = {}
     result['reply_id'] = row[0]

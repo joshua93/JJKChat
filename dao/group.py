@@ -73,4 +73,10 @@ class GroupDAO:
         return "Contact added to group"
 
     def removeContactFromGroup(self,gId,uID):
-        return "Contact removed from group"
+        cursor = self.conn.cursor()
+        query = "DELETE FROM chat_group_members WHERE chat_group_id= %s AND user_id = %s"
+        cursor.execute(query, (gId, uID,))
+        # result = cursor.fetchone()
+        # # (uID, pID) = result[0], result[1]
+        self.conn.commit()
+        return uID

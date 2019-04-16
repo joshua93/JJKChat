@@ -56,6 +56,10 @@ def home():
 def loginUser():
     return UserHandler().loginUser(request.json)
 
+@app.route('/JJKChat/register', methods=['POST'])
+def registerUser():
+    return UserHandler().registerUser(request.json)
+
 #Get all users #Search for a user #Register a user
 @app.route('/JJKChat/user', methods=['GET','POST'])
 def getAllUsers():
@@ -64,8 +68,6 @@ def getAllUsers():
             return UserHandler().searchUser(request.args)
         else:
             return UserHandler().getAllUsers()
-    if request.method == 'POST':
-        return UserHandler().registerUser(request.json)
 
 #Gets contacts of an user . Add user to contacts
 @app.route('/JJKChat/user/<int:uID>/contact', methods=['GET','POST','DELETE'])
@@ -131,13 +133,6 @@ def getPostByGroupIdDETAILED(gID):
     if request.method == 'GET':
         return PostHandler().getPostByGroupIdDETAILED(gID)
 
-@app.route('/JJKChat/group/<int:gID>/post/react', methods=['GET','POST'])
-def reactToaPost(gID):
-    if request.method == 'GET':
-        return PostHandler().getReaction(request.json)
-    elif request.method == 'POST':
-        return PostHandler().react(gID,request.json)
-
 #Get specific group by ID
 @app.route('/JJKChat/group/<int:gID>', methods=['GET'])
 def getGroupByID(gID):
@@ -163,6 +158,14 @@ def getPostByID(pID):
 @app.route('/JJKChat/post/<int:pID>/replies', methods=['GET'])
 def getRepliesByPostID(pID):
     return PostHandler().getRepliesByPostID(pID)
+
+@app.route('/JJKChat/post/like', methods=['POST'])
+def likeaPost():
+        return PostHandler().likeaPost(request.json)
+
+@app.route('/JJKChat/post/dislike', methods=['POST'])
+def dislikeaPost():
+        return PostHandler().dislikeaPost(request.json)
 
 #DELETEEEEEEEEEEEE???
 # Statistics 2 Get total number of posts on a certain date

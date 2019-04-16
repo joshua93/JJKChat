@@ -84,7 +84,7 @@ class GroupHandler:
         if len(json) != 1:
             return jsonify(Error="Malformed post request"), 400
         else:
-            contactid = json['contactid']
+            contactid = json['user_id']
             if contactid:
                 result = dao.removeContactFromGroup(gID, contactid)
                 return jsonify(result), 201

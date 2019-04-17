@@ -91,3 +91,8 @@ def mapReplyToDict(row):
     result['first_name'] = row[5]
     result['last_name'] = row[6]
     return result
+
+def mapContact(row):
+    result = {}
+    result['user_id'] = row[0]
+    return result

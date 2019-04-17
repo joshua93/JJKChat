@@ -78,6 +78,7 @@ class UserHandler:
 
         return jsonify(mapped_result)
 
+
     def getMostActiveUser(self):
         dao = UserDAO()
         result = dao.getMostActiveUser()
@@ -156,32 +157,53 @@ class UserHandler:
 
     def addUserToContactList(self, uID, json):
         dao = UserDAO()
-        if json.get('firstname')==None or json.get('lastname')==None\
-                or not(json.get('phone')==None or json.get('email')==None):
+        if json.get('first_name')==None or json.get('last_name')==None or (json.get('phone')==None and json.get('email')==None):
             return jsonify(Error="Malformed post request"), 400
         else:
-            firstname = json['firstname']
-            lastname = json['lastname']
+            firstname = json['first_name']
+            lastname = json['last_name']
 
-            if json.get('phone')!=None:
+            if json.get('phone')!=None and json.get('email')!=None:
                 phone = json['phone']
-                email = None
+                email = json['email']
             elif json.get('email')!=None:
                 email = json['email']
                 phone = None
-            else:
-                phone = email = None
+            elif json.get('phone')!=None:
+                email = None
+                phone = json['phone']
 
-            if firstname and lastname and phone:
-                uID = dao.addContact(uID, firstname, lastname, phone, None)
+            if firstname and lastname and phone and email:
+                contact_uID = dao.getUserID1(firstname, lastname, email, phone)
+                if contact_uID == None:
+                    result = "User does not exist"
+                    return jsonify(result), 404
+                mappedContact = mapContact(contact_uID)
+                dao.addContact(uID, contact_uID[0])
                 result = "User was added to contactlist"
                 return jsonify(result), 201
+
+            elif firstname and lastname and phone:
+                contact_uID = dao.getUserID2(firstname, lastname, phone)
+                if contact_uID == None:
+                    result = "User does not exist"
+                    return jsonify(result), 404
+                mappedContact = mapContact(contact_uID)
+                dao.addContact(uID, contact_uID[0])
+                result = "User was added to contactlist"
+                return jsonify(result), 201
+
             elif firstname and lastname and email:
-                uID = dao.addContact(uID, firstname, lastname, None, email)
+                contact_uID = dao.getUserID3(firstname, lastname, email)
+                if contact_uID == None:
+                    result = "User does not exist"
+                    return jsonify(result), 404
+                mappedContact = mapContact(contact_uID)
+                dao.addContact(uID, contact_uID[0])
+                print(contact_uID)
                 result = "User was added to contactlist"
                 return jsonify(result), 201
-            else:
-                return jsonify(Error="Unexpected attributes in post request"), 400
+
 
 
     def removeContactsbyUserID(self,uID,json):

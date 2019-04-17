@@ -161,3 +161,11 @@ class UserDAO:
         cursor.execute(query, (uID, contact_uID,))
         self.conn.commit()
         return "Done"
+
+    def deleteContact(self, uID, contact_uID):
+        cursor = self.conn.cursor()
+        query = "DELETE FROM contact WHERE user_id = %s AND contact_user_id = %s RETURNING contact_user_id"
+        cursor.execute(query, (uID, contact_uID,))
+        result = cursor.fetchone()
+        self.conn.commit()
+        return result

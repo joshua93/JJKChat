@@ -72,7 +72,7 @@ class PostDAO:
 
     def getNumberOfPostsPerDay(self):
         cursor = self.conn.cursor()
-        query = "SELECT post_date AS day, count(*) AS total FROM post GROUP BY post_date"
+        query = "SELECT post_date AS day, count(*) AS total FROM post GROUP BY post_date ORDER by post_date asc"
         try:
             cursor.execute(query)
         except psycopg2.Error as e:

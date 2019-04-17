@@ -43,29 +43,19 @@ class GroupHandler:
 
     def createGroup(self, json):
         dao = GroupDAO()
-        if len(json) != 2:
-            return jsonify(Error="Malformed post request"), 400
-        else:
-            groupname = json['groupname']
-            ownerId = json['ownerid']
-            if groupname and ownerId:
-                result = dao.createGroup(groupname, ownerId)
-                return jsonify(result), 201
-            else:
-                return jsonify(Error="Unexpected attributes in post request"), 400
+        chat_name = json['chat_name']
+        ownerId = json['user_id']
+        result = dao.createGroup(chat_name, ownerId)
+        return jsonify(result), 201
+
 
     def deleteGroup(self, json):
         dao = GroupDAO()
-        if len(json) != 2:
-            return jsonify(Error="Malformed post request"), 400
-        else:
-            groupId = json['groupid']
-            ownerId = json['ownerid']
-            if groupId and ownerId:
-                result = dao.deleteGroup(groupId, ownerId)
-                return jsonify(result), 201
-            else:
-                return jsonify(Error="Unexpected attributes in post request"), 400
+        chat_group_id = json['chat_group_id']
+        ownerId = json['user_id']
+        result = dao.deleteGroup(chat_group_id, ownerId)
+        return jsonify(result), 201
+
 
     def addMember(self, gID, json):
         dao = GroupDAO()

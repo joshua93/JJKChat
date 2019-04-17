@@ -207,4 +207,5 @@ class UserHandler:
 
 
     def removeContactsbyUserID(self,uID,json):
-        return "Contact removed"
+        dao = UserDAO()
+        

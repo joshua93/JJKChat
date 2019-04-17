@@ -84,7 +84,7 @@ class PostDAO:
 
     def getNumberOfRepliesPerDay(self):
         cursor = self.conn.cursor()
-        query = "SELECT reply_date AS day, count(*) AS total FROM reply GROUP BY reply_date"
+        query = "SELECT reply_date AS day, count(*) AS total FROM reply GROUP BY reply_date ORDER by reply_date asc"
         try:
             cursor.execute(query)
         except psycopg2.Error as e:
@@ -96,7 +96,7 @@ class PostDAO:
 
     def getNumberOfLikesPerDay(self):
         cursor = self.conn.cursor()
-        query = "SELECT reaction_date AS day, count(*) AS total FROM reactions WHERE reaction = 'like' GROUP BY reaction_date"
+        query = "SELECT reaction_date AS day, count(*) AS total FROM reactions WHERE reaction = 'like' GROUP BY reaction_date ORDER by reaction_date asc"
         try:
             cursor.execute(query)
         except psycopg2.Error as e:
@@ -108,7 +108,7 @@ class PostDAO:
 
     def getNumberOfDislikesPerDay(self):
         cursor = self.conn.cursor()
-        query = "SELECT reaction_date AS day, count(*) AS total FROM reactions WHERE reaction = 'dislike' GROUP BY reaction_date"
+        query = "SELECT reaction_date AS day, count(*) AS total FROM reactions WHERE reaction = 'dislike' GROUP BY reaction_date ORDER by reaction_date asc"
         try:
             cursor.execute(query)
         except psycopg2.Error as e:

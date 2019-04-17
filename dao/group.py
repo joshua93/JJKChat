@@ -57,9 +57,16 @@ class GroupDAO:
         result = cursor.fetchone()
         return result
 
-    def createGroup(self,groupname, ownerId):
-        gID = "Group " + groupname + " created " + ownerId
-        return gID
+    def createGroup(self, chat_name, user_id):
+        cursor = self.conn.cursor()
+        query = "INSERT INTO chat_groups (chat_name, user_id) VALUES(%s, %s) RETURNING chat_group_id"
+        cursor.execute(query, (chat_name, user_id, ))
+        result = cursor.fetchone()
+        print(result)
+        self.conn.commit()
+        return result[0]
+
+
 
     def deleteGroup(self,groupname, ownerId):
         gID = "Group " + groupname + " deleted " + ownerId

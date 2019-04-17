@@ -100,11 +100,11 @@ class UserHandler:
             result = dao.loginUser(username,password)
             if not result:
                 return jsonify(Error="Error Not Found"), 404
-            mapped = {}
-            mapped['user_id'] = result[0]
-            mapped['authenticated'] = result[1]
+            mapped_result = {}
+            mapped_result['user_id'] = result[0]
+            mapped_result['authenticated'] = result[1]
 
-            return jsonify(Authentication = mapped)
+            return jsonify(mapped_result)
         else:
             return jsonify(Error="Unexpected attributes in post request"), 400
 
@@ -112,22 +112,23 @@ class UserHandler:
         dao = UserDAO()
         if len(json) != 6:
             return jsonify(Error="Malformed post request"), 400
+
+        first_name = json['first_name']
+        last_name = json['last_name']
+        email = json['email']
+        phone = json['phone']
+        password = json['password']
+        username = json['username']
+
+        if username and password and first_name and last_name and phone and email:
+            user_id = dao.registerUser(first_name, last_name, email, phone, password, username)
+            return jsonify(user_id), 201
         else:
-            first_name = json['first_name']
-            last_name = json['last_name']
-            email = json['email']
-            phone = json['phone']
-            password = json['password']
-            username = json['username']
-            if username and password and first_name and last_name and phone and email:
-                user_id = dao.registerUser(first_name, last_name, email, phone, password, username)
-                return jsonify(user_id), 201
-            else:
-                return jsonify(Error="Unexpected attributes in post request"), 400
+            return jsonify(Error="Unexpected attributes in post request"), 400
 
     def addUserToContactList(self, uID, json):
         dao = UserDAO()
-        if json.get('firstname')==None or json.get('lastname')==None\
+        if json.get('firstname')==None or json.get('lastname')==None \
                 or not(json.get('phone')==None or json.get('email')==None):
             return jsonify(Error="Malformed post request"), 400
         else:

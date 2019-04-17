@@ -110,7 +110,7 @@ class UserDAO:
 
     def loginUser(self, username, password):
         cursor = self.conn.cursor()
-        query = "SELECT user_id, password = %s as authenticate from person where username = %s"
+        query = "SELECT user_id, password = %s as authenticate from users where username = %s"
         cursor.execute(query, (password, username,))
         result = cursor.fetchone()
         if not result:

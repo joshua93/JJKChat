@@ -62,15 +62,18 @@ class GroupDAO:
         query = "INSERT INTO chat_groups (chat_name, user_id) VALUES(%s, %s) RETURNING chat_group_id"
         cursor.execute(query, (chat_name, user_id, ))
         result = cursor.fetchone()
-        print(result)
         self.conn.commit()
         return result[0]
 
 
 
-    def deleteGroup(self,groupname, ownerId):
-        gID = "Group " + groupname + " deleted " + ownerId
-        return gID
+    def deleteGroup(self,chat_group_id, ownerId):
+        cursor = self.conn.cursor()
+        query = "DELETE FROM chat_groups WHERE chat_group_id = %s AND user_id = %s RETURNING chat_group_id"
+        cursor.execute(query, (chat_group_id, ownerId,))
+        result = cursor.fetchone()
+        self.conn.commit()
+        return result[0]
 
     def getGroupByName(self,gName):
         members = list(filter(lambda u: u['chat_group_name'] == gName, self.groups))

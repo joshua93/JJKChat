@@ -8,7 +8,7 @@ from flask_cors import CORS, cross_origin
 import os
 
 UPLOAD_FOLDER = '/Users/kennethpadro/PycharmProjects/JJKChat/static' #change to get dynamic
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 
 app = Flask(__name__)
@@ -189,7 +189,6 @@ def getNumberOfDislikesPerDay():
     return PostHandler().getNumberOfDislikesPerDay()
 
 #Statistics 9
-#********************METODO TEMPORERO. LA IDEA ES PASARLE EL REACTION COMO PARAMETRO*****************
 @app.route('/JJKChat/post/<int:pID>/likes/count', methods=['GET'])
 def getNumberOfLikesForGivenPost(pID):
     return PostHandler().getNumberOfLikesForGivenPost(pID)
@@ -212,7 +211,6 @@ def getNumberOfPostsPerDayByUser(uID):
 def getMostActiveUser():
     return UserHandler().getMostActiveUser()
 
-#********************METODO TEMPORERO. LA IDEA ES PASARLE EL REACTION COMO PARAMETRO*****************
 @app.route('/JJKChat/post/<int:pID>/likes', methods=['GET'])
 def getListOfUsersWhoLikedPost(pID):
     return PostHandler().getListOfUsersWhoLikedPost(pID)

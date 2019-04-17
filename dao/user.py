@@ -126,17 +126,26 @@ class UserDAO:
         self.conn.commit()
         return user_id
 
-    def getUserByFirstName(self,uFN):
-        user = list(filter(lambda u: u['first_name'] == uFN, self.users))
-        return user
+    def getUserID1(self, first_name, last_name, email, phone):
+        cursor = self.conn.cursor()
+        query = "SELECT user_id FROM users WHERE first_name = %s AND last_name = %s AND email = %s AND phone = %s"
+        cursor.execute(query, (first_name, last_name, email, phone,))
+        result = cursor.fetchone()
+        return result
 
-    def getUserByLastName(self, uLN):
-        user = list(filter(lambda u: u['last_name'] == uLN, self.users))
-        return user
+    def getUserID2(self, first_name, last_name, phone):
+        cursor = self.conn.cursor()
+        query = "SELECT user_id FROM users WHERE first_name = %s AND last_name = %s AND phone = %s"
+        cursor.execute(query, (first_name, last_name, phone,))
+        result = cursor.fetchone()
+        return result
 
-    def getUserByPhone(self, uPn):
-        user = list(filter(lambda u: u['phone'] == uPn, self.users))
-        return user
+    def getUserID3(self, first_name, last_name, email):
+        cursor = self.conn.cursor()
+        query = "SELECT user_id FROM users WHERE first_name = %s AND last_name = %s AND email = %s"
+        cursor.execute(query, (first_name, last_name, email,))
+        result = cursor.fetchone()
+        return result
 
     def getUserByEmail(self, uEm):
         user = list(filter(lambda u: u['email'] == uEm, self.users))
@@ -146,5 +155,9 @@ class UserDAO:
         posts = list(filter(lambda u: u['user_id'] == uID, self.users))
         return posts
 
-    def addContact(self,uID, firstname, lastname, phone, email):
+    def addContact(self, uID, contact_uID):
+        cursor = self.conn.cursor()
+        query = "INSERT INTO contact VALUES(%s,%s);"
+        cursor.execute(query, (uID, contact_uID,))
+        self.conn.commit()
         return "Done"

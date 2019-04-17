@@ -179,7 +179,6 @@ class UserHandler:
                 if contact_uID == None:
                     result = "User does not exist"
                     return jsonify(result), 404
-                mappedContact = mapContact(contact_uID)
                 dao.addContact(uID, contact_uID[0])
                 result = "User was added to contactlist"
                 return jsonify(result), 201
@@ -189,7 +188,6 @@ class UserHandler:
                 if contact_uID == None:
                     result = "User does not exist"
                     return jsonify(result), 404
-                mappedContact = mapContact(contact_uID)
                 dao.addContact(uID, contact_uID[0])
                 result = "User was added to contactlist"
                 return jsonify(result), 201
@@ -199,7 +197,6 @@ class UserHandler:
                 if contact_uID == None:
                     result = "User does not exist"
                     return jsonify(result), 404
-                mappedContact = mapContact(contact_uID)
                 dao.addContact(uID, contact_uID[0])
                 print(contact_uID)
                 result = "User was added to contactlist"
@@ -209,4 +206,6 @@ class UserHandler:
 
     def removeContactsbyUserID(self,uID,json):
         dao = UserDAO()
+        result = dao.deleteContact(uID, json.get('user_id'))
+        return "Contact deleted"
         

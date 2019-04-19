@@ -79,14 +79,16 @@ class GroupDAO:
         members = list(filter(lambda u: u['chat_group_name'] == gName, self.groups))
         return members
 
-    def addContactTogroup(self,gId,uID):
+    def addContactTogroup(self, chat_group_id, user_id):
+        cursor = self.conn.cursor()
+        query = "INSERT INTO chat_group_members VALUES(%s, %s)"
+        cursor.execute(query, (user_id, chat_group_id,))
+        self.conn.commit()
         return "Contact added to group"
 
-    def removeContactFromGroup(self,gId,uID):
+    def removeContactFromGroup(self, chat_group_id, user_id):
         cursor = self.conn.cursor()
-        query = "DELETE FROM chat_group_members WHERE chat_group_id= %s AND user_id = %s"
-        cursor.execute(query, (gId, uID,))
-        # result = cursor.fetchone()
-        # # (uID, pID) = result[0], result[1]
+        query = "DELETE FROM chat_group_members WHERE chat_group_id= %s AND user_id = %s"  #Verificar esto!!!!!!!!!!!!
+        cursor.execute(query, (chat_group_id, user_id))
         self.conn.commit()
-        return uID
+        return "chat member removed"

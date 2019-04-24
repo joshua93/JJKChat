@@ -211,4 +211,13 @@ class PostDAO:
         self.conn.commit()
         return uID, pID
 
+    def replyToPostID(self, reply_message, post_id, user_id):
+        cursor = self.conn.cursor()
+        query = "INSERT INTO reply (reply_date, reply_message, post_id, user_id) VALUES (now(), %s, %s, %s) RETURNING reply_id"
+        cursor.execute(query, (reply_message, post_id, user_id))
+        result = cursor.fetchone()
+        reply_id = result[0]
+        self.conn.commit()
+        return reply_id
+
 

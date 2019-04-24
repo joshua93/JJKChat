@@ -155,9 +155,12 @@ def getPostByID(pID):
     return PostHandler().getPostByID(pID)
 
 #Get replies from post by post id
-@app.route('/JJKChat/post/<int:pID>/replies', methods=['GET'])
+@app.route('/JJKChat/post/<int:pID>/replies', methods=['GET','POST'])
 def getRepliesByPostID(pID):
-    return PostHandler().getRepliesByPostID(pID)
+    if request.method == 'POST':
+        return PostHandler().replyToPostID(pID, request.json)
+    if request.method == 'GET':
+        return PostHandler().getRepliesByPostID(pID)
 
 @app.route('/JJKChat/post/like', methods=['POST'])
 def likeaPost():

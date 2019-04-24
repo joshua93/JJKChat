@@ -224,3 +224,15 @@ class PostHandler:
 
     def getReaction(self, json):
         return"55 likes"
+
+    def replyToPostID(self, post_id, json):
+        if json is None:
+            return jsonify(Error="Malformed post request"), 400
+        else:
+            reply_message = json['reply_message']
+            user_id = json['user_id']
+
+            dao = PostDAO()
+            result = dao.replyToPostID(reply_message, post_id, user_id)
+            return jsonify(result)
+

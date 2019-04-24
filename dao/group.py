@@ -1,12 +1,8 @@
-from dao.data import Data
 import psycopg2
 from config.dbconfig import pg_config
 
 
 class GroupDAO:
-
-    groups = Data().groups
-    members = Data().group_members
 
     def __init__(self):
         #DATABASE_URL = 'postgres://postgres:databaseclass@localhost:5432/jjkchat'
@@ -65,8 +61,6 @@ class GroupDAO:
         self.conn.commit()
         return result[0]
 
-
-
     def deleteGroup(self,chat_group_id, ownerId):
         cursor = self.conn.cursor()
         query = "DELETE FROM chat_groups WHERE chat_group_id = %s AND user_id = %s RETURNING chat_group_id"
@@ -74,10 +68,6 @@ class GroupDAO:
         result = cursor.fetchone()
         self.conn.commit()
         return result[0]
-
-    def getGroupByName(self,gName):
-        members = list(filter(lambda u: u['chat_group_name'] == gName, self.groups))
-        return members
 
     def addContactTogroup(self, chat_group_id, user_id):
         cursor = self.conn.cursor()

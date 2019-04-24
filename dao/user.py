@@ -1,4 +1,3 @@
-from dao.data import Data
 from config.dbconfig import pg_config
 import psycopg2
 
@@ -9,12 +8,6 @@ class UserDAO:
         #DATABASE_URL = 'postgres://postgres:databaseclass@localhost:5432/jjkchat'
         DATABASE_URL = "dbname=%s user=%s password=%s host=%s" % (pg_config['dbname'], pg_config['user'], pg_config['passwd'], pg_config['host'])
         self.conn = psycopg2._connect(DATABASE_URL)
-
-    users = Data().users
-    groups = Data().groups
-    contacts = Data().contacts
-    posts = Data().posts
-    members = Data().group_members
 
     def getAllUsers(self):
         cursor = self.conn.cursor()

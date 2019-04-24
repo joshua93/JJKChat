@@ -1,4 +1,3 @@
-from dao.data import Data
 import psycopg2
 from config.dbconfig import pg_config
 
@@ -9,8 +8,6 @@ class PostDAO:
         #DATABASE_URL = 'postgres://postgres:databaseclass@localhost:5432/jjkchat'
         DATABASE_URL = "dbname=%s user=%s password=%s host=%s" % (pg_config['dbname'], pg_config['user'], pg_config['passwd'], pg_config['host'])
         self.conn = psycopg2._connect(DATABASE_URL)
-
-    posts = Data().posts
 
     def getAllPosts(self):
         cursor = self.conn.cursor()
@@ -163,26 +160,6 @@ class PostDAO:
         for row in cursor:
             result.append(row)
         return result
-
-    def getPostByID(self, pID):
-        post = list(filter(lambda u: u['post_id'] == pID, self.posts))
-        return post
-
-    def getMessageByPostID(self,pID):
-        message = list(filter(lambda u: u['post_id'] == pID, self.posts))
-        return message
-
-    def getMediaByPostID(self, pID):
-        media = list(filter(lambda u: u['post_id'] == pID, self.posts))
-        return media
-
-    def getAuthorByPostID(self, pID):
-        user = list(filter(lambda u: u['post_id'] == pID, self.posts))
-        return user
-
-    def getPostsByUserID(self, uID):
-        posts = list(filter(lambda u: u['post_author_id'] == uID, self.posts))
-        return posts
 
     def addPost(self, media, message, chat_group_id, user_id):
         cursor = self.conn.cursor()

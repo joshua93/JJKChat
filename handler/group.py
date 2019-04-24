@@ -74,10 +74,3 @@ class GroupHandler:
             return jsonify(result), 200
         else:
             return jsonify(Error="Unexpected attributes in post request"), 400
-
-    def searchGroup(self,args):
-        groupname = args.get("groupname")
-        dao = GroupDAO()
-        if groupname:
-            result = dao.getGroupByName(groupname)
-            return jsonify(result)

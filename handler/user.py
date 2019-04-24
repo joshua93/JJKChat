@@ -202,10 +202,7 @@ class UserHandler:
                 result = "User was added to contactlist"
                 return jsonify(result), 201
 
-
-
     def removeContactsbyUserID(self,uID,json):
         dao = UserDAO()
         result = dao.deleteContact(uID, json.get('user_id'))
         return "Contact deleted"
-        

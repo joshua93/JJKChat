@@ -149,10 +149,10 @@ def getAllPost():
     if request.method == 'GET':
         return PostHandler().getAllPost()
 
-#Get specific post by Id
-@app.route('/JJKChat/post/<int:pID>', methods=['GET'])
-def getPostByID(pID):
-    return PostHandler().getPostByID(pID)
+# #Get specific post by Id
+# @app.route('/JJKChat/post/<int:pID>', methods=['GET'])
+# def getPostByID(pID):
+#     return PostHandler().getPostByID(pID)
 
 #Get replies from post by post id
 @app.route('/JJKChat/post/<int:pID>/replies', methods=['GET','POST'])

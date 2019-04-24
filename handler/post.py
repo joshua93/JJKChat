@@ -147,31 +147,6 @@ class PostHandler:
             mapped_result.append(mapReplyToDict(r))
         return mapped_result
 
-    def getPostByID(self, pID):
-        dao = PostDAO()
-        result = dao.getPostByID(pID)
-        return jsonify(Post=result)
-
-    def getMessageByPostID(self, pID):
-        dao = PostDAO()
-        result = dao.getMessageByPostID(pID)
-        return jsonify(Message=result)
-
-    def getMediaByPostID(self,pID):
-        dao = PostDAO()
-        result = dao.getMediaByPostID(pID)
-        return jsonify(Contacts = result)
-
-    def getAuthorByPostID(self,pID):
-        dao = PostDAO()
-        result = dao.getAuthorByPostID(pID)
-        return jsonify(Author = result)
-
-    def getPostsByUserID(self,uID):
-        dao = PostDAO()
-        result = dao.getPostsByUserID(uID)
-        return jsonify(Post = result)
-
     def addPost(self, gID, json):
         dao = PostDAO()
         hdao = HashtagDAO()
@@ -221,9 +196,6 @@ class PostHandler:
             dao = PostDAO()
             result = dao.dislikeaPost(user_id,post_id)
             return jsonify(result)
-
-    def getReaction(self, json):
-        return"55 likes"
 
     def replyToPostID(self, post_id, json):
         if json is None:

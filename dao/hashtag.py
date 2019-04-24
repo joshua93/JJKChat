@@ -34,3 +34,10 @@ class HashtagDAO:
         for row in cursor:
             result.append(row)
         return result
+
+    def insertHashtag(self, hashtag, post_id):
+        cursor = self.conn.cursor()
+        query = "INSERT INTO hashtags (hashtag, post_id) VALUES(%s, %s)"
+        cursor.execute(query, (hashtag, post_id,))
+        self.conn.commit()
+        return "Done"

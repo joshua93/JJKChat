@@ -144,7 +144,7 @@ def getOwnerByGroupID(gID):
     return GroupHandler().getGroupOwnerByGroupID(gID)
 
 #Get all posts
-@app.route('/JJKChat/post', methods=['GET','POST'])
+@app.route('/JJKChat/post', methods=['GET'])
 def getAllPost():
     if request.method == 'GET':
         return PostHandler().getAllPost()

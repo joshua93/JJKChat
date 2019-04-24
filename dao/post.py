@@ -184,8 +184,14 @@ class PostDAO:
         posts = list(filter(lambda u: u['post_author_id'] == uID, self.posts))
         return posts
 
-    def addPost(self, gID, aID, message,media):
-        return "Message posted id 5"
+    def addPost(self, media, message, chat_group_id, user_id):
+        cursor = self.conn.cursor()
+        query = "INSERT INTO post (media, message, post_date, chat_group_id, user_id) VALUES(%s, %s, NOW(), %s, %s) RETURNING post_id"
+        cursor.execute(query, (media, message, chat_group_id, user_id, ))
+        result = cursor.fetchone()
+        post_id = result[0]
+        self.conn.commit()
+        return post_id
 
     def reactToPost(self,uID,pID):
         cursor = self.conn.cursor()

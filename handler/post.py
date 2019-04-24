@@ -2,6 +2,7 @@ from flask import jsonify
 from dao.post import PostDAO
 from dictionaryMapping import *
 from dao.hashtag import HashtagDAO
+from ttp import ttp
 
 
 class PostHandler:
@@ -171,21 +172,33 @@ class PostHandler:
         result = dao.getPostsByUserID(uID)
         return jsonify(Post = result)
 
-    def addPost(self,gID, json):
+    def addPost(self, gID, json):
         dao = PostDAO()
-        hdao = HashtagDAO
-        if len(json) != 2:
+        hdao = HashtagDAO()
+        p = ttp.Parser()
+
+        if len(json) != 3:
             return jsonify(Error="Malformed post request"), 400
         else:
-            groupID = json['groupID']
-            author = json['author']
+            chat_group_id = gID
+            user_id = json['user_id']
             message = json['message']
             media = json['media']
 
-            if groupID and author and message and media:
-                gID = dao.addPost(groupID, author,message, media)
+            if chat_group_id and user_id and message and media:
+                post_id = dao.addPost(media, message, chat_group_id, user_id)
 
-                return jsonify(gID), 201
+                hashtags = p.parse(message).tags
+
+                noDupHashtags = []
+                for tag in hashtags:
+                    if tag.lower() not in noDupHashtags:
+                        noDupHashtags.append(tag.lower())
+
+                for hashtag in noDupHashtags:
+                    hdao.insertHashtag(hashtag, post_id)
+
+                return jsonify(post_id), 201
             else:
                 return jsonify(Error="Unexpected attributes in post request"), 400
 

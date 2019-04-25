@@ -51,23 +51,23 @@ def upload_file():
 def home():
     return "Welcome to JJKChat api"
 
+#Register to the application.
+@app.route('/JJKChat/register', methods=['POST'])
+def registerUser():
+    return UserHandler().registerUser(request.json)
+
 #Login an existing user
 @app.route('/JJKChat/login', methods=['POST'])
 def loginUser():
     return UserHandler().loginUser(request.json)
 
-@app.route('/JJKChat/register', methods=['POST'])
-def registerUser():
-    return UserHandler().registerUser(request.json)
-
 #Get all users #Search for a user #Register a user
-@app.route('/JJKChat/user', methods=['GET','POST'])
+@app.route('/JJKChat/user', methods=['GET'])
 def getAllUsers():
-    if request.method == 'GET':
-        if request.args:
-            return UserHandler().searchUser(request.args)
-        else:
-            return UserHandler().getAllUsers()
+    if request.args:
+        return UserHandler().searchUser(request.args)
+    else:
+        return UserHandler().getAllUsers()
 
 #Gets contacts of an user . Add user to contacts
 @app.route('/JJKChat/user/<int:uID>/contact', methods=['GET','POST','DELETE'])
@@ -84,10 +84,10 @@ def getContactsByUserID(uID):
 def getUserByID(uID):
     return UserHandler().getUserById(uID)
 
-#Get specific user posts by user id
-@app.route('/JJKChat/user/<int:uID>/post', methods=['GET'])
-def getPostsByUserID(uID):
-    return PostHandler().getPostsByUserID(uID)
+# #Get specific user posts by user id
+# @app.route('/JJKChat/user/<int:uID>/post', methods=['GET'])
+# def getPostsByUserID(uID):
+#     return PostHandler().getPostsByUserID(uID)
 
 #get what groups the user is owner of
 @app.route('/JJKChat/user/<int:uID>/ownedgroups', methods=['GET'])

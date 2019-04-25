@@ -110,7 +110,7 @@ class UserDAO:
             return None
         return result
 
-    def registerUser(self,first_name, last_name, email, phone, password, username):
+    def registerUser(self, first_name, last_name, email, phone, password, username):
         cursor = self.conn.cursor()
         query = "INSERT INTO users (first_name, last_name, email, phone, password, username) VALUES(%s,%s,%s,%s,%s,%s) RETURNING user_id;"
         cursor.execute(query, (first_name, last_name, email, phone, password, username,))

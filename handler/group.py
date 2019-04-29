@@ -44,16 +44,17 @@ class GroupHandler:
     def createGroup(self, json):
         dao = GroupDAO()
         chat_name = json['chat_name']
-        ownerId = json['user_id']
-        result = dao.createGroup(chat_name, ownerId)
-        return jsonify(result), 201
+        user_id = json['user_id']
+        chat_group_id = dao.createGroup(chat_name, user_id)
+        dao.addContactTogroup(chat_group_id, user_id) #add user to group
+        return jsonify(chat_group_id), 201
 
 
     def deleteGroup(self, json):
         dao = GroupDAO()
         chat_group_id = json['chat_group_id']
-        ownerId = json['user_id']
-        result = dao.deleteGroup(chat_group_id, ownerId)
+        user_id = json['user_id']
+        result = dao.deleteGroup(chat_group_id, user_id)
         return jsonify(result), 201
 
 

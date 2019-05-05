@@ -63,7 +63,7 @@ class PostHandler:
         dao = PostDAO()
         result = dao.getListOfUsersWhoReactedPost(pID, "like")
         if not result:
-            return jsonify(Error="Not found"), 404
+            return jsonify(Error="Not found")
         mapped_result = []
         for r in result:
             mapped_result.append(mapToReactDict(r))
@@ -73,7 +73,7 @@ class PostHandler:
         dao = PostDAO()
         result = dao.getListOfUsersWhoReactedPost(pID, "dislike")
         if not result:
-            return jsonify(Error="Not found"), 404
+            return jsonify(Error="Not found")
         mapped_result = []
         for r in result:
             mapped_result.append(mapToReactDict(r))

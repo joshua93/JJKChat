@@ -179,6 +179,13 @@ class PostDAO:
         self.conn.commit()
         return post_id
 
+    def insertHashtag(self, hashtag, post_id):
+        cursor = self.conn.cursor()
+        query = "INSERT INTO hashtags (hashtag, post_id) VALUES(%s, %s)"
+        cursor.execute(query, (hashtag, post_id,))
+        self.conn.commit()
+        return "Done"
+
     def reactToPost(self,uID,pID):
         cursor = self.conn.cursor()
         query = "INSERT INTO reactions VALUES ('like',%s,%s,now()) RETURNING  user_id, post_id"

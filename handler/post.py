@@ -6,7 +6,7 @@ from ttp import ttp
 from werkzeug.utils import secure_filename
 import os
 
-UPLOAD_FOLDER = '/Users/kennethpadro/PycharmProjects/JJKChat/static' #change to get dynamic
+UPLOAD_FOLDER = os.getcwd() + '/static' #change to get dynamic
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 def allowed_file(filename):
@@ -157,46 +157,41 @@ class PostHandler:
 
     def addPost(self, gID, request):
         dao = PostDAO()
-        hdao = HashtagDAO()
         p = ttp.Parser()
 
-        # if len(request.values) != 3:
-        #     return jsonify(Error="Malformed post request"), 400
-        # else:
         chat_group_id = gID
         user_id = request.values['user_id']
         message = request.values['message']
-        # media = json['media']
+        file = request.files['file']
 
-        if chat_group_id and user_id and message:
-            post_id = dao.addPost(message, chat_group_id, user_id)
+        if chat_group_id and user_id and message and file:
 
-            hashtags = p.parse(message).tags
-
-            noDupHashtags = []
-            for tag in hashtags:
-                if tag.lower() not in noDupHashtags:
-                    noDupHashtags.append(tag.lower())
-
-            for hashtag in noDupHashtags:
-                hdao.insertHashtag(hashtag, post_id)
-
-            if 'file' not in request.files:
-                flash('No file part')
-                return redirect(request.url)
-            file = request.files['file']
-            # if user does not select file, browser also
-            # submit an empty part without filename
             if file.filename == '':
-                flash('No selected file')
-                return redirect(request.url)
-            if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                filename = "img_" + str(post_id) + "_" + filename
+                return jsonify(Error="Unexpected attributes in post request"), 400
+
+            if allowed_file(file.filename):
+
+                post_id = dao.addPost(message, chat_group_id, user_id)
+
+                filename = "img_" + str(post_id) + "_" + secure_filename(file.filename)
+
                 file.save(os.path.join(UPLOAD_FOLDER, filename))
 
                 dao.addPostMedia(post_id, filename)
-            return jsonify(post_id), 201
+
+                hashtags = p.parse(message).tags
+
+                noDupHashtags = []
+
+                for tag in hashtags:
+                    if tag.lower() not in noDupHashtags:
+                        noDupHashtags.append(tag.lower())
+                        dao.insertHashtag(tag.lower(), post_id)
+
+                return jsonify(post_id), 201
+
+            else:
+                return jsonify(Error="NO filename"), 400
         else:
             return jsonify(Error="Unexpected attributes in post request"), 400
 

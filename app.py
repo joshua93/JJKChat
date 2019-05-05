@@ -1,53 +1,14 @@
-from flask import Flask, request, flash, redirect, url_for
-from werkzeug.utils import secure_filename
+from flask import Flask, request
 from handler.user import UserHandler
 from handler.group import GroupHandler
 from handler.post import PostHandler
 from handler.hashtag import HashtagHandler
-from flask_cors import CORS, cross_origin
-import os
-
-UPLOAD_FOLDER = '/Users/kennethpadro/PycharmProjects/JJKChat/static' #change to get dynamic
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
-
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 CORS(app)
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-@app.route('/JJKChat/upload', methods=['GET', 'POST'])
-def upload_file():
-    if request.method == 'POST':
-        # check if the post request has the file part
-        username = request.values['username']
-
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-        # if user does not select file, browser also
-        # submit an empty part without filename
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            #return redirect(url_for('upload_file', filename=filename))
-    return '''
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-    '''
 
 @app.route('/')
 def home():
@@ -127,7 +88,7 @@ def getPostByGroupId(gID):
     if request.method == 'GET':
         return PostHandler().getPostByGroupId(gID)
     elif request.method == 'POST':
-        return PostHandler().addPost(gID,request)
+        return PostHandler().addPost(gID, request)
 
 #Get all posts by group id
 @app.route('/JJKChat/group/<int:gID>/detailedpost', methods=['GET'])

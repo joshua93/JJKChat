@@ -127,11 +127,11 @@ def getRepliesByPostID(pID):
 
 @app.route('/JJKChat/post/like', methods=['POST'])
 def likeaPost():
-        return PostHandler().likeaPost(request.json)
+        return PostHandler().reactToPost(request.json, 'like')
 
 @app.route('/JJKChat/post/dislike', methods=['POST'])
 def dislikeaPost():
-        return PostHandler().dislikeaPost(request.json)
+        return PostHandler().reactToPost(request.json, 'dislike')
 
 #DELETEEEEEEEEEEEE???
 # Statistics 2 Get total number of posts on a certain date

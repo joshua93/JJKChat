@@ -195,25 +195,27 @@ class PostHandler:
         else:
             return jsonify(Error="Unexpected attributes in post request"), 400
 
-    def likeaPost(self, json):
+    def reactToPost(self, json, reaction):
         if json is None:
             return jsonify(Error="Malformed post request"), 400
         else:
             user_id = json['user_id']
             post_id = json['post_id']
             dao = PostDAO()
-            result = dao.reactToPost(user_id,post_id)
+            result = dao.reactToPost(user_id, post_id, reaction)
+            if not result:
+                return jsonify(Error="Already reacted to this post"), 777
             return jsonify(result)
 
-    def dislikeaPost(self, json):
-        if json is None:
-            return jsonify(Error="Malformed post request"), 400
-        else:
-            user_id = json['user_id']
-            post_id = json['post_id']
-            dao = PostDAO()
-            result = dao.dislikeaPost(user_id,post_id)
-            return jsonify(result)
+    # def dislikeaPost(self, json):
+    #     if json is None:
+    #         return jsonify(Error="Malformed post request"), 400
+    #     else:
+    #         user_id = json['user_id']
+    #         post_id = json['post_id']
+    #         dao = PostDAO()
+    #         result = dao.dislikeaPost(user_id,post_id)
+    #         return jsonify(result)
 
     def replyToPostID(self, post_id, json):
         if json is None:

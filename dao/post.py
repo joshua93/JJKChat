@@ -186,23 +186,26 @@ class PostDAO:
         self.conn.commit()
         return "Done"
 
-    def reactToPost(self,uID,pID):
+    def reactToPost(self, uID, pID, reaction):
         cursor = self.conn.cursor()
-        query = "INSERT INTO reactions VALUES ('like',%s,%s,now()) RETURNING  user_id, post_id"
-        cursor.execute(query, (uID, pID,))
+        query = "INSERT INTO reactions VALUES (%s ,%s,%s,now()) RETURNING  user_id, post_id"
+        try:
+            cursor.execute(query, (reaction, uID, pID,))
+        except psycopg2.IntegrityError:
+            return
         result = cursor.fetchone()
         (uID, pID) = result[0], result[1]
         self.conn.commit()
         return uID, pID
 
-    def dislikeaPost(self,uID,pID):
-        cursor = self.conn.cursor()
-        query = "INSERT INTO reactions VALUES ('dislike',%s,%s,now()) RETURNING  user_id, post_id"
-        cursor.execute(query, (uID, pID,))
-        result = cursor.fetchone()
-        (uID, pID) = result[0], result[1]
-        self.conn.commit()
-        return uID, pID
+    # def dislikeaPost(self,uID,pID):
+    #     cursor = self.conn.cursor()
+    #     query = "INSERT INTO reactions VALUES ('dislike',%s,%s,now()) RETURNING  user_id, post_id"
+    #     cursor.execute(query, (uID, pID,))
+    #     result = cursor.fetchone()
+    #     (uID, pID) = result[0], result[1]
+    #     self.conn.commit()
+    #     return uID, pID
 
     def replyToPostID(self, reply_message, post_id, user_id):
         cursor = self.conn.cursor()

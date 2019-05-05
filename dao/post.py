@@ -161,10 +161,19 @@ class PostDAO:
             result.append(row)
         return result
 
-    def addPost(self, media, message, chat_group_id, user_id):
+    def addPost(self, message, chat_group_id, user_id):
         cursor = self.conn.cursor()
-        query = "INSERT INTO post (media, message, post_date, chat_group_id, user_id) VALUES(%s, %s, NOW(), %s, %s) RETURNING post_id"
-        cursor.execute(query, (media, message, chat_group_id, user_id, ))
+        query = "INSERT INTO post (message, post_date, chat_group_id, user_id) VALUES(%s, NOW(), %s, %s) RETURNING post_id"
+        cursor.execute(query, (message, chat_group_id, user_id, ))
+        result = cursor.fetchone()
+        post_id = result[0]
+        self.conn.commit()
+        return post_id
+
+    def addPostMedia(self, post_id, filename):
+        cursor = self.conn.cursor()
+        query = "UPDATE post SET media = %s WHERE post_id = %s RETURNING post_id"
+        cursor.execute(query, (filename, post_id, ))
         result = cursor.fetchone()
         post_id = result[0]
         self.conn.commit()

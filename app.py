@@ -20,10 +20,12 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/upload', methods=['GET', 'POST'])
+@app.route('/JJKChat/upload', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
         # check if the post request has the file part
+        username = request.values['username']
+
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
@@ -125,7 +127,7 @@ def getPostByGroupId(gID):
     if request.method == 'GET':
         return PostHandler().getPostByGroupId(gID)
     elif request.method == 'POST':
-        return PostHandler().addPost(gID,request.json)
+        return PostHandler().addPost(gID,request)
 
 #Get all posts by group id
 @app.route('/JJKChat/group/<int:gID>/detailedpost', methods=['GET'])

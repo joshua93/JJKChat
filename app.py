@@ -125,13 +125,27 @@ def getRepliesByPostID(pID):
     if request.method == 'GET':
         return PostHandler().getRepliesByPostID(pID)
 
-@app.route('/JJKChat/post/like', methods=['POST'])
-def likeaPost():
-        return PostHandler().reactToPost(request.json, 'like')
+# @app.route('/JJKChat/post/like', methods=['POST'])
+# def likeaPost():
+#         return PostHandler().reactToPost(request.json, 'like')
+#
+# @app.route('/JJKChat/post/dislike', methods=['POST'])
+# def dislikeaPost():
+#         return PostHandler().reactToPost(request.json, 'dislike')
 
-@app.route('/JJKChat/post/dislike', methods=['POST'])
-def dislikeaPost():
-        return PostHandler().reactToPost(request.json, 'dislike')
+@app.route('/JJKChat/post/<int:pID>/likes', methods=['GET','POST'])
+def getListOfUsersWhoLikedPost(pID):
+    if request.method == 'GET':
+        return PostHandler().getListOfUsersWhoLikedPost(pID)
+    if request.method == 'POST':
+        return PostHandler().reactToPost(pID, request.json, 'like')
+
+@app.route('/JJKChat/post/<int:pID>/dislikes', methods=['GET','POST'])
+def getListOfUsersWhoDislikedPost(pID):
+    if request.method == 'GET':
+        return PostHandler().getListOfUsersWhoDislikedPost(pID)
+    if request.method == 'POST':
+        return PostHandler().reactToPost(pID, request.json, 'dislike')
 
 #DELETEEEEEEEEEEEE???
 # Statistics 2 Get total number of posts on a certain date
@@ -177,13 +191,7 @@ def getNumberOfPostsPerDayByUser(uID):
 def getMostActiveUser():
     return UserHandler().getMostActiveUser()
 
-@app.route('/JJKChat/post/<int:pID>/likes', methods=['GET'])
-def getListOfUsersWhoLikedPost(pID):
-    return PostHandler().getListOfUsersWhoLikedPost(pID)
 
-@app.route('/JJKChat/post/<int:pID>/dislikes', methods=['GET'])
-def getListOfUsersWhoDislikedPost(pID):
-    return PostHandler().getListOfUsersWhoDislikedPost(pID)
 
 # Statistics 2 Get total number of posts on a certain date
 @app.route('/JJKChat/post/countperday', methods=['GET'])

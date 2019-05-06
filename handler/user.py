@@ -139,13 +139,13 @@ class UserHandler:
             firstname = json['first_name']
             lastname = json['last_name']
 
-            if json.get('phone')!=None and json.get('email')!=None:
+            if json.get('phone')!="" and json.get('email')!="":
                 phone = json['phone']
                 email = json['email']
-            elif json.get('email')!=None:
+            elif json.get('email')!="":
                 email = json['email']
                 phone = None
-            elif json.get('phone')!=None:
+            elif json.get('phone')!="":
                 email = None
                 phone = json['phone']
 

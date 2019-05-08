@@ -1,8 +1,6 @@
-from flask import jsonify , flash, redirect
+from flask import jsonify
 from dao.post import PostDAO
 from dictionaryMapping import *
-from dao.hashtag import HashtagDAO
-from ttp import ttp
 from werkzeug.utils import secure_filename
 import os
 
@@ -157,7 +155,6 @@ class PostHandler:
 
     def addPost(self, gID, request):
         dao = PostDAO()
-        p = ttp.Parser()
 
         chat_group_id = gID
         user_id = request.values['user_id']
@@ -179,7 +176,7 @@ class PostHandler:
 
                 dao.addPostMedia(post_id, filename)
 
-                hashtags = p.parse(message).tags
+                hashtags = {tag.strip("#") for tag in message.split() if tag.startswith("#")}
 
                 noDupHashtags = []
 

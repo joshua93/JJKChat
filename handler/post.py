@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 import os
 
 # UPLOAD_FOLDER = os.getcwd() + '/static' #change to get dynamic
-MYDIR = '/app/'
+MYDIR = '/tmp/'
 UPLOAD_FOLDER = 'static/'
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
@@ -175,7 +175,7 @@ class PostHandler:
 
                 filename = "img_" + str(post_id) + "_" + secure_filename(file.filename)
 
-                file.save(os.path.join(MYDIR + "/" + UPLOAD_FOLDER, filename))
+                file.save(os.path.join('/tmp/', filename))
 
                 dao.addPostMedia(post_id, filename)
 

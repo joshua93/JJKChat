@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 import os
 
 # UPLOAD_FOLDER = os.getcwd() + '/static' #change to get dynamic
-MYDIR = os.path.dirname(__file__)
+MYDIR = '/app/'
 UPLOAD_FOLDER = 'static/'
 
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])

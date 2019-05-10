@@ -4,10 +4,7 @@ from dictionaryMapping import *
 from werkzeug.utils import secure_filename
 import os
 
-# UPLOAD_FOLDER = os.getcwd() + '/static' #change to get dynamic
-MYDIR = '/tmp/'
-UPLOAD_FOLDER = 'static/'
-
+UPLOAD_FOLDER = os.getcwd() + '/static' #change to get dynamic
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 def allowed_file(filename):
@@ -175,7 +172,7 @@ class PostHandler:
 
                 filename = "img_" + str(post_id) + "_" + secure_filename(file.filename)
 
-                file.save(os.path.join('/tmp/', filename))
+                file.save(os.path.join(UPLOAD_FOLDER, filename))
 
                 dao.addPostMedia(post_id, filename)
 

@@ -4,7 +4,8 @@ from dictionaryMapping import *
 from werkzeug.utils import secure_filename
 import os
 
-UPLOAD_FOLDER = os.getcwd() + '/static' #change to get dynamic
+# UPLOAD_FOLDER = os.getcwd() + '/static' #change to get dynamic
+UPLOAD_FOLDER = '/app/static/'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 def allowed_file(filename):

@@ -47,11 +47,6 @@ def getContactsByUserID(uID):
 def getUserByID(uID):
     return UserHandler().getUserById(uID)
 
-# #Get specific user posts by user id
-# @app.route('/JJKChat/user/<int:uID>/post', methods=['GET'])
-# def getPostsByUserID(uID):
-#     return PostHandler().getPostsByUserID(uID)
-
 #get what groups the user is owner of
 @app.route('/JJKChat/user/<int:uID>/ownedgroups', methods=['GET'])
 def getOwnedGroupByUserID(uID):
@@ -190,8 +185,6 @@ def getNumberOfPostsPerDayByUser(uID):
 @app.route('/JJKChat/user/mostactive', methods=['GET'])
 def getMostActiveUser():
     return UserHandler().getMostActiveUser()
-
-
 
 # Statistics 2 Get total number of posts on a certain date
 @app.route('/JJKChat/post/countperday', methods=['GET'])

@@ -37,7 +37,7 @@ class UserHandler:
         dao = UserDAO()
         result = dao.getContactsByUserID(uID)
         if not result:
-            return jsonify(Error="Not found"), 404
+            return jsonify(Error="No contacts"), 777
         mapped_result = []
         for r in result:
             mapped_result.append(mapUserToDict(r))

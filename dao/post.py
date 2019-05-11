@@ -151,7 +151,7 @@ class PostDAO:
 
     def getRepliesByPostID(self, pID):
         cursor = self.conn.cursor()
-        query = "SELECT reply_id, reply_date, reply_message, post_id, username, first_name, last_name FROM reply natural inner join users WHERE post_id =%s"
+        query = "SELECT reply_id, reply_date, reply_message, post_id, username, first_name, last_name FROM reply natural inner join users WHERE post_id =%s ORDER BY reply_id"
         try:
             cursor.execute(query,(pID, ))
         except psycopg2.Error as e:

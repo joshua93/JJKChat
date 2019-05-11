@@ -122,9 +122,7 @@ class PostHandler:
         result = dao.getNumberOfRepliesForGivenPost(pID)
         if not result:
             return jsonify(Error="Not found"), 404
-        mapped_result = []
-        for r in result:
-            mapped_result.append(mapReplyCountToDict(r))
+        mapped_result = mapReplyCountToDict(result)
         return jsonify(mapped_result)
 
     def getNumberOfPostsPerDayByUser(self, uID):

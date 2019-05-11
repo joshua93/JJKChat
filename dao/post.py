@@ -55,6 +55,7 @@ class PostDAO:
         result = cursor.fetchone()
         return result
 
+
     def getListOfUsersWhoReactedPost(self, pID, reaction):
         cursor = self.conn.cursor()
         query = "SELECT  user_id, first_name, last_name, username, reaction_date FROM reactions NATURAL INNER JOIN users WHERE post_id = %s AND reaction = %s"
@@ -122,10 +123,9 @@ class PostDAO:
             cursor.execute(query, (pID,))
         except psycopg2.Error as e:
             return
-        result = []
-        for row in cursor:
-            result.append(row)
+        result = cursor.fetchone()
         return result
+
 
     def getNumberOfPostsPerDayByUser(self, uID):
         cursor = self.conn.cursor()

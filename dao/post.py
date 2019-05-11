@@ -35,7 +35,7 @@ class PostDAO:
 	                    GROUP BY post_id)
                 SELECT post.post_id, post.media, post.message, post.post_date, post.chat_group_id, post.user_id,likes, dislikes, users.username, users.first_name, users.last_name 
                 FROM post natural inner join users LEFT JOIN plikes on post.post_id = plikes.post_id LEFT JOIN pdislikes on post.post_id = pdislikes.post_id
-                WHERE post.chat_group_id =%s;"""
+                WHERE post.chat_group_id =%s ORDER BY post.post_id;"""
         try:
             cursor.execute(query,(gID,))
         except psycopg2.Error as e:

@@ -151,42 +151,27 @@ class PostHandler:
             mapped_result.append(mapReplyToDict(r))
         return mapped_result
 
-    def addPost(self, gID, request):
+    def addPost(self, gID, json):
         dao = PostDAO()
 
         chat_group_id = gID
-        user_id = request.values['user_id']
-        message = request.values['message']
-        file = request.files['file']
+        user_id = json['user_id']
+        message = json['message']
+        media = json['media']['url']
 
-        if chat_group_id and user_id and message and file:
+        if chat_group_id and user_id and message:
+            post_id = dao.addPost(media, message, chat_group_id, user_id)
 
-            if file.filename == '':
-                return jsonify(Error="Unexpected attributes in post request"), 400
+            hashtags = {tag.strip("#") for tag in message.split() if tag.startswith("#")}
 
-            if allowed_file(file.filename):
+            noDupHashtags = []
 
-                post_id = dao.addPost(message, chat_group_id, user_id)
+            for tag in hashtags:
+                if tag.lower() not in noDupHashtags:
+                    noDupHashtags.append(tag.lower())
+                    dao.insertHashtag(tag.lower(), post_id)
 
-                filename = "img_" + str(post_id) + "_" + secure_filename(file.filename)
-
-                file.save(os.path.join(UPLOAD_FOLDER, filename))
-
-                dao.addPostMedia(post_id, filename)
-
-                hashtags = {tag.strip("#") for tag in message.split() if tag.startswith("#")}
-
-                noDupHashtags = []
-
-                for tag in hashtags:
-                    if tag.lower() not in noDupHashtags:
-                        noDupHashtags.append(tag.lower())
-                        dao.insertHashtag(tag.lower(), post_id)
-
-                return jsonify(post_id), 201
-
-            else:
-                return jsonify(Error="NO filename"), 400
+            return jsonify(post_id), 201
         else:
             return jsonify(Error="Unexpected attributes in post request"), 400
 

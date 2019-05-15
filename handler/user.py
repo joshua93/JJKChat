@@ -99,7 +99,7 @@ class UserHandler:
         password = json['password']
 
         if username and password:
-            result = dao.loginUser(username, password)
+            result = dao.loginUser(username.lower(), password)
 
             if not result:
                 return jsonify(Error="Error Not Found"), 404
@@ -126,7 +126,7 @@ class UserHandler:
         username = json['username']
 
         if username and password and first_name and last_name and phone and email:
-            user_id = dao.registerUser(first_name, last_name, email, phone, password, username)
+            user_id = dao.registerUser(first_name, last_name, email, phone, password, username.lower())
             return jsonify(user_id), 201
         else:
             return jsonify(Error="Unexpected attributes in post request"), 400
